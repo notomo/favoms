@@ -1,11 +1,18 @@
-import { Link, Outlet } from "@remix-run/react";
+import { Link, NavLink, Outlet } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
 
 const Item = ({ id }: { id: number }) => {
   return (
-    <Link to={`/mylist/${id}`}>
-      <li className="border-b p-4">hogehoge{id}</li>
-    </Link>
+    <NavLink
+      className={({ isActive }) =>
+        isActive ? "font-bold bg-stone-500 text-stone-50" : ""
+      }
+      to={`/mylist/${id}`}
+    >
+      <Link to={`/mylist/${id}`}>
+        <li className="border-b p-4">hogehoge{id}</li>
+      </Link>
+    </NavLink>
   );
 };
 
