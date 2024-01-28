@@ -10,7 +10,7 @@ const Item = ({ id }: { id: number }) => {
       to={`/mylist/${id}`}
     >
       <Link to={`/mylist/${id}`}>
-        <li className="border-b p-4">hogehoge{id}</li>
+        <li className="border-b p-4">mylist {id}</li>
       </Link>
     </NavLink>
   );
