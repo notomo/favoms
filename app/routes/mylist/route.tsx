@@ -1,4 +1,5 @@
 import { Link, Outlet } from "@remix-run/react";
+import { ScrollArea } from "~/component/ui/scroll-area";
 
 const Item = ({ id }: { id: number }) => {
   return (
@@ -10,13 +11,15 @@ const Item = ({ id }: { id: number }) => {
 
 const MylistNavigation = () => {
   return (
-    <nav>
-      <ul className="flex flex-col h-full border min-w-40">
-        <Item id={1} />
-        <Item id={2} />
-        <Item id={3} />
-      </ul>
-    </nav>
+    <ScrollArea className="border border-gray-600 min-w-72">
+      <nav>
+        <ul className="flex flex-col h-full">
+          {Array.from({ length: 100 }, (_, i) => i).map((id) => {
+            return <Item id={id} key={id} />;
+          })}
+        </ul>
+      </nav>
+    </ScrollArea>
   );
 };
 
