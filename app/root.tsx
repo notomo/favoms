@@ -15,14 +15,14 @@ export const links: LinksFunction = () => [
 
 export default function App() {
   return (
-    <html lang="en">
+    <html lang="en" className="flex w-full h-full bg-slate-800 text-white">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="flex w-full h-full">
         <Outlet />
         <ScrollRestoration />
         <Scripts />
