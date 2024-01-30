@@ -1,17 +1,20 @@
 import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
+import { getMylist } from "~/persist/mylist";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const mylistId = +params.mylistId!;
-  const items = Array.from({ length: 100 }, (_, i) => i).map((id) => {
-    return {
-      id: (mylistId + 1) * id,
-    };
-  });
+  const mylist = await getMylist(mylistId);
+  if (mylist === null) {
+    throw new Response(null, {
+      status: 404,
+      statusText: "Not Found",
+    });
+  }
   return json({
-    id: params.mylistId,
-    items,
+    id: mylist.id,
+    items: mylist.items,
   });
 };
 

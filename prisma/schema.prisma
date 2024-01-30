@@ -8,6 +8,24 @@ datasource db {
 }
 
 model Mylist {
-  id   Int    @id @default(autoincrement())
-  name String @unique
+  id         Int          @id @default(autoincrement())
+  name       String       @unique
+  items      Item[]
+  mylistItem MylistItem[]
+}
+
+model Item {
+  id         Int          @id @default(autoincrement())
+  name       String
+  mylists    Mylist[]
+  mylistItem MylistItem[]
+}
+
+model MylistItem {
+  mylist   Mylist @relation(fields: [mylistId], references: [id])
+  mylistId Int
+  item     Item   @relation(fields: [itemId], references: [id])
+  itemId   Int
+
+  @@id([mylistId, itemId])
 }

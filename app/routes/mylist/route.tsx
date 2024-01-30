@@ -1,5 +1,17 @@
-import { Link, NavLink, Outlet } from "@remix-run/react";
+import { Link, NavLink, Outlet, json, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
+import { listMylists } from "~/persist/mylist";
+
+export const loader = async () => {
+  const mylists = await listMylists();
+  return json({
+    mylists: mylists.map((mylist) => {
+      return {
+        id: mylist.id,
+      };
+    }),
+  });
+};
 
 const Item = ({ id }: { id: number }) => {
   return (
@@ -17,11 +29,12 @@ const Item = ({ id }: { id: number }) => {
 };
 
 const MylistNavigation = () => {
+  const { mylists } = useLoaderData<typeof loader>();
   return (
     <ScrollArea className="border border-gray-600 min-w-72">
       <nav>
         <ul className="flex flex-col h-full">
-          {Array.from({ length: 100 }, (_, i) => i).map((id) => {
+          {mylists.map(({ id }) => {
             return <Item id={id} key={id} />;
           })}
         </ul>
