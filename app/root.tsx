@@ -1,5 +1,6 @@
 import type { LinksFunction } from "@remix-run/node";
 import {
+  Link,
   Links,
   LiveReload,
   Meta,
@@ -11,9 +12,40 @@ import {
 } from "@remix-run/react";
 import stylesheet from "~/tailwind.css";
 
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from "~/component/ui/navigation-menu";
+
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
+
+const Header = () => {
+  return (
+    <NavigationMenu className="w-full">
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <Link to="/">
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              Home
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link to="/mylist">
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              Mylist
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  );
+};
 
 export default function App() {
   return (
@@ -24,7 +56,8 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="flex w-full h-full">
+      <body className="flex flex-col w-full h-full">
+        <Header />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
