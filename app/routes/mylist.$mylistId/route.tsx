@@ -2,6 +2,7 @@ import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
 import { getMylist } from "~/persist/mylist";
+import { itemRoute } from "~/route_path";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const mylistId = +params.mylistId!;
@@ -20,7 +21,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
 const Item = ({ id }: { id: number }) => {
   return (
-    <Link to={`/item/${id}`}>
+    <Link to={itemRoute(id)}>
       <li className="border-b p-4">item {id}</li>
     </Link>
   );

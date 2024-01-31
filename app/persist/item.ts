@@ -1,4 +1,6 @@
-import { prisma } from "./prisma";
+import { prisma, UpsertData, UpsertWhere } from "./prisma";
+
+type Model = typeof prisma.item;
 
 export async function getItem(id: number) {
   return await prisma.item.findUnique({
@@ -8,10 +10,10 @@ export async function getItem(id: number) {
   });
 }
 
-type UpsertArgs = Parameters<typeof prisma.item.upsert>[0];
-type UpsertWhere = UpsertArgs["where"];
-type UpsertData = UpsertArgs["update"] & UpsertArgs["create"];
-export async function upsertItem(where: UpsertWhere, data: UpsertData) {
+export async function upsertItem(
+  where: UpsertWhere<Model>,
+  data: UpsertData<Model>
+) {
   return await prisma.item.upsert({
     where,
     create: data,

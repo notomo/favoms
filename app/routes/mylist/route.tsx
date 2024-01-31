@@ -1,6 +1,7 @@
 import { Link, NavLink, Outlet, json, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
 import { listMylists } from "~/persist/mylist";
+import { mylistRoute } from "~/route_path";
 
 export const loader = async () => {
   const mylists = await listMylists();
@@ -14,14 +15,15 @@ export const loader = async () => {
 };
 
 const Item = ({ id }: { id: number }) => {
+  const path = mylistRoute(id);
   return (
     <NavLink
       className={({ isActive }) =>
         isActive ? "font-bold bg-stone-500 text-stone-50" : ""
       }
-      to={`/mylist/${id}`}
+      to={path}
     >
-      <Link to={`/mylist/${id}`}>
+      <Link to={path}>
         <li className="border-b p-4">mylist {id}</li>
       </Link>
     </NavLink>
