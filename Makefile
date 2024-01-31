@@ -16,6 +16,8 @@ db_seed:
 	npx prisma db seed
 db_push:
 	npx prisma db push
+db_reset:
+	npx prisma migrate reset --force
 
 FORCE:
 .PHONY: FORCE

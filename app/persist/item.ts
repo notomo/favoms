@@ -10,13 +10,19 @@ export async function getItem(id: number) {
   });
 }
 
-export async function upsertItem(
-  where: UpsertWhere<Model>,
-  data: UpsertData<Model>
+export async function upsertItems(
+  upserts: {
+    where: UpsertWhere<Model>;
+    data: UpsertData<Model>;
+  }[]
 ) {
-  return await prisma.item.upsert({
-    where,
-    create: data,
-    update: data,
-  });
+  return await prisma.$transaction(
+    upserts.map((upsert) => {
+      return prisma.item.upsert({
+        where: upsert.where,
+        create: upsert.data,
+        update: upsert.data,
+      });
+    })
+  );
 }
