@@ -1,8 +1,10 @@
-dev:
-	npx remix dev --manual
-build:
-	npx remix build
 start:
+	docker compose up -d --wait
+	npx remix dev --manual
+
+build: FORCE
+	npx remix build
+start_built:
 	npx remix-serve ./build/index.js
 
 lint:
@@ -14,3 +16,6 @@ db_seed:
 	npx prisma db seed
 db_push:
 	npx prisma db push
+
+FORCE:
+.PHONY: FORCE

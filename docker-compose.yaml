@@ -12,6 +12,11 @@ services:
       - "127.0.0.1:5432:5432"
     volumes:
       - favoms_volume:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   favoms_volume:
