@@ -2,6 +2,9 @@ start:
 	docker compose up -d --wait
 	npx remix dev --manual
 
+routes:
+	npx remix routes --json | jq
+
 build: FORCE
 	npx remix build
 start_built:

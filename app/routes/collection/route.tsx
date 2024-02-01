@@ -33,8 +33,8 @@ const Item = ({ id }: { id: number }) => {
 const MylistNavigation = () => {
   const { mylists } = useLoaderData<typeof loader>();
   return (
-    <ScrollArea className="border border-gray-600 min-w-72">
-      <nav>
+    <ScrollArea className="border border-gray-600 h-full">
+      <nav className="h-full">
         <ul className="flex flex-col h-full">
           <NavLink
             className={({ isActive }) =>
@@ -58,8 +58,12 @@ const MylistNavigation = () => {
 export default function Page() {
   return (
     <div className="flex gap-4 w-full h-full p-4">
-      <MylistNavigation />
-      <Outlet />
+      <div className="w-2/12 h-full">
+        <MylistNavigation />
+      </div>
+      <div className="w-full">
+        <Outlet />
+      </div>
     </div>
   );
 }
