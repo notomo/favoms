@@ -2,15 +2,18 @@ import { upsertItems } from "~/persist/item";
 import { upsertMylist } from "~/persist/mylist";
 
 async function main() {
-  const itemsA = await upsertItems([
-    { where: { id: 1 }, data: { name: "A" } },
-    { where: { id: 2 }, data: { name: "B" } },
-    { where: { id: 3 }, data: { name: "C" } },
-    { where: { id: 4 }, data: { name: "D" } },
-    { where: { id: 5 }, data: { name: "E" } },
-  ]);
-  console.log({ itemsA });
+  const items = await upsertItems(
+    Array.from({ length: 40 }, (_, i) => {
+      const id = i + 1;
+      return {
+        where: { id },
+        data: { name: `name${id}` },
+      };
+    })
+  );
+  console.log({ items });
 
+  const itemsA = items.slice(undefined, 8);
   const mylistA = await upsertMylist(
     { id: 1 },
     {
@@ -22,16 +25,25 @@ async function main() {
   );
   console.log({ mylistA });
 
+  const itemsB = items.slice(8);
   const mylistB = await upsertMylist(
     { id: 2 },
     {
       name: "B",
       items: {
-        connect: itemsA.slice(2, 4),
+        connect: itemsB,
       },
     }
   );
   console.log({ mylistB });
+
+  const emptyMylist = await upsertMylist(
+    { id: 3 },
+    {
+      name: "C",
+    }
+  );
+  console.log({ emptyMylist });
 }
 
 main();
