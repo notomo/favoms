@@ -10,6 +10,12 @@ export async function getItem(id: number) {
   });
 }
 
+export async function listItems() {
+  return await prisma.item.findMany({
+    where: {},
+  });
+}
+
 export async function upsertItems(
   upserts: {
     where: UpsertWhere<Model>;

@@ -1,7 +1,11 @@
-export const mylistsRoute = "/mylist" as const;
+export const homeRoute = "/" as const;
+
+export const collectionRoute = "/collection" as const;
+
+export const allItemsRoute = `/collection/all` as const;
 
 export const mylistRoute = (mylistId: number) => {
-  return `/mylist/${mylistId}` as const;
+  return `/collection/mylist/${mylistId}` as const;
 };
 
 export const itemRoute = (itemId: number) => {

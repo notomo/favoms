@@ -19,6 +19,7 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "~/component/ui/navigation-menu";
+import { collectionRoute, homeRoute } from "./route_path";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -29,16 +30,16 @@ const Header = () => {
     <NavigationMenu className="w-full">
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link to="/">
+          <Link to={homeRoute}>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Home
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link to="/mylist">
+          <Link to={collectionRoute}>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Mylist
+              Collection
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
