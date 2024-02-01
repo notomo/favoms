@@ -57,8 +57,12 @@ export default function App() {
         <Links />
       </head>
       <body className="flex flex-col w-full h-full">
-        <Header />
-        <Outlet />
+        <div className="h-[40px]">
+          <Header />
+        </div>
+        <div className="h-[calc(100%-40px)]">
+          <Outlet />
+        </div>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
@@ -76,8 +80,11 @@ export function ErrorBoundary() {
         <Meta />
         <Links />
       </head>
-      <body className="flex w-full h-full">
-        <h1 className="text-4xl flex w-full flex-col items-center justify-center">
+      <body className="flex w-full h-screen">
+        <div className="h-[40px]">
+          <Header />
+        </div>
+        <h1 className="text-4xl flex w-full flex-col items-center justify-center h-[calc(100%-40px)]">
           {isRouteErrorResponse(error)
             ? `${error.status} ${error.statusText}`
             : error instanceof Error
