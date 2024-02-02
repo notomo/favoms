@@ -1,6 +1,8 @@
 start:
+	explorer.exe http://localhost:3000 || true
 	docker compose up -d --wait
-	npx remix dev --manual
+	pkill -KILL -f "npm exec remix de[v]" || true
+	npx remix dev
 
 routes:
 	npx remix routes --json | jq
