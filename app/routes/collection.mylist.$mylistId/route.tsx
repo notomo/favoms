@@ -1,22 +1,19 @@
 import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
-import { getMylist } from "~/persist/mylist";
+import { getMylistWith } from "~/persist/mylist";
 import { mylistItemRoute } from "~/route_path";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const mylistId = +params.mylistId!;
-  const mylist = await getMylist(mylistId);
+  const mylist = await getMylistWith(mylistId, { items: true });
   if (mylist === null) {
     throw new Response(null, {
       status: 404,
       statusText: "Not Found",
     });
   }
-  return json({
-    mylistId: mylist.id,
-    items: mylist.items,
-  });
+  return json(mylist);
 };
 
 const Item = ({ mylistId, itemId }: { mylistId: number; itemId: number }) => {
@@ -36,7 +33,7 @@ const Item = ({ mylistId, itemId }: { mylistId: number; itemId: number }) => {
 };
 
 export default function Page() {
-  const { mylistId, items } = useLoaderData<typeof loader>();
+  const { id: mylistId, items } = useLoaderData<typeof loader>();
   return (
     <div className="flex gap-4 w-full h-full">
       <ScrollArea className="h-full w-4/12 border border-gray-600">

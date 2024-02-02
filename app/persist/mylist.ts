@@ -1,15 +1,13 @@
-import { UpsertData, UpsertWhere, prisma } from "./prisma";
+import { Prisma, UpsertData, UpsertWhere, prisma } from "./prisma";
 
 type Model = typeof prisma.mylist;
 
-export async function getMylist(id: number) {
+export async function getMylistWith(id: number, include: Prisma.MylistInclude) {
   return await prisma.mylist.findUnique({
     where: {
       id: id,
     },
-    include: {
-      items: true,
-    },
+    include: include,
   });
 }
 
