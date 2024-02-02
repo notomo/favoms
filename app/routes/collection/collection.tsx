@@ -1,6 +1,6 @@
 import { Link, NavLink } from "@remix-run/react";
 
-export const ItemLink = ({
+export const CollectionLink = ({
   children,
   path,
 }: React.PropsWithChildren<{ path: string }>) => {
@@ -16,6 +16,6 @@ export const ItemLink = ({
   );
 };
 
-export const ItemRow = ({ itemId }: { itemId: number }) => {
-  return <li className="border-b p-4">item {itemId}</li>;
+export const CollectionRow = ({ children }: React.PropsWithChildren) => {
+  return <li className="border-b p-4">{children}</li>;
 };

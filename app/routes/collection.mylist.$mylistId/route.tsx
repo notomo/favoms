@@ -3,7 +3,7 @@ import { Outlet, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
 import { getMylistWith } from "~/persist/mylist";
 import { mylistItemRoute } from "~/route_path";
-import { Item, ItemNav } from "~/routes/collection.all/item";
+import { ItemRow, ItemLink } from "~/routes/collection.all/item";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const mylistId = +params.mylistId!;
@@ -17,22 +17,30 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   return json(mylist);
 };
 
-export default function Page() {
+const MylistItemRows = () => {
   const { id: mylistId, items } = useLoaderData<typeof loader>();
   return (
+    <ScrollArea className="h-full border border-gray-600">
+      <ul className="flex flex-col h-full">
+        {items.map(({ id }) => {
+          const path = mylistItemRoute(mylistId, id);
+          return (
+            <ItemLink path={path} key={id}>
+              <ItemRow itemId={id} />
+            </ItemLink>
+          );
+        })}
+      </ul>
+    </ScrollArea>
+  );
+};
+
+export default function Page() {
+  return (
     <div className="flex gap-4 w-full h-full">
-      <ScrollArea className="h-full w-4/12 border border-gray-600">
-        <ul className="flex flex-col h-full">
-          {items.map(({ id }) => {
-            const path = mylistItemRoute(mylistId, id);
-            return (
-              <ItemNav path={path} key={id}>
-                <Item itemId={id} />
-              </ItemNav>
-            );
-          })}
-        </ul>
-      </ScrollArea>
+      <div className="w-4/12">
+        <MylistItemRows />
+      </div>
       <div className="w-8/12">
         <Outlet />
       </div>
