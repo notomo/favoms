@@ -33,3 +33,9 @@ export async function createMylist() {
     data: { name: "New" },
   });
 }
+
+export async function deleteMylist(id: number) {
+  return await prisma.mylist.delete({
+    where: { id: id },
+  });
+}
