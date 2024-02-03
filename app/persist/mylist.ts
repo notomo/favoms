@@ -27,3 +27,9 @@ export async function upsertMylist(
     update: data,
   });
 }
+
+export async function createMylist() {
+  return await prisma.mylist.create({
+    data: { name: "New" },
+  });
+}

@@ -1,8 +1,8 @@
 start:
-	explorer.exe http://localhost:3000 || true
+	explorer.exe http://localhost:3000/collection || true
 	docker compose up -d --wait
 	pkill -KILL -f "npm exec remix de[v]" || true
-	npx remix dev
+	npx remix dev --manual
 
 routes:
 	npx remix routes --json | jq
@@ -29,6 +29,8 @@ db_push:
 	npx prisma db push
 db_reset:
 	npx prisma migrate reset --force
+db_migrate:
+	npx prisma migrate dev
 
 FORCE:
 .PHONY: FORCE

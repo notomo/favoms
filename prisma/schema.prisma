@@ -9,7 +9,7 @@ datasource db {
 
 model Mylist {
   id         Int          @id @default(autoincrement())
-  name       String       @unique
+  name       String
   items      Item[]
   mylistItem MylistItem[]
 }

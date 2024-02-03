@@ -1,8 +1,10 @@
-import { Outlet, json, useLoaderData } from "@remix-run/react";
+import { Form, Outlet, json, redirect, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
-import { listMylists } from "~/persist/mylist";
+import { createMylist, listMylists } from "~/persist/mylist";
 import { allItemsRoute, mylistRoute } from "~/route_path";
 import { CollectionLink, CollectionRow } from "./collection";
+import { Button } from "~/component/ui/button";
+import { Plus } from "lucide-react";
 
 export const loader = async () => {
   const mylists = await listMylists();
@@ -11,26 +13,40 @@ export const loader = async () => {
   });
 };
 
+export const action = async () => {
+  const mylist = await createMylist();
+  return redirect(mylistRoute(mylist.id));
+};
+
 const Collections = () => {
   const { mylists } = useLoaderData<typeof loader>();
   return (
-    <ScrollArea className="border border-gray-600 h-full">
-      <nav className="h-full">
-        <ul className="flex flex-col h-full">
-          <CollectionLink path={allItemsRoute}>
-            <CollectionRow>All</CollectionRow>
-          </CollectionLink>
+    <>
+      <div className="flex items-center justify-end border border-gray-600 h-[40px]">
+        <Form method="post">
+          <Button type="submit" variant="secondary">
+            <Plus />
+          </Button>
+        </Form>
+      </div>
+      <ScrollArea className="border border-gray-600 h-[calc(100%-40px)]">
+        <nav className="h-full">
+          <ul className="flex flex-col h-full">
+            <CollectionLink path={allItemsRoute}>
+              <CollectionRow>All</CollectionRow>
+            </CollectionLink>
 
-          {mylists.map(({ id }) => {
-            return (
-              <CollectionLink path={mylistRoute(id)} key={id}>
-                <CollectionRow>mylist {id}</CollectionRow>
-              </CollectionLink>
-            );
-          })}
-        </ul>
-      </nav>
-    </ScrollArea>
+            {mylists.map(({ id }) => {
+              return (
+                <CollectionLink path={mylistRoute(id)} key={id}>
+                  <CollectionRow>mylist {id}</CollectionRow>
+                </CollectionLink>
+              );
+            })}
+          </ul>
+        </nav>
+      </ScrollArea>
+    </>
   );
 };
 
