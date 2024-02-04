@@ -32,5 +32,18 @@ db_reset:
 db_migrate:
 	npx prisma migrate dev
 
+_deploy:
+	rm -rf ./deploy
+	mkdir -p ./deploy/public
+	cp -rf ./public/* ./deploy/public
+	mkdir -p ./deploy/build
+	cp -rf ./build/* ./deploy/build
+	mkdir -p ./deploy/prisma
+	cp -f ./prisma/schema.prisma ./deploy/prisma
+	cp -rf ./app.yaml package.json package-lock.json ./deploy
+
+deploy: _deploy build FORCE
+	cd deploy; gcloud --project favoms app deploy --stop-previous-version --quiet
+
 FORCE:
 .PHONY: FORCE
