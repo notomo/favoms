@@ -21,3 +21,11 @@ updates:
     assignees:
       - "notomo"
     open-pull-requests-limit: 10
+    groups:
+      "@remix-run":
+        patterns:
+          - "@remix-run/*"
+      prisma:
+        patterns:
+          - prisma
+          - "@prisma/client"
