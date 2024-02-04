@@ -30,18 +30,18 @@ const Header = () => {
     <NavigationMenu className="w-full">
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link to={homeRoute}>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+          <NavigationMenuLink asChild>
+            <Link to={homeRoute} className={navigationMenuTriggerStyle()}>
               Home
-            </NavigationMenuLink>
-          </Link>
+            </Link>
+          </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link to={collectionRoute}>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+          <NavigationMenuLink asChild>
+            <Link to={collectionRoute} className={navigationMenuTriggerStyle()}>
               Collection
-            </NavigationMenuLink>
-          </Link>
+            </Link>
+          </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

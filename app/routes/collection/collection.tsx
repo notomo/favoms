@@ -1,4 +1,4 @@
-import { Link, NavLink } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 
 export const CollectionLink = ({
   children,
@@ -11,7 +11,7 @@ export const CollectionLink = ({
       }
       to={path}
     >
-      <Link to={path}>{children}</Link>
+      {children}
     </NavLink>
   );
 };

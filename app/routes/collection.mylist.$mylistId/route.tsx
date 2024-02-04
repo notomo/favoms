@@ -42,7 +42,7 @@ export const action = async ({ params }: ActionFunctionArgs) => {
 const MylistDeleteDialog = () => {
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button variant="secondary">
           <Trash />
         </Button>
