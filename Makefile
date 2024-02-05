@@ -32,7 +32,7 @@ db_reset:
 db_migrate:
 	npx prisma migrate dev
 
-_deploy:
+_deploy: build
 	rm -rf ./deploy
 	mkdir -p ./deploy/public
 	cp -rf ./public/* ./deploy/public
@@ -42,8 +42,12 @@ _deploy:
 	cp -f ./prisma/schema.prisma ./deploy/prisma
 	cp -rf ./app.yaml ./app_secret.yaml package.json package-lock.json ./deploy
 
-deploy: _deploy build FORCE
+deploy: _deploy FORCE
 	cd deploy; gcloud --project favoms app deploy --stop-previous-version --quiet
+
+PROJECT:=favoms
+setup_terraform_backend:
+	gsutil mb -b on -c standard -p ${PROJECT} -l us-west1 gs://favoms-tfstate
 
 FORCE:
 .PHONY: FORCE
