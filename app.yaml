@@ -4,6 +4,10 @@ instance_class: F1
 
 env_variables:
   PORT: 8080
+  NODE_ENV: production
+
+includes:
+  - app_secret.yaml
 
 handlers:
   - url: /build
