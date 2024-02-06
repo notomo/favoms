@@ -44,7 +44,7 @@ const MylistDeleteDialog = () => {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="secondary">
-          <Trash />
+          <Trash className="h-4 w-4" />
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -67,10 +67,11 @@ const MylistDeleteDialog = () => {
 };
 
 const MylistItemRows = () => {
-  const { id: mylistId, items } = useLoaderData<typeof loader>();
+  const { id: mylistId, name, items } = useLoaderData<typeof loader>();
   return (
-    <>
-      <div className="flex items-center justify-end border border-gray-600 h-[40px]">
+    <div className="h-full flex flex-col gap-2">
+      <div className="flex items-center justify-between h-[40px]">
+        <div className="flex items-center px-4 text-xl">{name}</div>
         <MylistDeleteDialog />
       </div>
       <ScrollArea className="h-[calc(100%-40px)] border border-gray-600">
@@ -85,7 +86,7 @@ const MylistItemRows = () => {
           })}
         </ul>
       </ScrollArea>
-    </>
+    </div>
   );
 };
 
