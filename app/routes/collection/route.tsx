@@ -36,10 +36,10 @@ const Collections = () => {
               <CollectionRow>All</CollectionRow>
             </CollectionLink>
 
-            {mylists.map(({ id }) => {
+            {mylists.map(({ id, name }) => {
               return (
                 <CollectionLink path={mylistRoute(id)} key={id}>
-                  <CollectionRow>mylist {id}</CollectionRow>
+                  <CollectionRow>{name}</CollectionRow>
                 </CollectionLink>
               );
             })}

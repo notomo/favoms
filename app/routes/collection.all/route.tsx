@@ -17,11 +17,11 @@ const ItemRows = () => {
   return (
     <ScrollArea className="h-full border border-gray-600">
       <ul className="flex flex-col h-full">
-        {items.map(({ id }) => {
+        {items.map(({ id, name }) => {
           const path = collectionItemRoute(id);
           return (
             <ItemLink path={path} key={id}>
-              <ItemRow itemId={id} />
+              <ItemRow>{name}</ItemRow>
             </ItemLink>
           );
         })}

@@ -32,6 +32,6 @@ export const ItemLink = ({
   );
 };
 
-export const ItemRow = ({ itemId }: { itemId: number }) => {
-  return <li className="border-b p-4">item {itemId}</li>;
+export const ItemRow = ({ children }: React.PropsWithChildren) => {
+  return <li className="border-b p-4">{children}</li>;
 };
