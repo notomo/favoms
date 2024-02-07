@@ -17,6 +17,13 @@ export async function listMylists() {
   });
 }
 
+export async function updateMylist(id: number, data: UpsertData<Model>) {
+  return await prisma.mylist.update({
+    where: { id: id },
+    data,
+  });
+}
+
 export async function upsertMylist(
   where: UpsertWhere<Model>,
   data: UpsertData<Model>

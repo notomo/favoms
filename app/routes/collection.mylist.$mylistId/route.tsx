@@ -5,7 +5,8 @@ import {
   redirect,
 } from "@remix-run/node";
 import { Form, Outlet, useLoaderData } from "@remix-run/react";
-import { Trash } from "lucide-react";
+import { Check, Pencil, Trash } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Button } from "~/component/ui/button";
 import {
   Dialog,
@@ -16,6 +17,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/component/ui/dialog";
+import { Input } from "~/component/ui/input";
 import { ScrollArea } from "~/component/ui/scroll-area";
 import { deleteMylist, getMylistWith } from "~/persist/mylist";
 import { collectionRoute, mylistItemRoute } from "~/route_path";
@@ -66,12 +68,54 @@ const MylistDeleteDialog = () => {
   );
 };
 
+const EditableMylistName = ({
+  mylistId,
+  name,
+}: {
+  mylistId: number;
+  name: string;
+}) => {
+  const [editable, setEditable] = useState(false);
+
+  useEffect(() => {
+    setEditable(false);
+  }, [mylistId]);
+
+  if (editable === false) {
+    return (
+      <div className="flex w-full items-center justify-between px-4 text-xl gap-2">
+        {name}
+        <Button variant="secondary" onClick={() => setEditable(true)}>
+          <Pencil className="h-4 w-4" />
+        </Button>
+      </div>
+    );
+  }
+
+  return (
+    <Form
+      action="edit_name"
+      method="post"
+      className="flex w-full items-center justify-between px-4 text-xl gap-2"
+      onSubmit={() => {
+        setEditable(false);
+      }}
+    >
+      <Input className="text-xl" type="text" name="name" defaultValue={name} />
+      <Button variant="secondary" type="submit">
+        <Check className="h-4 w-4" />
+      </Button>
+    </Form>
+  );
+};
+
 const MylistItemRows = () => {
   const { id: mylistId, name, items } = useLoaderData<typeof loader>();
+
   return (
     <div className="h-full flex flex-col gap-2">
       <div className="flex items-center justify-between h-[40px]">
-        <div className="flex items-center px-4 text-xl">{name}</div>
+        <EditableMylistName mylistId={mylistId} name={name} />
         <MylistDeleteDialog />
       </div>
       <ScrollArea className="h-[calc(100%-40px)] border border-gray-600">
