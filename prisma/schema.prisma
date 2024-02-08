@@ -8,24 +8,21 @@ datasource db {
 }
 
 model Mylist {
-  id         Int          @id @default(autoincrement())
-  name       String
-  items      Item[]
-  mylistItem MylistItem[]
+  id    Int          @id @default(autoincrement())
+  name  String
+  items Item[]
+  order MylistOrder? /// actualy one to one
+}
+
+model MylistOrder {
+  id       Int    @id @default(autoincrement())
+  position Int    @unique @default(autoincrement())
+  mylist   Mylist @relation(fields: [mylistId], references: [id], onDelete: Cascade)
+  mylistId Int    @unique
 }
 
 model Item {
-  id         Int          @id @default(autoincrement())
-  name       String
-  mylists    Mylist[]
-  mylistItem MylistItem[]
-}
-
-model MylistItem {
-  mylist   Mylist @relation(fields: [mylistId], references: [id])
-  mylistId Int
-  item     Item   @relation(fields: [itemId], references: [id])
-  itemId   Int
-
-  @@id([mylistId, itemId])
+  id      Int      @id @default(autoincrement())
+  name    String
+  mylists Mylist[]
 }

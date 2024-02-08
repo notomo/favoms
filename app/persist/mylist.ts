@@ -12,9 +12,19 @@ export async function getMylistWith(id: number, include: Prisma.MylistInclude) {
 }
 
 export async function listMylists() {
-  return await prisma.mylist.findMany({
+  const mylistOrders = await prisma.mylistOrder.findMany({
     where: {},
+    orderBy: { position: "asc" },
+    select: {
+      mylist: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
   });
+  return mylistOrders.map((e) => e.mylist);
 }
 
 export async function updateMylist(id: number, data: UpsertData<Model>) {
@@ -26,18 +36,48 @@ export async function updateMylist(id: number, data: UpsertData<Model>) {
 
 export async function upsertMylist(
   where: UpsertWhere<Model>,
-  data: UpsertData<Model>
+  data: Pick<UpsertData<Model>, "name" | "items">
 ) {
-  return await prisma.mylist.upsert({
-    where,
-    create: data,
-    update: data,
+  return await prisma.$transaction(async (tx) => {
+    const mylist = await tx.mylist.upsert({
+      where,
+      create: data,
+      update: data,
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+    await tx.mylistOrder.create({
+      data: {
+        mylist: {
+          connect: mylist,
+        },
+      },
+    });
+    return mylist;
   });
 }
 
 export async function createMylist() {
-  return await prisma.mylist.create({
-    data: { name: "New" },
+  return await prisma.$transaction(async (tx) => {
+    const mylist = await tx.mylist.create({
+      data: {
+        name: "New",
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+    await tx.mylistOrder.create({
+      data: {
+        mylist: {
+          connect: mylist,
+        },
+      },
+    });
+    return mylist;
   });
 }
 

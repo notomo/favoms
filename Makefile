@@ -23,14 +23,18 @@ lint:
 typecheck:
 	npx tsc --skipLibCheck
 
+prisma_generate:
+	npx prisma generate
 db_seed:
 	npx prisma db seed
 db_push:
 	npx prisma db push
-db_reset:
+db_migrate_reset:
 	npx prisma migrate reset --force
-db_migrate:
+db_migrate_dev:
 	npx prisma migrate dev
+db_migrate_status:
+	npx prisma migrate status
 
 _deploy: build
 	rm -rf ./deploy
