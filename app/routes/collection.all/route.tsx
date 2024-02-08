@@ -4,6 +4,7 @@ import { ScrollArea } from "~/component/ui/scroll-area";
 import { listItems } from "~/persist/item";
 import { collectionItemRoute } from "~/route_path";
 import { ItemRow, ItemLink } from "./item";
+import { DeleteMylistButton } from "~/routes/collection.mylist.$mylistId/delete_mylist_button";
 
 export const loader = async () => {
   const items = await listItems();
@@ -18,6 +19,7 @@ const ItemRows = () => {
     <div className="h-full flex flex-col gap-2">
       <div className="flex items-center justify-between h-[40px]">
         <div className="flex items-center px-4 text-xl">All</div>
+        <DeleteMylistButton disabled={true} />
       </div>
       <ScrollArea className="h-[calc(100%-40px)] border border-gray-600">
         <ul className="flex flex-col h-full">

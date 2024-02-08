@@ -11,11 +11,11 @@ import {
   DialogTrigger,
 } from "~/component/ui/dialog";
 
-export const DeleteMylistButton = () => {
+export const DeleteMylistButton = ({ disabled }: { disabled: boolean }) => {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="secondary">
+      <DialogTrigger disabled={disabled} asChild>
+        <Button disabled={disabled} variant="secondary">
           <Trash className="h-4 w-4" />
         </Button>
       </DialogTrigger>

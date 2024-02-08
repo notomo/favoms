@@ -22,7 +22,7 @@ const CreateMylistButton = () => {
   return (
     <Form method="post">
       <Button type="submit" variant="secondary">
-        <Plus />
+        <Plus className="h-4 w-4" />
       </Button>
     </Form>
   );
@@ -31,8 +31,8 @@ const CreateMylistButton = () => {
 const Collections = () => {
   const { mylists } = useLoaderData<typeof loader>();
   return (
-    <>
-      <div className="flex items-center justify-end border border-gray-600 h-[40px]">
+    <div className="h-full flex flex-col gap-2">
+      <div className="flex items-center justify-start h-[40px]">
         <CreateMylistButton />
       </div>
       <ScrollArea className="border border-gray-600 h-[calc(100%-40px)]">
@@ -52,7 +52,7 @@ const Collections = () => {
           </ul>
         </nav>
       </ScrollArea>
-    </>
+    </div>
   );
 };
 

@@ -26,7 +26,7 @@ const MylistItemRows = () => {
     <div className="h-full flex flex-col gap-2">
       <div className="flex items-center justify-between h-[40px]">
         <EditableMylistName mylistId={mylistId} name={name} />
-        <DeleteMylistButton />
+        <DeleteMylistButton disabled={false} />
       </div>
       <ScrollArea className="h-[calc(100%-40px)] border border-gray-600">
         <ul className="flex flex-col h-full">
