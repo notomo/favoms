@@ -18,16 +18,22 @@ export const action = async () => {
   return redirect(mylistRoute(mylist.id));
 };
 
+const CreateMylistButton = () => {
+  return (
+    <Form method="post">
+      <Button type="submit" variant="secondary">
+        <Plus />
+      </Button>
+    </Form>
+  );
+};
+
 const Collections = () => {
   const { mylists } = useLoaderData<typeof loader>();
   return (
     <>
       <div className="flex items-center justify-end border border-gray-600 h-[40px]">
-        <Form method="post">
-          <Button type="submit" variant="secondary">
-            <Plus />
-          </Button>
-        </Form>
+        <CreateMylistButton />
       </div>
       <ScrollArea className="border border-gray-600 h-[calc(100%-40px)]">
         <nav className="h-full">
