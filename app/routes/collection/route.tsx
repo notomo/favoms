@@ -1,12 +1,18 @@
 import { Form, Outlet, json, redirect, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
 import { createMylist, listMylists } from "~/persist/mylist";
-import { allItemsRoute, mylistRoute } from "~/route_path";
+import { allItemsRoute, collectionRoute, mylistRoute } from "~/route_path";
 import { CollectionLink, CollectionRow } from "./collection";
 import { Button } from "~/component/ui/button";
 import { Plus } from "lucide-react";
+import { LoaderFunctionArgs } from "@remix-run/node";
 
-export const loader = async () => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const url = new URL(request.url);
+  if (url.pathname === collectionRoute) {
+    return redirect(allItemsRoute);
+  }
+
   const mylists = await listMylists();
   return json({
     mylists,

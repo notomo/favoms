@@ -19,7 +19,7 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "~/component/ui/navigation-menu";
-import { collectionRoute, homeRoute } from "./route_path";
+import { allItemsRoute, homeRoute } from "./route_path";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -38,7 +38,7 @@ const Header = () => {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>
-            <Link to={collectionRoute} className={navigationMenuTriggerStyle()}>
+            <Link to={allItemsRoute} className={navigationMenuTriggerStyle()}>
               Collection
             </Link>
           </NavigationMenuLink>

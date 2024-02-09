@@ -1,6 +1,6 @@
 import type { MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
-import { collectionRoute } from "~/route_path";
+import { allItemsRoute } from "~/route_path";
 
 export const meta: MetaFunction = () => {
   return [
@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center text-3xl font-bold">
-      <Link to={collectionRoute}>favoms</Link>
+      <Link to={allItemsRoute}>favoms</Link>
     </div>
   );
 }
