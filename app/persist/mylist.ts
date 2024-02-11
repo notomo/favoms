@@ -59,11 +59,11 @@ export async function upsertMylist(
   });
 }
 
-export async function createMylist() {
+export async function createMylist(name: string) {
   return await prisma.$transaction(async (tx) => {
     const mylist = await tx.mylist.create({
       data: {
-        name: "New",
+        name: name,
       },
       select: {
         id: true,

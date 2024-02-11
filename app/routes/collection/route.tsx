@@ -1,11 +1,19 @@
-import { Form, Outlet, json, redirect, useLoaderData } from "@remix-run/react";
+import { Outlet, json, redirect, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
 import { createMylist, listMylists } from "~/persist/mylist";
 import { allItemsRoute, collectionRoute, mylistRoute } from "~/route_path";
 import { CollectionLink, CollectionRow } from "./collection";
+import { CreateMylistDialog } from "./create_mylist_dialog";
 import { Button } from "~/component/ui/button";
-import { Plus } from "lucide-react";
-import { LoaderFunctionArgs } from "@remix-run/node";
+import { MoreHorizontal } from "lucide-react";
+import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/component/ui/dropdown-menu";
+import { useState } from "react";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
@@ -19,18 +27,33 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   });
 };
 
-export const action = async () => {
-  const mylist = await createMylist();
+export const action = async ({ request }: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const mylistName = formData.get("name")?.toString();
+  const mylist = await createMylist(mylistName!);
   return redirect(mylistRoute(mylist.id));
 };
 
-const CreateMylistButton = () => {
+const CollectionsDropDownMenu = () => {
+  const [isOpened, setIsOpened] = useState(false);
+
   return (
-    <Form method="post">
-      <Button type="submit" variant="secondary">
-        <Plus className="h-4 w-4" />
-      </Button>
-    </Form>
+    <DropdownMenu open={isOpened} onOpenChange={(o) => setIsOpened(o)}>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="icon">
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="border border-gray-600">
+        <DropdownMenuItem
+          onSelect={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <CreateMylistDialog onCreated={() => setIsOpened(false)} />
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 
@@ -38,8 +61,8 @@ const Collections = () => {
   const { mylists } = useLoaderData<typeof loader>();
   return (
     <div className="h-full flex flex-col gap-2">
-      <div className="flex items-center justify-start h-[40px]">
-        <CreateMylistButton />
+      <div className="flex items-center justify-end h-[40px]">
+        <CollectionsDropDownMenu />
       </div>
       <ScrollArea className="border border-gray-600 h-[calc(100%-40px)]">
         <nav className="h-full">
