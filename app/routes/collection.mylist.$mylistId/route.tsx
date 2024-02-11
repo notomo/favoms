@@ -3,7 +3,7 @@ import { Outlet, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
 import { getMylistWith } from "~/persist/mylist";
 import { mylistItemRoute } from "~/route_path";
-import { ItemRow, ItemLink } from "~/routes/collection.all/item";
+import { ItemLink } from "~/routes/collection.all/item_link";
 import { DeleteMylistButton } from "./delete_mylist_button";
 import { EditableMylistName } from "./editable_mylist_name";
 
@@ -34,7 +34,7 @@ const MylistItemRows = () => {
             const path = mylistItemRoute(mylistId, id);
             return (
               <ItemLink path={path} key={id}>
-                <ItemRow>{name}</ItemRow>
+                {name}
               </ItemLink>
             );
           })}

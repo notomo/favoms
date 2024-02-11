@@ -3,7 +3,7 @@ import { Outlet, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
 import { listItems } from "~/persist/item";
 import { collectionItemRoute } from "~/route_path";
-import { ItemRow, ItemLink } from "./item";
+import { ItemLink } from "./item_link";
 import { DeleteMylistButton } from "~/routes/collection.mylist.$mylistId/delete_mylist_button";
 
 export const loader = async () => {
@@ -27,7 +27,7 @@ const ItemRows = () => {
             const path = collectionItemRoute(id);
             return (
               <ItemLink path={path} key={id}>
-                <ItemRow>{name}</ItemRow>
+                {name}
               </ItemLink>
             );
           })}
