@@ -18,20 +18,21 @@ export const CollectionLink = ({
       to={path}
     >
       {({ isActive }) => {
+        const row = <CollectionRow>{children}</CollectionRow>;
         if (isActive) {
           return (
             <>
               <div ref={scrollTarget}></div>
-              {children}
+              {row}
             </>
           );
         }
-        return children;
+        return row;
       }}
     </NavLink>
   );
 };
 
-export const CollectionRow = ({ children }: React.PropsWithChildren) => {
+const CollectionRow = ({ children }: React.PropsWithChildren) => {
   return <li className="border-b p-4">{children}</li>;
 };

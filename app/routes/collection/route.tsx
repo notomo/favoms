@@ -1,19 +1,13 @@
 import { Outlet, json, redirect, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
-import { createMylist, listMylists } from "~/persist/mylist";
+import { listMylists } from "~/persist/mylist";
 import { allItemsRoute, collectionRoute, mylistRoute } from "~/route_path";
-import { CollectionLink, CollectionRow } from "./collection";
-import { CreateMylistDialog } from "./create_mylist_dialog";
-import { Button } from "~/component/ui/button";
-import { MoreHorizontal } from "lucide-react";
-import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "~/component/ui/dropdown-menu";
-import { useState } from "react";
+import { CollectionLink } from "./collection_link";
+import { LoaderFunctionArgs } from "@remix-run/node";
+import { CollectionsDropDownMenu } from "./collections_drop_down_menu";
+import { createMylistAction } from "~/routes/collection/create_mylist_dialog";
+
+export const action = createMylistAction;
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
@@ -27,36 +21,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   });
 };
 
-export const action = async ({ request }: ActionFunctionArgs) => {
-  const formData = await request.formData();
-  const mylistName = formData.get("name")?.toString();
-  const mylist = await createMylist(mylistName!);
-  return redirect(mylistRoute(mylist.id));
-};
-
-const CollectionsDropDownMenu = () => {
-  const [isOpened, setIsOpened] = useState(false);
-
-  return (
-    <DropdownMenu open={isOpened} onOpenChange={(o) => setIsOpened(o)}>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="border border-gray-600">
-        <DropdownMenuItem
-          onSelect={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <CreateMylistDialog onCreated={() => setIsOpened(false)} />
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-};
-
 const Collections = () => {
   const { mylists } = useLoaderData<typeof loader>();
   return (
@@ -67,14 +31,12 @@ const Collections = () => {
       <ScrollArea className="border border-gray-600 h-[calc(100%-40px)]">
         <nav className="h-full">
           <ul className="flex flex-col h-full">
-            <CollectionLink path={allItemsRoute}>
-              <CollectionRow>All</CollectionRow>
-            </CollectionLink>
+            <CollectionLink path={allItemsRoute}>All</CollectionLink>
 
             {mylists.map(({ id, name }) => {
               return (
                 <CollectionLink path={mylistRoute(id)} key={id}>
-                  <CollectionRow>{name}</CollectionRow>
+                  {name}
                 </CollectionLink>
               );
             })}

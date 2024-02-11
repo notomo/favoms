@@ -11,6 +11,16 @@ import {
 } from "~/component/ui/dialog";
 import { Input } from "~/component/ui/input";
 import { useState } from "react";
+import { ActionFunctionArgs, redirect } from "@remix-run/node";
+import { mylistRoute } from "~/route_path";
+import { createMylist } from "~/persist/mylist";
+
+export const createMylistAction = async ({ request }: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const mylistName = formData.get("name")?.toString();
+  const mylist = await createMylist(mylistName!);
+  return redirect(mylistRoute(mylist.id));
+};
 
 export const CreateMylistDialog = ({
   onCreated,
