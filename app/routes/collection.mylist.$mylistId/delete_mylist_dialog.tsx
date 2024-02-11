@@ -1,5 +1,4 @@
 import { Form } from "@remix-run/react";
-import { useState } from "react";
 import { Button } from "~/component/ui/button";
 import {
   Dialog,
@@ -8,18 +7,17 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "~/component/ui/dialog";
 
 export const DeleteMylistDialog = ({
-  onDeleted,
+  isOpened,
+  setIsOpened,
 }: {
-  onDeleted: () => void;
+  isOpened: boolean;
+  setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [isOpened, setIsOpened] = useState(false);
   return (
     <Dialog open={isOpened} onOpenChange={(o) => setIsOpened(o)}>
-      <DialogTrigger className="flex items-start w-full">Delete</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Confirm</DialogTitle>
@@ -33,7 +31,6 @@ export const DeleteMylistDialog = ({
             action="destroy"
             onSubmit={() => {
               setIsOpened(false);
-              onDeleted();
             }}
           >
             <Button type="submit" variant="destructive">

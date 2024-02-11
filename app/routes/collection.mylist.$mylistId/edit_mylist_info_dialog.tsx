@@ -7,31 +7,26 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "~/component/ui/dialog";
 import { Input } from "~/component/ui/input";
-import { useState } from "react";
 
 export const EditMylistInfoDialog = ({
   mylistName,
-  onEdited,
+  isOpened,
+  setIsOpened,
 }: {
   mylistName: string;
-  onEdited: () => void;
+  isOpened: boolean;
+  setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [isOpened, setIsOpened] = useState(false);
   return (
     <Dialog open={isOpened} onOpenChange={(o) => setIsOpened(o)}>
-      <DialogTrigger className="flex items-start w-full">
-        Edit info
-      </DialogTrigger>
       <DialogContent>
         <Form
           method="post"
           action="edit_name"
           onSubmit={() => {
             setIsOpened(false);
-            onEdited();
           }}
           className="flex flex-col gap-4"
         >

@@ -13,36 +13,49 @@ import { DeleteMylistDialog } from "~/routes/collection.mylist.$mylistId/delete_
 
 export const MylistDropDownMenu = ({ mylistName }: { mylistName: string }) => {
   const [isOpened, setIsOpened] = useState(false);
+  const [isEditDialogOpened, setEditDialogIsOpened] = useState(false);
+  const [isDeleteDialogOpened, setDeleteDialogIsOpened] = useState(false);
 
   return (
-    <DropdownMenu open={isOpened} onOpenChange={(o) => setIsOpened(o)}>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="border border-gray-600" align="start">
-        <DropdownMenuItem
-          onSelect={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <EditMylistInfoDialog
-            mylistName={mylistName}
-            onEdited={() => setIsOpened(false)}
-          />
-        </DropdownMenuItem>
+    <>
+      <EditMylistInfoDialog
+        mylistName={mylistName}
+        isOpened={isEditDialogOpened}
+        setIsOpened={setEditDialogIsOpened}
+      />
+      <DeleteMylistDialog
+        isOpened={isDeleteDialogOpened}
+        setIsOpened={setDeleteDialogIsOpened}
+      />
 
-        <DropdownMenuSeparator />
+      <DropdownMenu open={isOpened} onOpenChange={(o) => setIsOpened(o)}>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" size="icon">
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="border border-gray-600" align="start">
+          <DropdownMenuItem
+            onClick={() => {
+              setEditDialogIsOpened(true);
+            }}
+            className="cursor-pointer"
+          >
+            Edit info
+          </DropdownMenuItem>
 
-        <DropdownMenuItem
-          onSelect={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <DeleteMylistDialog onDeleted={() => setIsOpened(false)} />
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <DropdownMenuSeparator />
+
+          <DropdownMenuItem
+            onClick={() => {
+              setDeleteDialogIsOpened(true);
+            }}
+            className="cursor-pointer"
+          >
+            Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 };

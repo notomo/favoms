@@ -7,10 +7,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "~/component/ui/dialog";
 import { Input } from "~/component/ui/input";
-import { useState } from "react";
 import { ActionFunctionArgs, redirect } from "@remix-run/node";
 import { mylistRoute } from "~/route_path";
 import { createMylist } from "~/persist/mylist";
@@ -23,36 +21,37 @@ export const createMylistAction = async ({ request }: ActionFunctionArgs) => {
 };
 
 export const CreateMylistDialog = ({
-  onCreated,
+  isOpened,
+  setIsOpened,
 }: {
-  onCreated: () => void;
+  isOpened: boolean;
+  setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [isOpened, setIsOpened] = useState(false);
   return (
     <Dialog open={isOpened} onOpenChange={(o) => setIsOpened(o)}>
-      <DialogTrigger className="flex items-start w-full">New</DialogTrigger>
       <DialogContent>
         <Form
           method="post"
           onSubmit={() => {
             setIsOpened(false);
-            onCreated();
           }}
           className="flex flex-col gap-4"
         >
-          <DialogHeader className="flex flex-col gap-2">
+          <DialogHeader>
             <DialogTitle>New mylist</DialogTitle>
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                name="name"
-                required
-                type="text"
-                defaultValue="New"
-              />
-            </div>
           </DialogHeader>
+
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="name">Name</Label>
+            <Input
+              id="name"
+              name="name"
+              required
+              type="text"
+              defaultValue="New"
+            />
+          </div>
+
           <DialogFooter>
             <Button type="submit">Save</Button>
           </DialogFooter>

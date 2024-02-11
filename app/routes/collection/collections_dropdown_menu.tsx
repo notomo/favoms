@@ -11,23 +11,32 @@ import { useState } from "react";
 
 export const CollectionsDropDownMenu = () => {
   const [isOpened, setIsOpened] = useState(false);
+  const [isCreateDialogOpened, setCreateDialogIsOpened] = useState(false);
 
   return (
-    <DropdownMenu open={isOpened} onOpenChange={(o) => setIsOpened(o)}>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="border border-gray-600" align="start">
-        <DropdownMenuItem
-          onSelect={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <CreateMylistDialog onCreated={() => setIsOpened(false)} />
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      <CreateMylistDialog
+        isOpened={isCreateDialogOpened}
+        setIsOpened={setCreateDialogIsOpened}
+      />
+
+      <DropdownMenu open={isOpened} onOpenChange={(o) => setIsOpened(o)}>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" size="icon">
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="border border-gray-600" align="start">
+          <DropdownMenuItem
+            onClick={() => {
+              setCreateDialogIsOpened(true);
+            }}
+            className="cursor-pointer"
+          >
+            New
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 };
