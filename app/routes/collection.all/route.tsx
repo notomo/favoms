@@ -4,7 +4,8 @@ import { ScrollArea } from "~/component/ui/scroll-area";
 import { listItems } from "~/persist/item";
 import { collectionItemRoute } from "~/route_path";
 import { ItemLink } from "./item_link";
-import { DeleteMylistButton } from "~/routes/collection.mylist.$mylistId/delete_mylist_button";
+import { Button } from "~/component/ui/button";
+import { MoreHorizontal } from "lucide-react";
 
 export const loader = async () => {
   const items = await listItems();
@@ -19,7 +20,9 @@ const ItemRows = () => {
     <div className="h-full flex flex-col gap-2">
       <div className="flex items-center justify-between h-[40px]">
         <div className="flex items-center px-4 text-xl">All</div>
-        <DeleteMylistButton disabled={true} />
+        <Button disabled variant="ghost" size="icon">
+          <MoreHorizontal className="h-4 w-4" />
+        </Button>
       </div>
       <ScrollArea className="h-[calc(100%-40px)] border border-gray-600">
         <ul className="flex flex-col h-full">

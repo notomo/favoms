@@ -1,5 +1,5 @@
 import { Form } from "@remix-run/react";
-import { Trash } from "lucide-react";
+import { useState } from "react";
 import { Button } from "~/component/ui/button";
 import {
   Dialog,
@@ -11,14 +11,15 @@ import {
   DialogTrigger,
 } from "~/component/ui/dialog";
 
-export const DeleteMylistButton = ({ disabled }: { disabled: boolean }) => {
+export const DeleteMylistDialog = ({
+  onDeleted,
+}: {
+  onDeleted: () => void;
+}) => {
+  const [isOpened, setIsOpened] = useState(false);
   return (
-    <Dialog>
-      <DialogTrigger disabled={disabled} asChild>
-        <Button disabled={disabled} variant="secondary">
-          <Trash className="h-4 w-4" />
-        </Button>
-      </DialogTrigger>
+    <Dialog open={isOpened} onOpenChange={(o) => setIsOpened(o)}>
+      <DialogTrigger className="flex items-start w-full">Delete</DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Confirm</DialogTitle>
@@ -27,7 +28,14 @@ export const DeleteMylistButton = ({ disabled }: { disabled: boolean }) => {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Form method="delete" action="destroy">
+          <Form
+            method="delete"
+            action="destroy"
+            onSubmit={() => {
+              setIsOpened(false);
+              onDeleted();
+            }}
+          >
             <Button type="submit" variant="destructive">
               Delete
             </Button>

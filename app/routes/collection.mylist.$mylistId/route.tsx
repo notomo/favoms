@@ -4,8 +4,7 @@ import { ScrollArea } from "~/component/ui/scroll-area";
 import { getMylistWith } from "~/persist/mylist";
 import { mylistItemRoute } from "~/route_path";
 import { ItemLink } from "~/routes/collection.all/item_link";
-import { DeleteMylistButton } from "./delete_mylist_button";
-import { EditableMylistName } from "./editable_mylist_name";
+import { MylistDropDownMenu } from "~/routes/collection.mylist.$mylistId/mylist_dropdown_menu";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const mylistId = +params.mylistId!;
@@ -20,13 +19,17 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 };
 
 const MylistItemRows = () => {
-  const { id: mylistId, name, items } = useLoaderData<typeof loader>();
+  const {
+    id: mylistId,
+    name: mylistName,
+    items,
+  } = useLoaderData<typeof loader>();
 
   return (
     <div className="h-full flex flex-col gap-2">
       <div className="flex items-center justify-between h-[40px]">
-        <EditableMylistName mylistId={mylistId} name={name} />
-        <DeleteMylistButton disabled={false} />
+        <div className="px-4 text-xl">{mylistName}</div>
+        <MylistDropDownMenu mylistName={mylistName} />
       </div>
       <ScrollArea className="h-[calc(100%-40px)] border border-gray-600">
         <ul className="flex flex-col h-full">
