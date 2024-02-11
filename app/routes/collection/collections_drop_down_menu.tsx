@@ -19,7 +19,7 @@ export const CollectionsDropDownMenu = () => {
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="border border-gray-600">
+      <DropdownMenuContent className="border border-gray-600" align="start">
         <DropdownMenuItem
           onSelect={(e) => {
             e.preventDefault();
