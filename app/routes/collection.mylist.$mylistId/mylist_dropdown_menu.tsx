@@ -31,16 +31,11 @@ const OneDialog = ({
   }
 };
 
-const useDialog = () => {
+export const MylistDropDownMenu = ({ mylistName }: { mylistName: string }) => {
   const [dialogType, setDialogType] = useState<DialogType>(undefined);
   const openEditDialog = () => setDialogType("edit");
   const openDeleteDialog = () => setDialogType("delete");
   const close = () => setDialogType(undefined);
-  return [dialogType, openEditDialog, openDeleteDialog, close] as const;
-};
-
-export const MylistDropDownMenu = ({ mylistName }: { mylistName: string }) => {
-  const [dialogType, openEditDialog, openDeleteDialog, close] = useDialog();
 
   return (
     <>
