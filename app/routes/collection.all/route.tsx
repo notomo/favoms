@@ -16,15 +16,17 @@ export const loader = async () => {
 
 const ItemRows = () => {
   const { items } = useLoaderData<typeof loader>();
+
   return (
-    <div className="h-full flex flex-col gap-2">
-      <div className="flex items-center justify-between h-[40px]">
-        <div className="flex items-center px-4 text-xl">All</div>
+    <div className="w-full h-full grid grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
+      <div className="flex items-center justify-between">
+        <div className="px-4 text-xl">All</div>
         <Button disabled variant="ghost" size="icon">
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </div>
-      <ScrollArea className="h-[calc(100%-40px)] border border-gray-600">
+
+      <ScrollArea className="border border-gray-600">
         <ul className="flex flex-col h-full">
           {items.map(({ id, name }) => {
             const path = collectionItemRoute(id);
@@ -42,13 +44,9 @@ const ItemRows = () => {
 
 export default function Page() {
   return (
-    <div className="flex gap-4 w-full h-full">
-      <div className="w-4/12 h-full">
-        <ItemRows />
-      </div>
-      <div className="w-8/12">
-        <Outlet />
-      </div>
+    <div className="w-full h-full grid grid-cols-2 grid-rows-[100%] gap-x-4">
+      <ItemRows />
+      <Outlet />
     </div>
   );
 }

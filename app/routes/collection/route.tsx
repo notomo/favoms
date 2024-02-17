@@ -24,11 +24,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 const Collections = () => {
   const { mylists } = useLoaderData<typeof loader>();
   return (
-    <div className="h-full flex flex-col gap-2">
-      <div className="flex items-center justify-end h-[40px]">
-        <CollectionsDropDownMenu />
-      </div>
-      <ScrollArea className="border border-gray-600 h-[calc(100%-40px)]">
+    <div className="w-full h-full grid grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
+      <CollectionsDropDownMenu className="justify-self-end" />
+
+      <ScrollArea className="border border-gray-600">
         <nav className="h-full">
           <ul className="flex flex-col h-full">
             <CollectionLink path={allItemsRoute}>All</CollectionLink>
@@ -49,13 +48,9 @@ const Collections = () => {
 
 export default function Page() {
   return (
-    <div className="flex gap-4 w-full h-full p-4">
-      <div className="w-2/12 h-full">
-        <Collections />
-      </div>
-      <div className="w-full">
-        <Outlet />
-      </div>
+    <div className="w-full h-full p-4 grid grid-cols-[20%_calc(80%-1rem)] grid-rows-[100%] gap-[1rem]">
+      <Collections />
+      <Outlet />
     </div>
   );
 }

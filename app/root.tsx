@@ -24,11 +24,9 @@ export default function Root() {
         <Meta />
         <Links />
       </head>
-      <body className="flex flex-col w-full h-full">
-        <div className="h-[40px]">
+      <body className="w-full h-full">
+        <div className="w-full h-full grid grid-rows-[5%_95%] grid-cols-[100%]">
           <GlobalHeader />
-        </div>
-        <div className="h-[calc(100%-40px)]">
           <Outlet />
         </div>
         <ScrollRestoration />

@@ -7,10 +7,11 @@ import {
   navigationMenuTriggerStyle,
 } from "~/component/ui/navigation-menu";
 import { allItemsRoute, homeRoute } from "./route_path";
+import { cn } from "~/lib/util";
 
-export const GlobalHeader = () => {
+export const GlobalHeader = ({ className }: { className?: string }) => {
   return (
-    <NavigationMenu className="w-full">
+    <NavigationMenu className={cn("w-full", className)}>
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuLink asChild>

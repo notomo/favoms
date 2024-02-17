@@ -10,13 +10,17 @@ import {
 import { useState } from "react";
 import { DialogContent, Dialog } from "~/component/ui/dialog";
 
-export const CollectionsDropDownMenu = () => {
+export const CollectionsDropDownMenu = ({
+  className,
+}: {
+  className?: string;
+}) => {
   const [dialogIsOpened, setDialogIsOpened] = useState(false);
   const openDialog = () => setDialogIsOpened(true);
   const close = () => setDialogIsOpened(false);
 
   return (
-    <>
+    <div className={className}>
       <Dialog open={dialogIsOpened} onOpenChange={close}>
         <DialogContent onSubmit={close}>
           <CreateMylistDialog />
@@ -34,6 +38,6 @@ export const CollectionsDropDownMenu = () => {
           <DropdownMenuButton onClick={openDialog}>New</DropdownMenuButton>
         </DropdownMenuContent>
       </DropdownMenu>
-    </>
+    </div>
   );
 };
