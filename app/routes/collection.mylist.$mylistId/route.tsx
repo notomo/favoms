@@ -28,7 +28,9 @@ const MylistItemRows = () => {
   return (
     <div className="w-full h-full grid grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
       <div className="flex items-center justify-between">
-        <div className="px-4 text-xl">{mylistName}</div>
+        <div className="px-4 text-xl overflow-hidden whitespace-nowrap overflow-ellipsis">
+          {mylistName}
+        </div>
         <MylistDropDownMenu mylistName={mylistName} />
       </div>
 
