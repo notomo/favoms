@@ -190,11 +190,23 @@ const DropdownMenuShortcut = ({
 };
 DropdownMenuShortcut.displayName = "DropdownMenuShortcut";
 
+const DropdownMenuButton = ({
+  children,
+  onClick,
+}: React.PropsWithChildren<{ onClick: () => void }>) => {
+  return (
+    <DropdownMenuItem onClick={onClick} className="cursor-pointer">
+      {children}
+    </DropdownMenuItem>
+  );
+};
+
 export {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuButton,
   DropdownMenuCheckboxItem,
   DropdownMenuRadioItem,
   DropdownMenuLabel,

@@ -1,13 +1,7 @@
 import { Label } from "~/component/ui/label";
 import { Form } from "@remix-run/react";
 import { Button } from "~/component/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "~/component/ui/dialog";
+import { DialogFooter, DialogHeader, DialogTitle } from "~/component/ui/dialog";
 import { Input } from "~/component/ui/input";
 import { ActionFunctionArgs, redirect } from "@remix-run/node";
 import { mylistRoute } from "~/route_path";
@@ -20,43 +14,21 @@ export const createMylistAction = async ({ request }: ActionFunctionArgs) => {
   return redirect(mylistRoute(mylist.id));
 };
 
-export const CreateMylistDialog = ({
-  isOpened,
-  setIsOpened,
-}: {
-  isOpened: boolean;
-  setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+export const CreateMylistDialog = () => {
   return (
-    <Dialog open={isOpened} onOpenChange={(o) => setIsOpened(o)}>
-      <DialogContent>
-        <Form
-          method="post"
-          onSubmit={() => {
-            setIsOpened(false);
-          }}
-          className="flex flex-col gap-4"
-        >
-          <DialogHeader>
-            <DialogTitle>New mylist</DialogTitle>
-          </DialogHeader>
+    <Form method="post" className="flex flex-col gap-4">
+      <DialogHeader>
+        <DialogTitle>New mylist</DialogTitle>
+      </DialogHeader>
 
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              name="name"
-              required
-              type="text"
-              defaultValue="New"
-            />
-          </div>
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="name">Name</Label>
+        <Input id="name" name="name" required type="text" defaultValue="New" />
+      </div>
 
-          <DialogFooter>
-            <Button type="submit">Save</Button>
-          </DialogFooter>
-        </Form>
-      </DialogContent>
-    </Dialog>
+      <DialogFooter>
+        <Button type="submit">Save</Button>
+      </DialogFooter>
+    </Form>
   );
 };

@@ -3,57 +3,70 @@ import { MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuButton,
 } from "~/component/ui/dropdown-menu";
 import { useState } from "react";
 import { EditMylistInfoDialog } from "./edit_mylist_info_dialog";
 import { DeleteMylistDialog } from "~/routes/collection.mylist.$mylistId/delete_mylist_dialog";
+import { Dialog, DialogContent } from "~/component/ui/dialog";
+
+type DialogType = "edit" | "delete" | undefined;
+
+const OneDialog = ({
+  mylistName,
+  dialogType,
+}: {
+  mylistName: string;
+  dialogType: DialogType;
+}) => {
+  switch (dialogType) {
+    case "edit":
+      return <EditMylistInfoDialog mylistName={mylistName} />;
+    case "delete":
+      return <DeleteMylistDialog />;
+    case undefined:
+      return null;
+  }
+};
+
+const useDialog = () => {
+  const [dialogType, setDialogType] = useState<DialogType>(undefined);
+  const openEditDialog = () => setDialogType("edit");
+  const openDeleteDialog = () => setDialogType("delete");
+  const close = () => setDialogType(undefined);
+  return [dialogType, openEditDialog, openDeleteDialog, close] as const;
+};
 
 export const MylistDropDownMenu = ({ mylistName }: { mylistName: string }) => {
-  const [isOpened, setIsOpened] = useState(false);
-  const [isEditDialogOpened, setEditDialogIsOpened] = useState(false);
-  const [isDeleteDialogOpened, setDeleteDialogIsOpened] = useState(false);
+  const [dialogType, openEditDialog, openDeleteDialog, close] = useDialog();
 
   return (
     <>
-      <EditMylistInfoDialog
-        mylistName={mylistName}
-        isOpened={isEditDialogOpened}
-        setIsOpened={setEditDialogIsOpened}
-      />
-      <DeleteMylistDialog
-        isOpened={isDeleteDialogOpened}
-        setIsOpened={setDeleteDialogIsOpened}
-      />
+      <Dialog open={dialogType !== undefined} onOpenChange={close}>
+        <DialogContent onSubmit={close}>
+          <OneDialog mylistName={mylistName} dialogType={dialogType} />
+        </DialogContent>
+      </Dialog>
 
-      <DropdownMenu open={isOpened} onOpenChange={(o) => setIsOpened(o)}>
+      <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon">
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
+
         <DropdownMenuContent className="border border-gray-600" align="start">
-          <DropdownMenuItem
-            onClick={() => {
-              setEditDialogIsOpened(true);
-            }}
-            className="cursor-pointer"
-          >
+          <DropdownMenuButton onClick={openEditDialog}>
             Edit info
-          </DropdownMenuItem>
+          </DropdownMenuButton>
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem
-            onClick={() => {
-              setDeleteDialogIsOpened(true);
-            }}
-            className="cursor-pointer"
-          >
+          <DropdownMenuButton onClick={openDeleteDialog}>
             Delete
-          </DropdownMenuItem>
+          </DropdownMenuButton>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

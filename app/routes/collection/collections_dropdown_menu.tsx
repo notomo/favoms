@@ -4,37 +4,34 @@ import { MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuButton,
 } from "~/component/ui/dropdown-menu";
 import { useState } from "react";
+import { DialogContent, Dialog } from "~/component/ui/dialog";
 
 export const CollectionsDropDownMenu = () => {
-  const [isOpened, setIsOpened] = useState(false);
-  const [isCreateDialogOpened, setCreateDialogIsOpened] = useState(false);
+  const [dialogIsOpened, setDialogIsOpened] = useState(false);
+  const openDialog = () => setDialogIsOpened(true);
+  const close = () => setDialogIsOpened(false);
 
   return (
     <>
-      <CreateMylistDialog
-        isOpened={isCreateDialogOpened}
-        setIsOpened={setCreateDialogIsOpened}
-      />
+      <Dialog open={dialogIsOpened} onOpenChange={close}>
+        <DialogContent onSubmit={close}>
+          <CreateMylistDialog />
+        </DialogContent>
+      </Dialog>
 
-      <DropdownMenu open={isOpened} onOpenChange={(o) => setIsOpened(o)}>
+      <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="icon">
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
+
         <DropdownMenuContent className="border border-gray-600" align="start">
-          <DropdownMenuItem
-            onClick={() => {
-              setCreateDialogIsOpened(true);
-            }}
-            className="cursor-pointer"
-          >
-            New
-          </DropdownMenuItem>
+          <DropdownMenuButton onClick={openDialog}>New</DropdownMenuButton>
         </DropdownMenuContent>
       </DropdownMenu>
     </>
