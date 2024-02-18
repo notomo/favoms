@@ -1,9 +1,17 @@
 import { LoaderFunctionArgs, json } from "@remix-run/node";
-import { Outlet, useLoaderData } from "@remix-run/react";
+import {
+  Outlet,
+  useFetcher,
+  useLoaderData,
+  useSearchParams,
+} from "@remix-run/react";
+import { Check } from "lucide-react";
+import { FormEvent, useState } from "react";
+import { Button } from "~/component/ui/button";
 import { ScrollArea } from "~/component/ui/scroll-area";
 import { getMylistWith } from "~/persist/mylist";
-import { mylistItemRoute } from "~/route_path";
-import { ItemLink } from "~/routes/collection.all/item_link";
+import { isMylistItemsEditRoute, mylistItemRoute } from "~/route_path";
+import { EditableItemRow, ItemLink } from "~/routes/collection.all/item_link";
 import { MylistDropDownMenu } from "~/routes/collection.mylist.$mylistId/mylist_dropdown_menu";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
@@ -18,12 +26,50 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   return json(mylist);
 };
 
-const MylistItemRows = () => {
-  const {
-    id: mylistId,
-    name: mylistName,
-    items,
-  } = useLoaderData<typeof loader>();
+const DoneMylistItemsEditButton = ({
+  willBeRemovedItemIds,
+}: {
+  willBeRemovedItemIds: Record<number, boolean>;
+}) => {
+  const fetcher = useFetcher();
+
+  const onSubmit = (e: FormEvent) => {
+    const data = {
+      itemIds: Object.entries(willBeRemovedItemIds)
+        .filter(([, willBeRemoved]) => willBeRemoved)
+        .map(([id]) => id)
+        .join(","),
+    };
+    fetcher.submit(data, { method: "POST", action: "done_items_edit" });
+    e.preventDefault();
+  };
+
+  return (
+    <fetcher.Form onSubmit={onSubmit}>
+      <Button type="submit" variant="default" size="icon">
+        <Check className="h-4 w-4" />
+      </Button>
+    </fetcher.Form>
+  );
+};
+
+type LoaderData = ReturnType<typeof useLoaderData<typeof loader>>;
+
+const MylistItemRows = ({
+  mylistId,
+  mylistName,
+  items,
+}: {
+  mylistId: LoaderData["id"];
+  mylistName: LoaderData["name"];
+  items: LoaderData["items"];
+}) => {
+  const [willBeRemovedItemIds, setWillBeDeletedItemIds] = useState<
+    Record<number, boolean>
+  >({});
+
+  const [searchParams] = useSearchParams();
+  const editable = isMylistItemsEditRoute(searchParams);
 
   return (
     <div className="w-full h-full grid grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
@@ -31,12 +77,41 @@ const MylistItemRows = () => {
         <div className="px-4 text-xl overflow-hidden whitespace-nowrap overflow-ellipsis">
           {mylistName}
         </div>
-        <MylistDropDownMenu mylistName={mylistName} />
+        {editable ? (
+          <DoneMylistItemsEditButton
+            willBeRemovedItemIds={willBeRemovedItemIds}
+          />
+        ) : (
+          <MylistDropDownMenu mylistId={mylistId} mylistName={mylistName} />
+        )}
       </div>
 
       <ScrollArea className="border border-gray-600">
         <ul className="flex flex-col h-full">
           {items.map(({ id, name }) => {
+            if (editable) {
+              return (
+                <EditableItemRow
+                  key={id}
+                  willBeRemoved={willBeRemovedItemIds[id]}
+                  onClickToRemove={() => {
+                    setWillBeDeletedItemIds({
+                      ...willBeRemovedItemIds,
+                      [id]: true,
+                    });
+                  }}
+                  onClickToUndo={() => {
+                    setWillBeDeletedItemIds({
+                      ...willBeRemovedItemIds,
+                      [id]: false,
+                    });
+                  }}
+                >
+                  {name}
+                </EditableItemRow>
+              );
+            }
+
             const path = mylistItemRoute(mylistId, id);
             return (
               <ItemLink path={path} key={id}>
@@ -51,9 +126,20 @@ const MylistItemRows = () => {
 };
 
 export default function Page() {
+  const {
+    id: mylistId,
+    name: mylistName,
+    items,
+  } = useLoaderData<typeof loader>();
+
   return (
     <div className="w-full h-full grid grid-cols-2 grid-rows-[100%] gap-x-4">
-      <MylistItemRows />
+      <MylistItemRows
+        key={mylistId}
+        mylistId={mylistId}
+        mylistName={mylistName}
+        items={items}
+      />
       <Outlet />
     </div>
   );

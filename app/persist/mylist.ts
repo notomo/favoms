@@ -86,3 +86,19 @@ export async function deleteMylist(id: number) {
     where: { id: id },
   });
 }
+
+export async function removeItemsFromMylist(
+  mylistId: number,
+  itemIds: number[]
+) {
+  return await prisma.mylist.update({
+    where: {
+      id: mylistId,
+    },
+    data: {
+      items: {
+        disconnect: itemIds.map((id) => ({ id: id })),
+      },
+    },
+  });
+}

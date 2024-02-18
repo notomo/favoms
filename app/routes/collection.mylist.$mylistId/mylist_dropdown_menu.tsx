@@ -11,6 +11,8 @@ import { useState } from "react";
 import { EditMylistInfoDialog } from "./edit_mylist_info_dialog";
 import { DeleteMylistDialog } from "~/routes/collection.mylist.$mylistId/delete_mylist_dialog";
 import { Dialog, DialogContent } from "~/component/ui/dialog";
+import { Link } from "@remix-run/react";
+import { mylistItemsEditRoute } from "~/route_path";
 
 type DialogType = "edit" | "delete" | undefined;
 
@@ -31,7 +33,13 @@ const OneDialog = ({
   }
 };
 
-export const MylistDropDownMenu = ({ mylistName }: { mylistName: string }) => {
+export const MylistDropDownMenu = ({
+  mylistId,
+  mylistName,
+}: {
+  mylistId: number;
+  mylistName: string;
+}) => {
   const [dialogType, setDialogType] = useState<DialogType>(undefined);
   const openEditDialog = () => setDialogType("edit");
   const openDeleteDialog = () => setDialogType("delete");
@@ -55,6 +63,10 @@ export const MylistDropDownMenu = ({ mylistName }: { mylistName: string }) => {
         <DropdownMenuContent className="border border-gray-600" align="start">
           <DropdownMenuButton onClick={openEditDialog}>
             Edit info
+          </DropdownMenuButton>
+
+          <DropdownMenuButton asChild>
+            <Link to={mylistItemsEditRoute(mylistId)}>Edit items</Link>
           </DropdownMenuButton>
 
           <DropdownMenuSeparator />

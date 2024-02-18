@@ -193,9 +193,14 @@ DropdownMenuShortcut.displayName = "DropdownMenuShortcut";
 const DropdownMenuButton = ({
   children,
   onClick,
-}: React.PropsWithChildren<{ onClick: () => void }>) => {
+  asChild,
+}: React.PropsWithChildren<{ onClick?: () => void; asChild?: boolean }>) => {
   return (
-    <DropdownMenuItem onClick={onClick} className="cursor-pointer">
+    <DropdownMenuItem
+      asChild={asChild}
+      onClick={onClick}
+      className="cursor-pointer"
+    >
       {children}
     </DropdownMenuItem>
   );
