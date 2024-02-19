@@ -29,7 +29,7 @@ const Collections = () => {
   const { mylists } = useLoaderData<typeof loader>();
   return (
     <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
-      <CollectionsDropDownMenu className="justify-self-end" />
+      <CollectionsDropDownMenu className="self-center justify-self-end" />
 
       <ScrollArea className="border border-gray-600">
         <nav className="h-full">
