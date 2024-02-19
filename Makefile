@@ -24,6 +24,8 @@ lint:
 	npx eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .
 typecheck:
 	npx tsc --skipLibCheck
+format:
+	npx prettier . --write 
 
 prisma_generate:
 	npx prisma generate
