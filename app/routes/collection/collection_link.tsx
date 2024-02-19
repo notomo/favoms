@@ -13,7 +13,7 @@ export const CollectionLink = ({
   return (
     <NavLink
       className={({ isActive }) =>
-        isActive ? "font-bold bg-stone-500 text-stone-50" : ""
+        isActive ? "bg-stone-500 font-bold text-stone-50" : ""
       }
       to={path}
     >

@@ -17,15 +17,15 @@ export const links: LinksFunction = () => [
 
 export default function Root() {
   return (
-    <html lang="en" className="dark flex w-full h-full">
+    <html lang="en" className="dark flex h-full w-full">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
       </head>
-      <body className="w-full h-full">
-        <div className="w-full h-full grid grid-rows-[5%_95%] grid-cols-[100%]">
+      <body className="h-full w-full">
+        <div className="grid h-full w-full grid-cols-[100%] grid-rows-[5%_95%]">
           <GlobalHeader />
           <Outlet />
         </div>

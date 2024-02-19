@@ -9,7 +9,7 @@ async function main() {
         where: { id },
         data: { name: `name${id}` },
       };
-    })
+    }),
   );
   console.log({ items });
 
@@ -21,7 +21,7 @@ async function main() {
       items: {
         connect: itemsA,
       },
-    }
+    },
   );
   console.log({ mylistA });
 
@@ -33,7 +33,7 @@ async function main() {
       items: {
         connect: itemsB,
       },
-    }
+    },
   );
   console.log({ mylistB });
 
@@ -41,7 +41,7 @@ async function main() {
     { id: 3 },
     {
       name: "C",
-    }
+    },
   );
   console.log({ emptyMylist });
 }

@@ -16,7 +16,7 @@ export const ItemLink = ({
   return (
     <NavLink
       className={({ isActive }) =>
-        isActive ? "font-bold bg-stone-500 text-stone-50" : ""
+        isActive ? "bg-stone-500 font-bold text-stone-50" : ""
       }
       to={path}
     >
@@ -55,7 +55,7 @@ export const EditableItemRow = ({
 }>) => {
   const onClick = willBeRemoved ? onClickToUndo : onClickToRemove;
   return (
-    <ItemRow className="flex gap-2 items-center justify-between">
+    <ItemRow className="flex items-center justify-between gap-2">
       {children}
       <Button onClick={onClick} variant="ghost" className="h-4 w-4 p-0">
         {willBeRemoved ? (

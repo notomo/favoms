@@ -20,7 +20,7 @@ export async function upsertItems(
   upserts: {
     where: UpsertWhere<Model>;
     data: UpsertData<Model>;
-  }[]
+  }[],
 ) {
   return await prisma.$transaction(
     upserts.map((upsert) => {
@@ -29,6 +29,6 @@ export async function upsertItems(
         create: upsert.data,
         update: upsert.data,
       });
-    })
+    }),
   );
 }

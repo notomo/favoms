@@ -36,7 +36,7 @@ export async function updateMylist(id: number, data: UpsertData<Model>) {
 
 export async function upsertMylist(
   where: UpsertWhere<Model>,
-  data: Pick<UpsertData<Model>, "name" | "items">
+  data: Pick<UpsertData<Model>, "name" | "items">,
 ) {
   return await prisma.$transaction(async (tx) => {
     const mylist = await tx.mylist.upsert({
@@ -89,7 +89,7 @@ export async function deleteMylist(id: number) {
 
 export async function removeItemsFromMylist(
   mylistId: number,
-  itemIds: number[]
+  itemIds: number[],
 ) {
   return await prisma.mylist.update({
     where: {

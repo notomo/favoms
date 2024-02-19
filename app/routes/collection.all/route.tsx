@@ -22,7 +22,7 @@ const ItemRows = () => {
   const { items } = useLoaderData<typeof loader>();
 
   return (
-    <div className="w-full h-full grid grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
+    <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
       <div className="flex items-center justify-between">
         <div className="px-4 text-xl">All</div>
         <Button disabled variant="ghost" size="icon">
@@ -31,7 +31,7 @@ const ItemRows = () => {
       </div>
 
       <ScrollArea className="border border-gray-600">
-        <ul className="flex flex-col h-full">
+        <ul className="flex h-full flex-col">
           {items.map(({ id, name }) => {
             const path = collectionItemRoute(id);
             return (
@@ -48,7 +48,7 @@ const ItemRows = () => {
 
 export default function Page() {
   return (
-    <div className="w-full h-full grid grid-cols-2 grid-rows-[100%] gap-x-4">
+    <div className="grid h-full w-full grid-cols-2 grid-rows-[100%] gap-x-4">
       <ItemRows />
       <Outlet />
     </div>

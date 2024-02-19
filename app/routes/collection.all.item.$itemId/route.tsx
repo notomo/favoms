@@ -23,7 +23,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 export default function Page() {
   const { id, name } = useLoaderData<typeof loader>();
   return (
-    <ScrollArea className="w-full h-full border border-gray-600">
+    <ScrollArea className="h-full w-full border border-gray-600">
       <div>
         <Link to={itemRoute(id)} target="_blank" rel="noreferrer">
           item {id}: {name}

@@ -28,12 +28,12 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 const Collections = () => {
   const { mylists } = useLoaderData<typeof loader>();
   return (
-    <div className="w-full h-full grid grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
+    <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
       <CollectionsDropDownMenu className="justify-self-end" />
 
       <ScrollArea className="border border-gray-600">
         <nav className="h-full">
-          <ul className="flex flex-col h-full">
+          <ul className="flex h-full flex-col">
             <CollectionLink path={allItemsRoute}>All</CollectionLink>
 
             {mylists.map(({ id, name }) => {
@@ -52,7 +52,7 @@ const Collections = () => {
 
 export default function Page() {
   return (
-    <div className="w-full h-full p-4 grid grid-cols-[20%_calc(80%-1rem)] grid-rows-[100%] gap-[1rem]">
+    <div className="grid h-full w-full grid-cols-[20%_calc(80%-1rem)] grid-rows-[100%] gap-[1rem] p-4">
       <Collections />
       <Outlet />
     </div>
