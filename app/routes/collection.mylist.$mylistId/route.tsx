@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, json } from "@remix-run/node";
+import { LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node";
 import {
   Outlet,
   useFetcher,
@@ -13,6 +13,10 @@ import { getMylistWith } from "~/persist/mylist";
 import { isMylistItemsEditRoute, mylistItemRoute } from "~/route_path";
 import { EditableItemRow, ItemLink } from "~/routes/collection.all/item_link";
 import { MylistDropDownMenu } from "~/routes/collection.mylist.$mylistId/mylist_dropdown_menu";
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  return [{ title: `${data?.name} | favoms` }];
+};
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const mylistId = +params.mylistId!;

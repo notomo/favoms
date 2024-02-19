@@ -3,10 +3,7 @@ import { Link } from "@remix-run/react";
 import { allItemsRoute } from "~/route_path";
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: "favoms" },
-    { name: "description", content: "Welcome to favoms!" },
-  ];
+  return [{ title: "favoms" }];
 };
 
 export default function Index() {

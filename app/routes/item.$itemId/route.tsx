@@ -1,7 +1,11 @@
-import { LoaderFunctionArgs, json } from "@remix-run/node";
+import { LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
 import { getItem } from "~/persist/item";
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  return [{ title: `${data?.name} | favoms` }];
+};
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const itemId = +params.itemId!;

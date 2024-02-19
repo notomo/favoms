@@ -3,9 +3,13 @@ import { ScrollArea } from "~/component/ui/scroll-area";
 import { listMylists } from "~/persist/mylist";
 import { allItemsRoute, collectionRoute, mylistRoute } from "~/route_path";
 import { CollectionLink } from "./collection_link";
-import { LoaderFunctionArgs } from "@remix-run/node";
+import { LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
 import { CollectionsDropDownMenu } from "./collections_dropdown_menu";
 import { createMylistAction } from "~/routes/collection/create_mylist_dialog";
+
+export const meta: MetaFunction = () => {
+  return [{ title: "Collections | favoms" }];
+};
 
 export const action = createMylistAction;
 

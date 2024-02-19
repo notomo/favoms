@@ -1,4 +1,4 @@
-import { json } from "@remix-run/node";
+import { type MetaFunction, json } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
 import { listItems } from "~/persist/item";
@@ -6,6 +6,10 @@ import { collectionItemRoute } from "~/route_path";
 import { ItemLink } from "./item_link";
 import { Button } from "~/component/ui/button";
 import { MoreHorizontal } from "lucide-react";
+
+export const meta: MetaFunction = () => {
+  return [{ title: "All | favoms" }];
+};
 
 export const loader = async () => {
   const items = await listItems();
