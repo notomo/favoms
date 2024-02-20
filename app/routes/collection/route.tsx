@@ -1,11 +1,17 @@
-import { Outlet, json, redirect, useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
-import { listMylists } from "~/persist/mylist";
-import { allItemsRoute, collectionRoute, mylistRoute } from "~/route_path";
+import { allItemsRoute, isMylistsEditRoute } from "~/route_path";
 import { CollectionLink } from "./collection_link";
-import { LoaderFunctionArgs, type MetaFunction } from "@remix-run/node";
+import { type MetaFunction } from "@remix-run/node";
 import { CollectionsDropDownMenu } from "./collections_dropdown_menu";
 import { createMylistAction } from "~/routes/collection/create_mylist_dialog";
+import {
+  DoneMylistsEditButton,
+  EditableMylistRows,
+} from "~/routes/collection/mylists_edit";
+import { LoaderData, Mylist, getMylists } from "./loader";
+import { MylistLinks } from "~/routes/collection/mylist_links";
+import { useState } from "react";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Collections | favoms" }];
@@ -13,20 +19,13 @@ export const meta: MetaFunction = () => {
 
 export const action = createMylistAction;
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const url = new URL(request.url);
-  if (url.pathname === collectionRoute) {
-    return redirect(allItemsRoute);
-  }
+export const loader = getMylists;
 
-  const mylists = await listMylists();
-  return json({
-    mylists,
-  });
+const AllItemsCollectionLink = () => {
+  return <CollectionLink path={allItemsRoute}>All</CollectionLink>;
 };
 
-const Collections = () => {
-  const { mylists } = useLoaderData<typeof loader>();
+const Collections = ({ mylists }: { mylists: LoaderData["mylists"] }) => {
   return (
     <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
       <CollectionsDropDownMenu className="self-center justify-self-end" />
@@ -34,15 +33,45 @@ const Collections = () => {
       <ScrollArea className="border border-gray-600">
         <nav className="h-full">
           <ul className="flex h-full flex-col">
-            <CollectionLink path={allItemsRoute}>All</CollectionLink>
+            <AllItemsCollectionLink />
 
-            {mylists.map(({ id, name }) => {
-              return (
-                <CollectionLink path={mylistRoute(id)} key={id}>
-                  {name}
-                </CollectionLink>
-              );
-            })}
+            <MylistLinks mylists={mylists} />
+          </ul>
+        </nav>
+      </ScrollArea>
+    </div>
+  );
+};
+
+const EditableCollections = ({
+  mylists,
+}: {
+  mylists: LoaderData["mylists"];
+}) => {
+  const [mylistIds, setMylistIds] = useState(mylists.map((x) => x.id));
+
+  const mylistRecords: Record<number, Mylist> = {};
+  mylists.forEach((mylist) => {
+    mylistRecords[mylist.id] = mylist;
+  });
+
+  return (
+    <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
+      <DoneMylistsEditButton
+        mylistIds={mylistIds}
+        className="self-center justify-self-end"
+      />
+
+      <ScrollArea className="border border-gray-600">
+        <nav className="h-full">
+          <ul className="flex h-full flex-col">
+            <AllItemsCollectionLink />
+
+            <EditableMylistRows
+              mylistRecords={mylistRecords}
+              mylistIds={mylistIds}
+              setMylistIds={setMylistIds}
+            />
           </ul>
         </nav>
       </ScrollArea>
@@ -51,9 +80,17 @@ const Collections = () => {
 };
 
 export default function Page() {
+  const [searchParams] = useSearchParams();
+  const editable = isMylistsEditRoute(searchParams);
+
+  const loaderData = useLoaderData<typeof loader>();
   return (
     <div className="grid h-full w-full grid-cols-[20%_calc(80%-1rem)] grid-rows-[100%] gap-[1rem] p-4">
-      <Collections />
+      {editable ? (
+        <EditableCollections {...loaderData} />
+      ) : (
+        <Collections {...loaderData} />
+      )}
       <Outlet />
     </div>
   );

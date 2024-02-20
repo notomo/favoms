@@ -9,6 +9,8 @@ import {
 } from "~/component/ui/dropdown-menu";
 import { useState } from "react";
 import { DialogContent, Dialog } from "~/component/ui/dialog";
+import { mylistsEditRoute } from "~/route_path";
+import { Link } from "@remix-run/react";
 
 export const CollectionsDropDownMenu = ({
   className,
@@ -36,6 +38,10 @@ export const CollectionsDropDownMenu = ({
 
         <DropdownMenuContent className="border border-gray-600" align="start">
           <DropdownMenuButton onClick={openDialog}>New</DropdownMenuButton>
+
+          <DropdownMenuButton asChild>
+            <Link to={mylistsEditRoute()}>Edit mylists</Link>
+          </DropdownMenuButton>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

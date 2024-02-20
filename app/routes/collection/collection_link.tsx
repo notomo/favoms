@@ -1,5 +1,6 @@
 import { NavLink } from "@remix-run/react";
 import { useEffect, useRef } from "react";
+import { cn } from "~/lib/util";
 
 export const CollectionLink = ({
   children,
@@ -33,6 +34,9 @@ export const CollectionLink = ({
   );
 };
 
-const CollectionRow = ({ children }: React.PropsWithChildren) => {
-  return <li className="border-b p-4">{children}</li>;
+export const CollectionRow = ({
+  children,
+  className,
+}: React.PropsWithChildren<{ className?: string }>) => {
+  return <li className={cn("border-b p-4", className)}>{children}</li>;
 };

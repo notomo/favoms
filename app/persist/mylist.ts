@@ -102,3 +102,17 @@ export async function removeItemsFromMylist(
     },
   });
 }
+
+export async function reorderMylists(mylistIds: number[]) {
+  await prisma.$transaction([
+    prisma.mylistOrder.deleteMany({
+      where: {},
+    }),
+    prisma.mylistOrder.createMany({
+      data: mylistIds.map((id, i) => ({
+        mylistId: id,
+        position: i,
+      })),
+    }),
+  ]);
+}
