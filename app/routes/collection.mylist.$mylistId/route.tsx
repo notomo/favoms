@@ -1,6 +1,11 @@
 import { type MetaFunction } from "@remix-run/node";
-import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
-import { useState } from "react";
+import {
+  Await,
+  Outlet,
+  useLoaderData,
+  useSearchParams,
+} from "@remix-run/react";
+import { Suspense, useEffect, useState } from "react";
 import { ScrollArea } from "~/component/ui/scroll-area";
 import { isMylistItemsEditRoute } from "~/route_path";
 import { MylistDropDownMenu } from "./mylist_dropdown_menu";
@@ -8,11 +13,13 @@ import {
   DoneMylistItemsEditButton,
   EditableItemRows,
 } from "./mylist_items_edit";
-import { LoaderData, getMylistWithItems } from "./loader";
+import { MylistItem, getMylistWithItems } from "./loader";
 import { ItemLinks } from "./mylist_item_links";
+import { Loading } from "~/loading";
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  return [{ title: `${data?.mylistName} | favoms` }];
+export const meta: MetaFunction = ({ params }) => {
+  const mylistId = params.mylistId || "(invalid)";
+  return [{ title: `Mylist ${mylistId} | favoms` }];
 };
 
 export const loader = getMylistWithItems;
@@ -22,10 +29,15 @@ const MylistItemRows = ({
   mylistName,
   items,
 }: {
-  mylistId: LoaderData["mylistId"];
-  mylistName: LoaderData["mylistName"];
-  items: LoaderData["items"];
+  mylistId: number;
+  mylistName: string;
+  items: MylistItem[];
 }) => {
+  useEffect(() => {
+    // HACK
+    document.title = `${mylistName} | favoms`;
+  }, [mylistId, mylistName]);
+
   const [willBeRemovedItemIds, setWillBeRemovedItemIds] = useState<
     Record<number, boolean>
   >({});
@@ -68,7 +80,21 @@ export default function Page() {
 
   return (
     <div className="grid h-full w-full grid-cols-2 grid-rows-[100%] gap-x-4">
-      <MylistItemRows key={loaderData.mylistId} {...loaderData} />
+      <Suspense fallback={<Loading />}>
+        <Await resolve={loaderData.mylist}>
+          {(mylist) =>
+            mylist === null ? (
+              <div>mylist is not found</div>
+            ) : (
+              <MylistItemRows
+                mylistId={mylist.id}
+                mylistName={mylist.name}
+                items={mylist.items}
+              />
+            )
+          }
+        </Await>
+      </Suspense>
       <Outlet />
     </div>
   );
