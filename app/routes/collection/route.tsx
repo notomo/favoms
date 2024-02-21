@@ -1,4 +1,9 @@
-import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
+import {
+  Await,
+  Outlet,
+  useLoaderData,
+  useSearchParams,
+} from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
 import { allItemsRoute, isMylistsEditRoute } from "~/route_path";
 import { CollectionLink } from "./collection_link";
@@ -9,9 +14,10 @@ import {
   DoneMylistsEditButton,
   EditableMylistRows,
 } from "~/routes/collection/mylists_edit";
-import { LoaderData, Mylist, getMylists } from "./loader";
+import { Mylist, getMylists } from "./loader";
 import { MylistLinks } from "~/routes/collection/mylist_links";
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { Loading } from "~/loading";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Collections | favoms" }];
@@ -25,7 +31,7 @@ const AllItemsCollectionLink = () => {
   return <CollectionLink path={allItemsRoute}>All</CollectionLink>;
 };
 
-const Collections = ({ mylists }: { mylists: LoaderData["mylists"] }) => {
+const Collections = ({ mylists }: { mylists: Mylist[] }) => {
   return (
     <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
       <CollectionsDropDownMenu className="self-center justify-self-end" />
@@ -43,11 +49,7 @@ const Collections = ({ mylists }: { mylists: LoaderData["mylists"] }) => {
   );
 };
 
-const EditableCollections = ({
-  mylists,
-}: {
-  mylists: LoaderData["mylists"];
-}) => {
+const EditableCollections = ({ mylists }: { mylists: Mylist[] }) => {
   const [mylistIds, setMylistIds] = useState(mylists.map((x) => x.id));
 
   const mylistRecords: Record<number, Mylist> = {};
@@ -86,11 +88,17 @@ export default function Page() {
   const loaderData = useLoaderData<typeof loader>();
   return (
     <div className="grid h-full w-full grid-cols-[20%_calc(80%-1rem)] grid-rows-[100%] gap-[1rem] p-4">
-      {editable ? (
-        <EditableCollections {...loaderData} />
-      ) : (
-        <Collections {...loaderData} />
-      )}
+      <Suspense fallback={<Loading />}>
+        <Await resolve={loaderData.mylists}>
+          {(mylists) =>
+            editable ? (
+              <EditableCollections mylists={mylists} />
+            ) : (
+              <Collections mylists={mylists} />
+            )
+          }
+        </Await>
+      </Suspense>
       <Outlet />
     </div>
   );

@@ -14,7 +14,7 @@ export default function handleRequest(
   responseHeaders: Headers,
   remixContext: EntryContext,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  loadContext: AppLoadContext,
+  _loadContext: AppLoadContext,
 ) {
   return isBotRequest(request.headers.get("user-agent"))
     ? handleBotRequest(
