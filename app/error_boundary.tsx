@@ -8,8 +8,20 @@ import {
 } from "@remix-run/react";
 import { GlobalHeader } from "./global_header";
 
-export function ErrorBoundary() {
+const ErrorMessage = () => {
   const error = useRouteError();
+  return (
+    <h1 className="flex flex-col items-center justify-center text-4xl">
+      {isRouteErrorResponse(error)
+        ? `${error.status} ${error.statusText}`
+        : error instanceof Error
+          ? error.message
+          : "Unknown Error"}
+    </h1>
+  );
+};
+
+export function ErrorBoundary() {
   return (
     <html lang="en" className="dark h-full w-full">
       <head>
@@ -17,17 +29,11 @@ export function ErrorBoundary() {
         <Meta />
         <Links />
       </head>
-      <body className="flex h-screen w-full">
-        <div className="h-[40px]">
+      <body className="h-full w-full">
+        <div className="grid h-full w-full grid-cols-[100%] grid-rows-[5%_95%]">
           <GlobalHeader />
+          <ErrorMessage />
         </div>
-        <h1 className="flex h-[calc(100%-40px)] w-full flex-col items-center justify-center text-4xl">
-          {isRouteErrorResponse(error)
-            ? `${error.status} ${error.statusText}`
-            : error instanceof Error
-              ? error.message
-              : "Unknown Error"}
-        </h1>
         <Scripts />
         <LiveReload />
       </body>
