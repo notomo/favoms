@@ -1,13 +1,13 @@
 import { mylistItemRoute } from "~/route_path";
 import { ItemLink } from "~/routes/collection.all/item_link";
-import { LoaderData } from "./loader";
+import { MylistItem } from "./loader";
 
 export const ItemLinks = ({
   mylistId,
   items,
 }: {
-  mylistId: LoaderData["mylistId"];
-  items: LoaderData["items"];
+  mylistId: number;
+  items: MylistItem[];
 }) => {
   return items.map(({ id, name }) => {
     const path = mylistItemRoute(mylistId, id);

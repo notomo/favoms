@@ -3,7 +3,7 @@ import { Check, Trash, Undo } from "lucide-react";
 import { FormEvent } from "react";
 import { Button } from "~/component/ui/button";
 import { ItemRow } from "~/routes/collection.all/item_link";
-import { LoaderData } from "~/routes/collection.mylist.$mylistId/loader";
+import { MylistItem } from "~/routes/collection.mylist.$mylistId/loader";
 
 export const DoneMylistItemsEditButton = ({
   willBeRemovedItemIds,
@@ -62,7 +62,7 @@ export const EditableItemRows = ({
   willBeRemovedItemIds,
   setWillBeRemovedItemIds,
 }: {
-  items: LoaderData["items"];
+  items: MylistItem[];
   willBeRemovedItemIds: Record<number, boolean>;
   setWillBeRemovedItemIds: React.Dispatch<
     React.SetStateAction<Record<number, boolean>>
