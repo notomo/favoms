@@ -42,3 +42,5 @@ export const collectionItemRoute = (itemId: number) => {
 export const itemRoute = (itemId: number) => {
   return `/item/${itemId}` as const;
 };
+
+export const importRoute = `/manage/import/`;
