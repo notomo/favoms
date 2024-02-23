@@ -6,6 +6,10 @@ env_variables:
   PORT: 8080
   NODE_ENV: production
 
+build_env_variables:
+  NPM_CONFIG_FORCE: true
+  GOOGLE_NODE_RUN_SCRIPTS: ''
+
 includes:
   - app_secret.yaml
 
