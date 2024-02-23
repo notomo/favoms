@@ -13,13 +13,31 @@ import {
   optional,
   instance,
   mimeType,
+  array,
+  safeParse,
+  flatten,
+  minLength,
+  number,
+  minValue,
 } from "valibot";
-import { useActionData } from "@remix-run/react";
+import { json, redirect, useActionData, useFetcher } from "@remix-run/react";
+import { Loader2 } from "lucide-react";
+import { importRoute } from "~/route_path";
+import { importItems } from "~/persist/item";
 
 const schema = object({
   targetFile: instance(File, [mimeType(["application/json"])]),
   dryRun: transform(optional(string(), ""), (x) => x === "on"),
   isReplace: transform(optional(string(), ""), (x) => x === "on"),
+});
+
+const fileSchema = object({
+  items: array(
+    object({
+      name: string([minLength(1)]),
+      id: number([minValue(1)]),
+    }),
+  ),
 });
 
 export const meta: MetaFunction = () => {
@@ -33,12 +51,31 @@ export async function action({ request }: ActionFunctionArgs) {
   });
 
   if (submission.status !== "success") {
-    return submission.reply();
+    return json(submission.reply());
   }
 
-  // TODO
+  const fileContent = await submission.value.targetFile.text();
+  const parsedJson = JSON.parse(fileContent);
+  const validated = safeParse(fileSchema, parsedJson);
+  if (!validated.success) {
+    const error = JSON.stringify(flatten(validated.issues), null, 2);
+    return json({
+      ...submission.reply(),
+      error: {
+        ["fileContent"]: [error],
+      },
+    });
+  }
 
-  return null;
+  if (!submission.value.dryRun) {
+    const upserts = validated.output.items.map((x) => ({
+      where: { id: x.id },
+      data: x,
+    }));
+    await importItems(upserts, submission.value.isReplace);
+  }
+
+  return redirect(importRoute);
 }
 
 const ErrorMessage = ({ errors }: { errors: string[] | undefined }) => {
@@ -49,26 +86,42 @@ const ErrorMessage = ({ errors }: { errors: string[] | undefined }) => {
 };
 
 export default function Index() {
-  const lastResult = useActionData<typeof action>();
+  const fetcher = useFetcher<ReturnType<typeof useActionData<typeof action>>>();
+
   const [form, fields] = useForm({
-    lastResult,
+    lastResult: fetcher.data,
     onValidate({ formData }) {
       return parseWithValibot(formData, { schema });
     },
-    shouldValidate: "onBlur",
+    shouldValidate: "onSubmit",
   });
+
+  const fileContentError = fetcher.data?.error?.fileContent?.at(0) || null;
+  const fileContentErrorMessage =
+    fileContentError !== null
+      ? JSON.stringify(JSON.parse(fileContentError), null, 2)
+      : "";
 
   return (
     <div className="flex h-full w-full items-start justify-start gap-4 p-4 py-8">
-      <form
+      <fetcher.Form
         method="post"
         id={form.id}
         onSubmit={form.onSubmit}
         className="flex flex-col gap-8 p-4"
         encType="multipart/form-data"
       >
-        <Button className="text-lg" type="submit" size="lg">
-          Import
+        <Button
+          className="text-lg"
+          type="submit"
+          size="lg"
+          disabled={fetcher.state !== "idle"}
+        >
+          {fetcher.state === "submitting" ? (
+            <Loader2 className="animate-spin" />
+          ) : (
+            "Import"
+          )}
         </Button>
 
         <div className="flex flex-col gap-2">
@@ -78,7 +131,6 @@ export default function Index() {
           <Input
             {...getInputProps(fields.targetFile, { type: "file" })}
             accept=".json"
-            // required
             className="bg-primary text-black"
           />
           <ErrorMessage errors={fields.targetFile.errors} />
@@ -99,7 +151,7 @@ export default function Index() {
           </Label>
           <ErrorMessage errors={fields.isReplace.errors} />
         </div>
-      </form>
+      </fetcher.Form>
 
       <div className="flex h-full w-full flex-col gap-2 p-4">
         <Label className="text-xl" htmlFor="errorMessage">
@@ -108,7 +160,8 @@ export default function Index() {
         <Textarea
           readOnly
           id="errorMessage"
-          className="h-full w-full border border-gray-600"
+          className="h-full w-full border border-gray-600 text-xl"
+          value={fileContentErrorMessage}
         />
       </div>
     </div>

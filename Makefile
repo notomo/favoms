@@ -39,6 +39,8 @@ db_migrate_dev:
 	npx prisma migrate dev
 db_migrate_status:
 	npx prisma migrate status
+db_studio:
+	npx prisma studio
 
 _deploy: build
 	rm -rf ./deploy

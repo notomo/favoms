@@ -16,6 +16,27 @@ export async function listItems() {
   });
 }
 
+export async function importItems(
+  upserts: {
+    where: UpsertWhere<Model>;
+    data: UpsertData<Model>;
+  }[],
+  isReplace = false,
+) {
+  if (!isReplace) {
+    return await upsertItems(upserts);
+  }
+
+  return await prisma.$transaction([
+    prisma.item.deleteMany({ where: {} }),
+    ...upserts.map((upsert) => {
+      return prisma.item.createMany({
+        data: upsert.data,
+      });
+    }),
+  ]);
+}
+
 export async function upsertItems(
   upserts: {
     where: UpsertWhere<Model>;
