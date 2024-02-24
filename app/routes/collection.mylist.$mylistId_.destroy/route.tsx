@@ -1,5 +1,5 @@
 import { ActionFunctionArgs, redirect } from "@remix-run/node";
-import { deleteMylist } from "~/persist/mylist";
+import { deleteMylist } from "~/.server/persist/mylist";
 import { collectionRoute } from "~/route_path";
 
 export const action = async ({ params }: ActionFunctionArgs) => {

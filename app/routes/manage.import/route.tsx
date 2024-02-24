@@ -23,7 +23,7 @@ import {
 import { json, redirect, useActionData, useFetcher } from "@remix-run/react";
 import { Loader2 } from "lucide-react";
 import { importRoute } from "~/route_path";
-import { importItems } from "~/persist/item";
+import { importItems } from "~/.server/persist/item";
 
 const schema = object({
   targetFile: instance(File, [mimeType(["application/json"])]),

@@ -1,5 +1,5 @@
-import { upsertItems } from "~/persist/item";
-import { upsertMylist } from "~/persist/mylist";
+import { upsertItems } from "~/.server/persist/item";
+import { upsertMylist } from "~/.server/persist/mylist";
 
 async function main() {
   const items = await upsertItems(

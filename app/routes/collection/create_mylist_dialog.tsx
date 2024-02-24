@@ -5,14 +5,17 @@ import { DialogFooter, DialogHeader, DialogTitle } from "~/component/ui/dialog";
 import { Input } from "~/component/ui/input";
 import { ActionFunctionArgs, redirect } from "@remix-run/node";
 import { mylistRoute } from "~/route_path";
-import { createMylist } from "~/persist/mylist";
+import { createMylist } from "~/.server/persist/mylist";
+import { serverOnly$ } from "vite-env-only";
 
-export const createMylistAction = async ({ request }: ActionFunctionArgs) => {
-  const formData = await request.formData();
-  const mylistName = formData.get("name")?.toString();
-  const mylist = await createMylist(mylistName!);
-  return redirect(mylistRoute(mylist.id));
-};
+export const createMylistAction = serverOnly$(
+  async ({ request }: ActionFunctionArgs) => {
+    const formData = await request.formData();
+    const mylistName = formData.get("name")?.toString();
+    const mylist = await createMylist(mylistName!);
+    return redirect(mylistRoute(mylist.id));
+  },
+);
 
 export const CreateMylistDialog = () => {
   return (

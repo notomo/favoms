@@ -1,7 +1,7 @@
 import { type MetaFunction, defer } from "@remix-run/node";
 import { Await, Outlet, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
-import { listItems } from "~/persist/item";
+import { listItems } from "~/.server/persist/item";
 import { collectionItemRoute } from "~/route_path";
 import { ItemLink } from "./item_link";
 import { Button } from "~/component/ui/button";

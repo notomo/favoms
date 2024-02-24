@@ -2,6 +2,7 @@ import { vitePlugin as remix } from "@remix-run/dev";
 import { defineConfig, loadEnv } from "vite";
 import { installGlobals } from "@remix-run/node";
 import tsconfigPaths from "vite-tsconfig-paths";
+import envOnly from "vite-env-only";
 
 installGlobals();
 
@@ -14,6 +15,6 @@ export default defineConfig(({ mode }) => {
     define: {
       "process.env": env,
     },
-    plugins: [remix(), tsconfigPaths()],
+    plugins: [remix(), tsconfigPaths(), envOnly()],
   };
 });

@@ -1,6 +1,6 @@
 import { LoaderFunctionArgs, defer } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { getMylistWith } from "~/persist/mylist";
+import { getMylistWith } from "~/.server/persist/mylist";
 
 export const getMylistWithItems = async ({ params }: LoaderFunctionArgs) => {
   const mylistId = +params.mylistId!;
