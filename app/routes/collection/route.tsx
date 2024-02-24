@@ -17,7 +17,7 @@ import {
 import { Mylist, getMylists } from "./loader";
 import { MylistLinks } from "~/routes/collection/mylist_links";
 import { Suspense, useState } from "react";
-import { Loading } from "~/loading";
+import { Loading } from "~/component/ui/loading";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Collections | favoms" }];

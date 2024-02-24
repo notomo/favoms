@@ -15,7 +15,7 @@ import {
 } from "./mylist_items_edit";
 import { MylistItem, getMylistWithItems } from "./loader";
 import { ItemLinks } from "./mylist_item_links";
-import { Loading } from "~/loading";
+import { Loading } from "~/component/ui/loading";
 
 export const meta: MetaFunction = ({ params }) => {
   const mylistId = params.mylistId || "(invalid)";

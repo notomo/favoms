@@ -7,7 +7,7 @@ import { ItemLink } from "./item_link";
 import { Button } from "~/component/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { Suspense } from "react";
-import { Loading } from "~/loading";
+import { Loading } from "~/component/ui/loading";
 
 export const meta: MetaFunction = () => {
   return [{ title: "All | favoms" }];
