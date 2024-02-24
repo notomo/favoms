@@ -14,7 +14,7 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
 
-export default function Root() {
+export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark flex h-full w-full">
       <head>
@@ -26,11 +26,15 @@ export default function Root() {
       <body className="h-full w-full">
         <div className="grid h-full w-full grid-cols-[100%] grid-rows-[5%_95%]">
           <GlobalHeader />
-          <Outlet />
+          {children}
         </div>
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   );
+}
+
+export default function Root() {
+  return <Outlet />;
 }
