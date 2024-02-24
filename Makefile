@@ -1,7 +1,7 @@
 start:
 	docker compose up -d --wait
-	pkill -KILL -f "npm exec remix de[v]" || true
-	npx remix dev --manual
+	pkill -KILL -f "npm exec remix vite:de[v]" || true
+	npx remix vite:dev
 
 open:
 	explorer.exe http://localhost:3000/collection || true
@@ -10,9 +10,9 @@ routes:
 	npx remix routes --json | jq
 
 build: FORCE
-	npx remix build
+	npx remix vite:build
 start_built:
-	npx remix-serve ./build/index.js
+	npx remix-serve ./build/server/index.js
 
 update_remix:
 	rm -f ./app/entry.client.tsx
@@ -23,7 +23,7 @@ update_remix:
 lint:
 	npx eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .
 typecheck:
-	npx tsc --skipLibCheck
+	npx tsc
 format:
 	npx prettier . --write 
 

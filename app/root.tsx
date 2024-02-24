@@ -1,7 +1,6 @@
 import type { LinksFunction } from "@remix-run/node";
 import {
   Links,
-  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -10,7 +9,7 @@ import {
 import { GlobalHeader } from "./global_header";
 export { ErrorBoundary } from "./error_boundary";
 
-import stylesheet from "~/tailwind.css";
+import stylesheet from "~/tailwind.css?url";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
@@ -31,7 +30,6 @@ export default function Root() {
         </div>
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
       </body>
     </html>
   );

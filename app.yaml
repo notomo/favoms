@@ -17,4 +17,4 @@ handlers:
   - url: /build
     static_dir: public/build
 
-entrypoint: npx remix-serve ./build/index.js
+entrypoint: npx remix-serve ./build/server/index.js

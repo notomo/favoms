@@ -1,6 +1,5 @@
 import {
   Links,
-  LiveReload,
   Meta,
   Scripts,
   isRouteErrorResponse,
@@ -35,7 +34,6 @@ export function ErrorBoundary() {
           <ErrorMessage />
         </div>
         <Scripts />
-        <LiveReload />
       </body>
     </html>
   );
