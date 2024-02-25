@@ -1,15 +1,22 @@
-import { ActionFunctionArgs, redirect } from "@remix-run/node";
+import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
+import { parseWithValibot } from "conform-to-valibot";
 import { removeItemsFromMylist } from "~/.server/persist/mylist";
 import { validateId } from "~/lib/schema/validation/params";
 import { mylistRoute } from "~/route_path";
+import { editMylistItemsSchema } from "~/routes/collection.mylist.$mylistId/schema";
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
   const mylistId = validateId(params.mylistId);
 
   const formData = await request.formData();
-  // TODO: validate
-  const rawItemIds = formData.get("itemIds") as string;
-  const itemIds = rawItemIds.split(",").map((x) => Number(x));
-  const mylist = await removeItemsFromMylist(mylistId, itemIds);
-  return redirect(mylistRoute(mylist.id));
+  const submission = parseWithValibot(formData, {
+    schema: editMylistItemsSchema,
+  });
+  if (submission.status !== "success") {
+    return json(submission.reply());
+  }
+
+  const itemIds = submission.value.itemIds;
+  await removeItemsFromMylist(mylistId, itemIds);
+  return redirect(mylistRoute(mylistId));
 };
