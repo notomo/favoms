@@ -7,7 +7,7 @@ import {
 } from "@remix-run/react";
 import { Suspense, useEffect, useState } from "react";
 import { ScrollArea } from "~/component/ui/scroll-area";
-import { isMylistItemsEditRoute } from "~/route_path";
+import { getMylistDialogType, isMylistItemsEditRoute } from "~/route_path";
 import { MylistDropDownMenu } from "./mylist_dropdown_menu";
 import {
   DoneMylistItemsEditButton,
@@ -44,6 +44,7 @@ const MylistItemRows = ({
 
   const [searchParams] = useSearchParams();
   const editable = isMylistItemsEditRoute(searchParams);
+  const dialogType = getMylistDialogType(searchParams);
 
   return (
     <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
@@ -55,10 +56,10 @@ const MylistItemRows = ({
           />
         ) : (
           <MylistDropDownMenu
-            // TODO: key from url params
-            key={`${mylistId}-${mylistName}`}
+            key={dialogType}
             mylistId={mylistId}
             mylistName={mylistName}
+            dialogType={dialogType}
           />
         )}
       </div>

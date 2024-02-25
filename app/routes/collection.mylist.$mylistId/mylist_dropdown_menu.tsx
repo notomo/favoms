@@ -7,14 +7,17 @@ import {
   DropdownMenuTrigger,
   DropdownMenuButton,
 } from "~/component/ui/dropdown-menu";
-import { useState } from "react";
 import { EditMylistInfoDialog } from "./edit_mylist_info_dialog";
 import { DeleteMylistDialog } from "~/routes/collection.mylist.$mylistId/delete_mylist_dialog";
 import { Dialog, DialogContent } from "~/component/ui/dialog";
-import { Link } from "@remix-run/react";
-import { mylistItemsEditRoute } from "~/route_path";
-
-type DialogType = "edit" | "delete" | undefined;
+import { Link, useNavigate } from "@remix-run/react";
+import {
+  DialogType,
+  mylistDeleteRoute,
+  mylistInfoEditRoute,
+  mylistItemsEditRoute,
+  mylistRoute,
+} from "~/route_path";
 
 const OneDialog = ({
   mylistName,
@@ -36,14 +39,16 @@ const OneDialog = ({
 export const MylistDropDownMenu = ({
   mylistId,
   mylistName,
+  dialogType,
 }: {
   mylistId: number;
   mylistName: string;
+  dialogType: DialogType;
 }) => {
-  const [dialogType, setDialogType] = useState<DialogType>(undefined);
-  const openEditDialog = () => setDialogType("edit");
-  const openDeleteDialog = () => setDialogType("delete");
-  const close = () => setDialogType(undefined);
+  const navigate = useNavigate();
+  const close = () => {
+    navigate(mylistRoute(mylistId));
+  };
 
   return (
     <>
@@ -61,8 +66,8 @@ export const MylistDropDownMenu = ({
         </DropdownMenuTrigger>
 
         <DropdownMenuContent className="border" align="start">
-          <DropdownMenuButton onClick={openEditDialog}>
-            Edit info
+          <DropdownMenuButton asChild>
+            <Link to={mylistInfoEditRoute(mylistId)}>Edit info</Link>
           </DropdownMenuButton>
 
           <DropdownMenuButton asChild>
@@ -71,8 +76,8 @@ export const MylistDropDownMenu = ({
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuButton onClick={openDeleteDialog}>
-            Delete
+          <DropdownMenuButton asChild>
+            <Link to={mylistDeleteRoute(mylistId)}>Delete</Link>
           </DropdownMenuButton>
         </DropdownMenuContent>
       </DropdownMenu>

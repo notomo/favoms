@@ -17,6 +17,36 @@ export const isMylistsEditRoute = (searchParams: URLSearchParams) => {
 
 export const allItemsRoute = `/collection/all` as const;
 
+const mylistDialogKey = "dialog" as const;
+const editDialog = "edit" as const;
+const deleteDialog = "delete" as const;
+export type DialogType = typeof editDialog | typeof deleteDialog | undefined;
+
+export const getMylistDialogType = (
+  searchParams: URLSearchParams,
+): DialogType => {
+  const dialogType = searchParams.get(mylistDialogKey);
+  if (dialogType === editDialog) {
+    return editDialog;
+  }
+  if (dialogType === deleteDialog) {
+    return deleteDialog;
+  }
+  return undefined;
+};
+
+export const mylistInfoEditRoute = (mylistId: number) => {
+  const path = mylistRoute(mylistId);
+  const searchParams = new URLSearchParams({ [mylistDialogKey]: editDialog });
+  return `${path}?${searchParams.toString()}` as const;
+};
+
+export const mylistDeleteRoute = (mylistId: number) => {
+  const path = mylistRoute(mylistId);
+  const searchParams = new URLSearchParams({ [mylistDialogKey]: deleteDialog });
+  return `${path}?${searchParams.toString()}` as const;
+};
+
 export const mylistRoute = (mylistId: number) => {
   return `/collection/mylist/${mylistId}` as const;
 };
