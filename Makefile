@@ -26,6 +26,7 @@ typecheck:
 	npx tsc
 format:
 	npx prettier . --write 
+check: typecheck lint build
 
 prisma_generate:
 	npx prisma generate
