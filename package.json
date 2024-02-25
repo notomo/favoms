@@ -56,7 +56,6 @@
     "tsx": "^4.7.1",
     "typescript": "^5.3.3",
     "vite": "^5.1.4",
-    "vite-env-only": "^2.2.0",
     "vite-tsconfig-paths": "^4.3.1"
   },
   "engines": {

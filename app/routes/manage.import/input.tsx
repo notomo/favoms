@@ -4,6 +4,7 @@ import { FieldMetadata, getInputProps } from "@conform-to/react";
 import { Input } from "~/component/ui/input";
 import { Button } from "~/component/ui/button";
 import { Loader2 } from "lucide-react";
+import { ErrorMessage } from "~/component/ui/form";
 
 export const SubmitButton = ({
   isSubmitting,
@@ -48,11 +49,4 @@ export const FileInput = ({
       <ErrorMessage errors={field.errors} />
     </div>
   );
-};
-
-const ErrorMessage = ({ errors }: { errors: string[] | undefined }) => {
-  if (errors === undefined) {
-    return null;
-  }
-  return <div className="text-orange-200">{errors}</div>;
 };

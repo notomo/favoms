@@ -2,6 +2,7 @@ import {
   Await,
   Outlet,
   useLoaderData,
+  useNavigation,
   useSearchParams,
 } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scroll-area";
@@ -9,7 +10,6 @@ import { allItemsRoute, isMylistsEditRoute } from "~/route_path";
 import { CollectionLink } from "./collection_link";
 import { type MetaFunction } from "@remix-run/node";
 import { CollectionsDropDownMenu } from "./collections_dropdown_menu";
-import { createMylistAction } from "~/routes/collection/create_mylist_dialog";
 import {
   DoneMylistsEditButton,
   EditableMylistRows,
@@ -18,6 +18,7 @@ import { Mylist, getMylists } from "./loader";
 import { MylistLinks } from "~/routes/collection/mylist_links";
 import { Suspense, useState } from "react";
 import { Loading } from "~/component/ui/loading";
+import { createMylistAction } from "~/routes/collection/create_mylist_action";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Collections | favoms" }];
@@ -32,9 +33,14 @@ const AllItemsCollectionLink = () => {
 };
 
 const Collections = ({ mylists }: { mylists: Mylist[] }) => {
+  const navigation = useNavigation();
+
   return (
     <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
-      <CollectionsDropDownMenu className="self-center justify-self-end" />
+      <CollectionsDropDownMenu
+        key={navigation.location?.key}
+        className="self-center justify-self-end"
+      />
 
       <ScrollArea className="border border-gray-600">
         <nav className="h-full">

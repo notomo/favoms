@@ -1,37 +1,48 @@
 import { Label } from "~/component/ui/label";
-import { Form } from "@remix-run/react";
+import { useFetcher } from "@remix-run/react";
 import { Button } from "~/component/ui/button";
 import { DialogFooter, DialogHeader, DialogTitle } from "~/component/ui/dialog";
 import { Input } from "~/component/ui/input";
-import { ActionFunctionArgs, redirect } from "@remix-run/node";
-import { mylistRoute } from "~/route_path";
-import { createMylist } from "~/.server/persist/mylist";
-import { serverOnly$ } from "vite-env-only";
-
-export const createMylistAction = serverOnly$(
-  async ({ request }: ActionFunctionArgs) => {
-    const formData = await request.formData();
-    const mylistName = formData.get("name")?.toString();
-    const mylist = await createMylist(mylistName!);
-    return redirect(mylistRoute(mylist.id));
-  },
-);
+import { getInputProps, useForm } from "@conform-to/react";
+import { parseWithValibot } from "conform-to-valibot";
+import { createMylistSchema } from "~/routes/collection/schema";
+import { ActionData } from "~/routes/collection/create_mylist_action";
+import { ErrorMessage } from "~/component/ui/form";
 
 export const CreateMylistDialog = () => {
+  const fetcher = useFetcher<ActionData>();
+
+  const [form, fields] = useForm({
+    lastResult: fetcher.data,
+    onValidate({ formData }) {
+      return parseWithValibot(formData, { schema: createMylistSchema });
+    },
+    shouldValidate: "onInput",
+    defaultValue: {
+      name: "New",
+    },
+  });
+
   return (
-    <Form method="post" className="flex flex-col gap-4">
+    <fetcher.Form
+      method="post"
+      id={form.id}
+      onSubmit={form.onSubmit}
+      className="flex flex-col gap-4"
+    >
       <DialogHeader>
         <DialogTitle>New mylist</DialogTitle>
       </DialogHeader>
 
       <div className="flex flex-col gap-2">
-        <Label htmlFor="name">Name</Label>
-        <Input id="name" name="name" required type="text" defaultValue="New" />
+        <Label htmlFor={fields.name.id}>Name</Label>
+        <Input {...getInputProps(fields.name, { type: "text" })} />
+        <ErrorMessage errors={fields.name.errors} />
       </div>
 
       <DialogFooter>
         <Button type="submit">Save</Button>
       </DialogFooter>
-    </Form>
+    </fetcher.Form>
   );
 };

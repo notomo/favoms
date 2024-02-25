@@ -19,12 +19,12 @@ export const CollectionsDropDownMenu = ({
 }) => {
   const [dialogIsOpened, setDialogIsOpened] = useState(false);
   const openDialog = () => setDialogIsOpened(true);
-  const close = () => setDialogIsOpened(false);
+  const closeDialog = () => setDialogIsOpened(false);
 
   return (
     <div className={className}>
-      <Dialog open={dialogIsOpened} onOpenChange={close}>
-        <DialogContent onSubmit={close}>
+      <Dialog open={dialogIsOpened} onOpenChange={closeDialog}>
+        <DialogContent>
           <CreateMylistDialog />
         </DialogContent>
       </Dialog>
