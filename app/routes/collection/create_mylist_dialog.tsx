@@ -8,6 +8,7 @@ import { parseWithValibot } from "conform-to-valibot";
 import { createMylistSchema } from "~/routes/collection/schema";
 import { ActionData } from "~/routes/collection/create_mylist_action";
 import { ErrorMessage } from "~/component/ui/form";
+import { LoadingOr } from "~/component/ui/loading";
 
 export const CreateMylistDialog = () => {
   const fetcher = useFetcher<ActionData>();
@@ -22,6 +23,8 @@ export const CreateMylistDialog = () => {
       name: "New",
     },
   });
+
+  const isSubmitting = fetcher.state === "submitting";
 
   return (
     <fetcher.Form
@@ -41,7 +44,9 @@ export const CreateMylistDialog = () => {
       </div>
 
       <DialogFooter>
-        <Button type="submit">Save</Button>
+        <Button type="submit" disabled={isSubmitting}>
+          <LoadingOr isLoading={isSubmitting}>Save</LoadingOr>
+        </Button>
       </DialogFooter>
     </fetcher.Form>
   );

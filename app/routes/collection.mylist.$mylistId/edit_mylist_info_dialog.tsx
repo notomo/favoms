@@ -8,7 +8,7 @@ import { parseWithValibot } from "conform-to-valibot";
 import { editMylistInfoSchema } from "~/routes/collection.mylist.$mylistId/schema";
 import { EditMylistInfoActionData } from "~/routes/collection.mylist.$mylistId/edit_mylist_info_action";
 import { ErrorMessage } from "~/component/ui/form";
-import { Loader2 } from "lucide-react";
+import { LoadingOr } from "~/component/ui/loading";
 
 export const EditMylistInfoDialog = ({
   mylistName,
@@ -50,7 +50,7 @@ export const EditMylistInfoDialog = ({
 
       <DialogFooter>
         <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? <Loader2 className="animate-spin" /> : "Save"}
+          <LoadingOr isLoading={isSubmitting}>Save</LoadingOr>
         </Button>
       </DialogFooter>
     </fetcher.Form>

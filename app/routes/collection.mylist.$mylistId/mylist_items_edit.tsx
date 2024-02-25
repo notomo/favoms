@@ -2,6 +2,7 @@ import { useFetcher } from "@remix-run/react";
 import { Check, Trash, Undo } from "lucide-react";
 import { FormEvent } from "react";
 import { Button } from "~/component/ui/button";
+import { LoadingOr } from "~/component/ui/loading";
 import { ItemRow } from "~/routes/collection.all/item_link";
 import { MylistItem } from "~/routes/collection.mylist.$mylistId/loader";
 
@@ -23,10 +24,19 @@ export const DoneMylistItemsEditButton = ({
     e.preventDefault();
   };
 
+  const isSubmitting = fetcher.state === "submitting";
+
   return (
     <fetcher.Form onSubmit={onSubmit}>
-      <Button type="submit" variant="default" size="icon">
-        <Check className="h-4 w-4" />
+      <Button
+        type="submit"
+        variant="default"
+        size="icon"
+        disabled={isSubmitting}
+      >
+        <LoadingOr isLoading={isSubmitting}>
+          <Check className="h-4 w-4" />
+        </LoadingOr>
       </Button>
     </fetcher.Form>
   );

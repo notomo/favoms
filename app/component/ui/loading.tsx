@@ -7,3 +7,13 @@ export const Loading = () => {
     </div>
   );
 };
+
+export const LoadingOr = ({
+  isLoading,
+  children,
+}: React.PropsWithChildren<{ isLoading: boolean }>) => {
+  if (!isLoading) {
+    return children;
+  }
+  return <Loader2 className="animate-spin" />;
+};

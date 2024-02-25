@@ -3,8 +3,8 @@ import { Label } from "~/component/ui/label";
 import { FieldMetadata, getInputProps } from "@conform-to/react";
 import { Input } from "~/component/ui/input";
 import { Button } from "~/component/ui/button";
-import { Loader2 } from "lucide-react";
 import { ErrorMessage } from "~/component/ui/form";
+import { LoadingOr } from "~/component/ui/loading";
 
 export const SubmitButton = ({
   isSubmitting,
@@ -12,7 +12,7 @@ export const SubmitButton = ({
 }: React.PropsWithChildren<{ isSubmitting: boolean }>) => {
   return (
     <Button className="text-lg" type="submit" size="lg" disabled={isSubmitting}>
-      {isSubmitting ? <Loader2 className="animate-spin" /> : children}
+      <LoadingOr isLoading={isSubmitting}>{children}</LoadingOr>
     </Button>
   );
 };

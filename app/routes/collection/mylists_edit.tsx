@@ -14,6 +14,7 @@ import { CSS } from "@dnd-kit/utilities";
 import clsx from "clsx";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import { LoadingOr } from "~/component/ui/loading";
 
 export const DoneMylistsEditButton = ({
   mylistIds,
@@ -32,10 +33,19 @@ export const DoneMylistsEditButton = ({
     e.preventDefault();
   };
 
+  const isSubmitting = fetcher.state === "submitting";
+
   return (
     <fetcher.Form onSubmit={onSubmit} className={className}>
-      <Button type="submit" variant="default" size="icon">
-        <Check className="h-4 w-4" />
+      <Button
+        type="submit"
+        variant="default"
+        size="icon"
+        disabled={isSubmitting}
+      >
+        <LoadingOr isLoading={isSubmitting}>
+          <Check className="h-4 w-4" />
+        </LoadingOr>
       </Button>
     </fetcher.Form>
   );

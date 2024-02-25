@@ -1,4 +1,4 @@
-import { Form } from "@remix-run/react";
+import { useFetcher } from "@remix-run/react";
 import { Button } from "~/component/ui/button";
 import {
   DialogDescription,
@@ -6,10 +6,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "~/component/ui/dialog";
+import { LoadingOr } from "~/component/ui/loading";
 
 export const DeleteMylistDialog = () => {
+  const fetcher = useFetcher();
+  const isSubmitting = fetcher.state === "submitting";
+
   return (
-    <Form method="delete" action="destroy">
+    <fetcher.Form method="delete" action="destroy">
       <DialogHeader>
         <DialogTitle>Confirm</DialogTitle>
         <DialogDescription>
@@ -17,10 +21,10 @@ export const DeleteMylistDialog = () => {
         </DialogDescription>
       </DialogHeader>
       <DialogFooter>
-        <Button type="submit" variant="destructive">
-          Delete
+        <Button type="submit" variant="destructive" disabled={isSubmitting}>
+          <LoadingOr isLoading={isSubmitting}>Delete</LoadingOr>
         </Button>
       </DialogFooter>
-    </Form>
+    </fetcher.Form>
   );
 };
