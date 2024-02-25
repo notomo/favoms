@@ -54,7 +54,12 @@ const MylistItemRows = ({
             willBeRemovedItemIds={willBeRemovedItemIds}
           />
         ) : (
-          <MylistDropDownMenu mylistId={mylistId} mylistName={mylistName} />
+          <MylistDropDownMenu
+            // TODO: key from url params
+            key={`${mylistId}-${mylistName}`}
+            mylistId={mylistId}
+            mylistName={mylistName}
+          />
         )}
       </div>
 

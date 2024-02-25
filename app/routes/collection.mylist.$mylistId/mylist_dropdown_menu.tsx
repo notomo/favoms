@@ -48,7 +48,7 @@ export const MylistDropDownMenu = ({
   return (
     <>
       <Dialog open={dialogType !== undefined} onOpenChange={close}>
-        <DialogContent onSubmit={close}>
+        <DialogContent>
           <OneDialog mylistName={mylistName} dialogType={dialogType} />
         </DialogContent>
       </Dialog>
