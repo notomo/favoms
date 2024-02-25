@@ -42,7 +42,7 @@ const Collections = ({ mylists }: { mylists: Mylist[] }) => {
         className="self-center justify-self-end"
       />
 
-      <ScrollArea className="border border-gray-600">
+      <ScrollArea className="border">
         <nav className="h-full">
           <ul className="flex h-full flex-col">
             <AllItemsCollectionLink />
@@ -70,7 +70,7 @@ const EditableCollections = ({ mylists }: { mylists: Mylist[] }) => {
         className="self-center justify-self-end"
       />
 
-      <ScrollArea className="border border-gray-600">
+      <ScrollArea className="border">
         <nav className="h-full">
           <ul className="flex h-full flex-col">
             <AllItemsCollectionLink />

@@ -60,7 +60,7 @@ export const MylistDropDownMenu = ({
           </Button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent className="border border-gray-600" align="start">
+        <DropdownMenuContent className="border" align="start">
           <DropdownMenuButton onClick={openEditDialog}>
             Edit info
           </DropdownMenuButton>

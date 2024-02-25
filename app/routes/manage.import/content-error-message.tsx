@@ -13,7 +13,7 @@ export const ContentErrorMessage = ({ error }: { error?: string }) => {
       <Textarea
         readOnly
         id="errorMessage"
-        className="h-full w-full border border-gray-600 text-xl"
+        className="h-full w-full border text-xl"
         value={message}
       />
     </div>

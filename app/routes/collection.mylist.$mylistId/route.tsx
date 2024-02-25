@@ -63,7 +63,7 @@ const MylistItemRows = ({
         )}
       </div>
 
-      <ScrollArea className="border border-gray-600">
+      <ScrollArea className="border">
         <ul className="flex h-full flex-col">
           {editable ? (
             <EditableItemRows

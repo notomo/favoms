@@ -35,7 +35,7 @@ const ItemRows = ({ items }: { items: Item[] }) => {
         </Button>
       </div>
 
-      <ScrollArea className="border border-gray-600">
+      <ScrollArea className="border">
         <ul className="flex h-full flex-col">
           {items.map(({ id, name }) => {
             const path = collectionItemRoute(id);

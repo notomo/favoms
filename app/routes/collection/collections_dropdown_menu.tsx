@@ -36,7 +36,7 @@ export const CollectionsDropDownMenu = ({
           </Button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent className="border border-gray-600" align="start">
+        <DropdownMenuContent className="border" align="start">
           <DropdownMenuButton onClick={openDialog}>New</DropdownMenuButton>
 
           <DropdownMenuButton asChild>
