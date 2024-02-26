@@ -1,0 +1,25 @@
+name: Delete GAE old versions
+on:
+  schedule:
+    - cron: "0 15 * * 0"
+  workflow_dispatch:
+
+jobs:
+  delete-gae-old-versions:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/708563497308/locations/global/workloadIdentityPools/favoms-pool/providers/github-actions
+          service_account: favoms-delivery@favoms.iam.gserviceaccount.com
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - run: make delete_old_versions

@@ -56,6 +56,9 @@ _deploy: build
 deploy: _deploy FORCE
 	cd deploy; gcloud --project favoms app deploy --stop-previous-version --quiet
 
+delete_old_versions:
+	gcloud --project=favoms app versions list --format="value(version.id)" --sort-by="~version.createTime" | tail -n +5 | xargs --no-run-if-empty gcloud app versions delete --quiet --project=favoms --service=default
+
 PROJECT:=favoms
 setup_terraform_backend:
 	gsutil mb -b on -c standard -p ${PROJECT} -l us-west1 gs://favoms-tfstate
