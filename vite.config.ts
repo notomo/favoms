@@ -1,7 +1,8 @@
 import { vitePlugin as remix } from "@remix-run/dev";
-import { defineConfig, loadEnv } from "vite";
+import { defineConfig, loadEnv, type ViteDevServer } from "vite";
 import { installGlobals } from "@remix-run/node";
 import tsconfigPaths from "vite-tsconfig-paths";
+import morgan from "morgan";
 
 installGlobals();
 
@@ -14,6 +15,17 @@ export default defineConfig(({ mode }) => {
     define: {
       "process.env": env,
     },
-    plugins: [remix(), tsconfigPaths()],
+    plugins: [morganPlugin(), remix(), tsconfigPaths()],
   };
 });
+
+function morganPlugin() {
+  return {
+    name: "morgan-plugin",
+    configureServer(server: ViteDevServer) {
+      return () => {
+        server.middlewares.use(morgan("tiny"));
+      };
+    },
+  };
+}

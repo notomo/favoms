@@ -20,13 +20,13 @@ update_remix:
 	rm -f ./app/entry.server.tsx
 	npx remix reveal entry.server
 
+check: typecheck lint build
 lint:
 	npx eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .
 typecheck:
 	npx tsc
 format:
 	npx prettier . --write 
-check: typecheck lint build
 
 prisma_generate:
 	npx prisma generate
