@@ -2,7 +2,7 @@ import type { ActionFunctionArgs } from "@remix-run/node";
 import { parseWithValibot } from "conform-to-valibot";
 import { safeParse, flatten } from "valibot";
 import { json, redirect, useActionData } from "@remix-run/react";
-import { importRoute } from "~/route_path";
+import { importRoute } from "~/routePath";
 import { importItems } from "~/.server/persist/item";
 import { fileSchema, schema } from "./schema";
 

@@ -1,4 +1,4 @@
-import { CreateMylistDialog } from "./create_mylist_dialog";
+import { CreateMylistDialog } from "./createMylistDialog";
 import { Button } from "~/component/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import {
@@ -6,10 +6,10 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
   DropdownMenuButton,
-} from "~/component/ui/dropdown-menu";
+} from "~/component/ui/dropdownMenu";
 import { useState } from "react";
 import { DialogContent, Dialog } from "~/component/ui/dialog";
-import { mylistsEditRoute } from "~/route_path";
+import { mylistsEditRoute } from "~/routePath";
 import { Link } from "@remix-run/react";
 
 export const CollectionsDropDownMenu = ({

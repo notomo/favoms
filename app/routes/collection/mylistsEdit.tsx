@@ -3,7 +3,7 @@ import { Check, GripVertical } from "lucide-react";
 import { FormEvent } from "react";
 import { Button } from "~/component/ui/button";
 import { type Mylist } from "./loader";
-import { CollectionRow } from "~/routes/collection/collection_link";
+import { CollectionRow } from "~/routes/collection/collectionLink";
 import {
   SortableContext,
   arrayMove,
@@ -29,7 +29,7 @@ export const DoneMylistsEditButton = ({
     const data = {
       mylistIds: mylistIds.join(","),
     };
-    fetcher.submit(data, { method: "POST", action: "done_mylists_edit" });
+    fetcher.submit(data, { method: "POST", action: "doneMylistsEdit" });
     e.preventDefault();
   };
 

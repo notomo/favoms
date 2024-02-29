@@ -5,8 +5,8 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from "~/component/ui/navigation-menu";
-import { allItemsRoute, homeRoute, importRoute } from "./route_path";
+} from "~/component/ui/navigationMenu";
+import { allItemsRoute, homeRoute, importRoute } from "./routePath";
 import { cn } from "~/lib/util";
 
 const MenuLink = ({

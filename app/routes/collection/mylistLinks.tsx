@@ -1,5 +1,5 @@
-import { mylistRoute } from "~/route_path";
-import { CollectionLink } from "./collection_link";
+import { mylistRoute } from "~/routePath";
+import { CollectionLink } from "./collectionLink";
 import { Mylist } from "./loader";
 
 export const MylistLinks = ({ mylists }: { mylists: Mylist[] }) => {

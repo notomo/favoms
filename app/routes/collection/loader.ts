@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, defer, redirect } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { listMylists } from "~/.server/persist/mylist";
-import { allItemsRoute, collectionRoute } from "~/route_path";
+import { allItemsRoute, collectionRoute } from "~/routePath";
 
 export const getMylists = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);

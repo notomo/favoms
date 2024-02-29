@@ -6,8 +6,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import { GlobalHeader } from "./global_header";
-export { ErrorBoundary } from "./error_boundary";
+import { GlobalHeader } from "./globalHeader";
+export { ErrorBoundary } from "./errorBoundary";
 
 import stylesheet from "~/tailwind.css?url";
 export const links: LinksFunction = () => [

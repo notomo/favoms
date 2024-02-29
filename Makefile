@@ -51,7 +51,7 @@ _deploy: build
 	cp -rf ./build/* ./deploy/build
 	mkdir -p ./deploy/prisma
 	cp -f ./prisma/schema.prisma ./deploy/prisma
-	cp -rf ./app.yaml ./app_secret.yaml package.json package-lock.json ./deploy
+	cp -rf ./app.yaml ./app-secret.yaml package.json package-lock.json ./deploy
 
 deploy: _deploy FORCE
 	cd deploy; gcloud --project favoms app deploy --stop-previous-version --quiet

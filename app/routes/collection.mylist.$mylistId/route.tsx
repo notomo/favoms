@@ -6,15 +6,12 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import { Suspense, useEffect, useState } from "react";
-import { ScrollArea } from "~/component/ui/scroll-area";
-import { getMylistDialogType, isMylistItemsEditRoute } from "~/route_path";
-import { MylistDropDownMenu } from "./mylist_dropdown_menu";
-import {
-  DoneMylistItemsEditButton,
-  EditableItemRows,
-} from "./mylist_items_edit";
+import { ScrollArea } from "~/component/ui/scrollArea";
+import { getMylistDialogType, isMylistItemsEditRoute } from "~/routePath";
+import { MylistDropDownMenu } from "./mylistDropdownMenu";
+import { DoneMylistItemsEditButton, EditableItemRows } from "./mylistItemsEdit";
 import { MylistItem, getMylistWithItems } from "./loader";
-import { ItemLinks } from "./mylist_item_links";
+import { ItemLinks } from "./mylistItemLinks";
 import { Loading } from "~/component/ui/loading";
 
 export const meta: MetaFunction = ({ params }) => {

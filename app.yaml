@@ -11,7 +11,7 @@ build_env_variables:
   GOOGLE_NODE_RUN_SCRIPTS: ''
 
 includes:
-  - app_secret.yaml
+  - app-secret.yaml
 
 handlers:
   - url: /build

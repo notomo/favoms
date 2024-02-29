@@ -1,6 +1,6 @@
 import { LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { ScrollArea } from "~/component/ui/scroll-area";
+import { ScrollArea } from "~/component/ui/scrollArea";
 import { getItem } from "~/.server/persist/item";
 import { validateId } from "~/lib/schema/validation/params";
 

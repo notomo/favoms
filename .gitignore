@@ -6,4 +6,4 @@ node_modules
 .env
 
 /deploy
-/app_secret.yaml
+/app-secret.yaml

@@ -3,7 +3,7 @@ import { useActionData } from "@remix-run/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { updateMylist } from "~/.server/persist/mylist";
 import { validateId } from "~/lib/schema/validation/params";
-import { mylistRoute } from "~/route_path";
+import { mylistRoute } from "~/routePath";
 import { editMylistInfoSchema } from "~/routes/collection.mylist.$mylistId/schema";
 
 export const editMylistInfoAction = async ({

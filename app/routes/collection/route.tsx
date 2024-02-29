@@ -5,20 +5,20 @@ import {
   useNavigation,
   useSearchParams,
 } from "@remix-run/react";
-import { ScrollArea } from "~/component/ui/scroll-area";
-import { allItemsRoute, isMylistsEditRoute } from "~/route_path";
-import { CollectionLink } from "./collection_link";
+import { ScrollArea } from "~/component/ui/scrollArea";
+import { allItemsRoute, isMylistsEditRoute } from "~/routePath";
+import { CollectionLink } from "./collectionLink";
 import { type MetaFunction } from "@remix-run/node";
-import { CollectionsDropDownMenu } from "./collections_dropdown_menu";
+import { CollectionsDropDownMenu } from "./collectionsDropdownMenu";
 import {
   DoneMylistsEditButton,
   EditableMylistRows,
-} from "~/routes/collection/mylists_edit";
+} from "~/routes/collection/mylistsEdit";
 import { Mylist, getMylists } from "./loader";
-import { MylistLinks } from "~/routes/collection/mylist_links";
+import { MylistLinks } from "~/routes/collection/mylistLinks";
 import { Suspense, useState } from "react";
 import { Loading } from "~/component/ui/loading";
-import { createMylistAction } from "~/routes/collection/create_mylist_action";
+import { createMylistAction } from "~/routes/collection/createMylistAction";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Collections | favoms" }];

@@ -1,8 +1,8 @@
 import { LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import { ScrollArea } from "~/component/ui/scroll-area";
+import { ScrollArea } from "~/component/ui/scrollArea";
 import { getItem } from "~/.server/persist/item";
-import { itemRoute } from "~/route_path";
+import { itemRoute } from "~/routePath";
 import { validateId } from "~/lib/schema/validation/params";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {

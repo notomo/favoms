@@ -1,6 +1,6 @@
 import type { MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
-import { allItemsRoute } from "~/route_path";
+import { allItemsRoute } from "~/routePath";
 
 export const meta: MetaFunction = () => {
   return [{ title: "favoms" }];

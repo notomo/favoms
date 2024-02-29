@@ -5,7 +5,7 @@ import { useFetcher } from "@remix-run/react";
 import { ActionData, importRun } from "./action";
 import { schema } from "./schema";
 import { BooleanInput, FileInput, SubmitButton } from "./input";
-import { ContentErrorMessage } from "~/routes/manage.import/content-error-message";
+import { ContentErrorMessage } from "~/routes/manage.import/contentErrorMessage";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Import | favoms" }];

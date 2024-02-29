@@ -6,9 +6,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuButton,
-} from "~/component/ui/dropdown-menu";
-import { EditMylistInfoDialog } from "./edit_mylist_info_dialog";
-import { DeleteMylistDialog } from "~/routes/collection.mylist.$mylistId/delete_mylist_dialog";
+} from "~/component/ui/dropdownMenu";
+import { EditMylistInfoDialog } from "./editMylistInfoDialog";
+import { DeleteMylistDialog } from "~/routes/collection.mylist.$mylistId/deleteMylistDialog";
 import { Dialog, DialogContent } from "~/component/ui/dialog";
 import { Link, useNavigate } from "@remix-run/react";
 import {
@@ -17,7 +17,7 @@ import {
   mylistInfoEditRoute,
   mylistItemsEditRoute,
   mylistRoute,
-} from "~/route_path";
+} from "~/routePath";
 
 const OneDialog = ({
   mylistName,

@@ -32,11 +32,11 @@ jobs:
 
       - uses: google-github-actions/setup-gcloud@v2
 
-      - run: envsubst < app_secret.yaml.sample > app_secret.yaml
+      - run: envsubst < app-secret.yaml.sample > app-secret.yaml
         env:
           FAVOMS_DB_URL: ${{ secrets.FAVOMS_DB_URL }}
 
       - run: make deploy
 
-      - run: rm -rf ./app_secret.yaml ./deploy
+      - run: rm -rf ./app-secret.yaml ./deploy
         if: ${{ always() }}

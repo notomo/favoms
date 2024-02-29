@@ -3,7 +3,7 @@ import { Check, Trash, Undo } from "lucide-react";
 import { FormEvent } from "react";
 import { Button } from "~/component/ui/button";
 import { LoadingOr } from "~/component/ui/loading";
-import { ItemRow } from "~/routes/collection.all/item_link";
+import { ItemRow } from "~/routes/collection.all/itemLink";
 import { MylistItem } from "~/routes/collection.mylist.$mylistId/loader";
 
 export const DoneMylistItemsEditButton = ({
@@ -20,7 +20,7 @@ export const DoneMylistItemsEditButton = ({
         .map(([id]) => id)
         .join(","),
     };
-    fetcher.submit(data, { method: "POST", action: "done_items_edit" });
+    fetcher.submit(data, { method: "POST", action: "doneItemsEdit" });
     e.preventDefault();
   };
 

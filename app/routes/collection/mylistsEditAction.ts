@@ -2,7 +2,7 @@ import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { reorderMylists } from "~/.server/persist/mylist";
-import { collectionRoute } from "~/route_path";
+import { collectionRoute } from "~/routePath";
 import { editMylistsSchema } from "~/routes/collection/schema";
 
 export const doneMylistsEditAction = async ({
