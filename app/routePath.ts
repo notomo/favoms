@@ -15,7 +15,22 @@ export const isMylistsEditRoute = (searchParams: URLSearchParams) => {
   return searchParams.get(editKey) === editMylistsValue;
 };
 
+const pageKey = "page" as const;
+
 export const allItemsRoute = `/collection/all` as const;
+
+export const allItemsWithPageRoute = (page: number) => {
+  const searchParams = new URLSearchParams({ [pageKey]: page.toString() });
+  return `${allItemsRoute}?${searchParams.toString()}` as const;
+};
+
+export const getPage = (searchParams: URLSearchParams): number => {
+  const page = searchParams.get(pageKey);
+  if (page) {
+    return Number(page);
+  }
+  return 1;
+};
 
 const mylistDialogKey = "dialog" as const;
 const editDialog = "edit" as const;

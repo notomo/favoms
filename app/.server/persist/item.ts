@@ -10,9 +10,17 @@ export async function getItem(id: number) {
   });
 }
 
-export async function listItems() {
+export async function listItems({
+  skip,
+  take,
+}: {
+  skip: number;
+  take: number;
+}) {
   return await prisma.item.findMany({
     where: {},
+    skip,
+    take,
   });
 }
 
