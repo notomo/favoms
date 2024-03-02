@@ -1,14 +1,26 @@
-export const homeRoute = "/" as const;
+const collectionPath = "collection" as const;
+const collectionAllPath = `${collectionPath}/all` as const;
+const itemPath = `item` as const;
+const collectionMylistPath = `${collectionPath}/mylist` as const;
+const collectionAllItemPath = `${collectionAllPath}/item` as const;
+const managePath = `manage` as const;
+const manageImportPath = `${managePath}/import` as const;
+
+export const homeRoute = () => {
+  return "/" as const;
+};
 
 const editKey = "edit" as const;
 const editItemsValue = "items" as const;
 const editMylistsValue = "mylists" as const;
 
-export const collectionRoute = "/collection" as const;
+export const collectionRoute = () => {
+  return `/${collectionPath}` as const;
+};
 
 export const mylistsEditRoute = () => {
-  const searchParams = new URLSearchParams({ [editKey]: editMylistsValue });
-  return `${allItemsRoute}?${searchParams.toString()}` as const;
+  const route = allItemsRoute();
+  return build(route, { [editKey]: editMylistsValue });
 };
 
 export const isMylistsEditRoute = (searchParams: URLSearchParams) => {
@@ -17,11 +29,13 @@ export const isMylistsEditRoute = (searchParams: URLSearchParams) => {
 
 const pageKey = "page" as const;
 
-export const allItemsRoute = `/collection/all` as const;
+export const allItemsRoute = () => {
+  return `/${collectionAllPath}` as const;
+};
 
 export const allItemsWithPageRoute = (page: number) => {
-  const searchParams = new URLSearchParams({ [pageKey]: page.toString() });
-  return `${allItemsRoute}?${searchParams.toString()}` as const;
+  const route = allItemsRoute();
+  return build(route, { [pageKey]: page.toString() });
 };
 
 export const getPage = (searchParams: URLSearchParams): number => {
@@ -51,25 +65,22 @@ export const getMylistDialogType = (
 };
 
 export const mylistInfoEditRoute = (mylistId: number) => {
-  const path = mylistRoute(mylistId);
-  const searchParams = new URLSearchParams({ [mylistDialogKey]: editDialog });
-  return `${path}?${searchParams.toString()}` as const;
+  const route = mylistRoute(mylistId);
+  return build(route, { [mylistDialogKey]: editDialog });
 };
 
 export const mylistDeleteRoute = (mylistId: number) => {
-  const path = mylistRoute(mylistId);
-  const searchParams = new URLSearchParams({ [mylistDialogKey]: deleteDialog });
-  return `${path}?${searchParams.toString()}` as const;
+  const route = mylistRoute(mylistId);
+  return build(route, { [mylistDialogKey]: deleteDialog });
 };
 
 export const mylistRoute = (mylistId: number) => {
-  return `/collection/mylist/${mylistId}` as const;
+  return `/${collectionMylistPath}/${mylistId}` as const;
 };
 
 export const mylistItemsEditRoute = (mylistId: number) => {
-  const path = mylistRoute(mylistId);
-  const searchParams = new URLSearchParams({ [editKey]: editItemsValue });
-  return `${path}?${searchParams.toString()}` as const;
+  const route = mylistRoute(mylistId);
+  return build(route, { [editKey]: editItemsValue });
 };
 
 export const isMylistItemsEditRoute = (searchParams: URLSearchParams) => {
@@ -77,17 +88,23 @@ export const isMylistItemsEditRoute = (searchParams: URLSearchParams) => {
 };
 
 export const mylistItemRoute = (mylistId: number, itemId: number) => {
-  return `/collection/mylist/${mylistId}/item/${itemId}` as const;
+  return `${mylistRoute(mylistId)}/${itemPath}/${itemId}` as const;
 };
 
 export const collectionItemRoute = (itemId: number, page: number) => {
-  const path = `/collection/all/item/${itemId}` as const;
-  const searchParams = new URLSearchParams({ [pageKey]: page.toString() });
-  return `${path}?${searchParams.toString()}` as const;
+  const route = `/${collectionAllItemPath}/${itemId}` as const;
+  return build(route, { [pageKey]: page.toString() });
 };
 
 export const itemRoute = (itemId: number) => {
-  return `/item/${itemId}` as const;
+  return `/${itemPath}/${itemId}` as const;
 };
 
-export const importRoute = `/manage/import/`;
+export const importRoute = () => {
+  return `/${manageImportPath}` as const;
+};
+
+const build = <T extends string>(route: T, params: Record<string, string>) => {
+  const searchParams = new URLSearchParams(params);
+  return `${route}?${searchParams.toString()}` as const;
+};

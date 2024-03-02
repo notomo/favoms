@@ -9,7 +9,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center text-3xl font-bold">
-      <Link to={allItemsRoute}>favoms</Link>
+      <Link to={allItemsRoute()}>favoms</Link>
     </div>
   );
 }

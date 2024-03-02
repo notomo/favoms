@@ -18,7 +18,7 @@ export const doneMylistsEditAction = async ({
 
   const mylistIds = submission.value.mylistIds;
   await reorderMylists(mylistIds);
-  return redirect(collectionRoute);
+  return redirect(collectionRoute());
 };
 
 export type DoneMylistsEditActionData = ReturnType<

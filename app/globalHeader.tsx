@@ -28,11 +28,11 @@ export const GlobalHeader = ({ className }: { className?: string }) => {
   return (
     <NavigationMenu className={cn("w-full", className)}>
       <NavigationMenuList>
-        <MenuLink to={homeRoute}>Home</MenuLink>
+        <MenuLink to={homeRoute()}>Home</MenuLink>
 
-        <MenuLink to={allItemsRoute}>Collection</MenuLink>
+        <MenuLink to={allItemsRoute()}>Collection</MenuLink>
 
-        <MenuLink to={importRoute}>Import</MenuLink>
+        <MenuLink to={importRoute()}>Import</MenuLink>
       </NavigationMenuList>
     </NavigationMenu>
   );

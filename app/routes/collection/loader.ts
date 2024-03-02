@@ -5,8 +5,8 @@ import { allItemsRoute, collectionRoute } from "~/routePath";
 
 export const getMylists = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
-  if (url.pathname === collectionRoute) {
-    return redirect(allItemsRoute);
+  if (url.pathname === collectionRoute()) {
+    return redirect(allItemsRoute());
   }
 
   const mylists = listMylists();

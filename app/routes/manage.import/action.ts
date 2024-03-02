@@ -37,7 +37,7 @@ export async function importRun({ request }: ActionFunctionArgs) {
     await importItems(upserts, submission.value.isReplace);
   }
 
-  return redirect(importRoute);
+  return redirect(importRoute());
 }
 
 export type ActionData = ReturnType<typeof useActionData<typeof importRun>>;

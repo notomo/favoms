@@ -6,5 +6,5 @@ import { collectionRoute } from "~/routePath";
 export const action = async ({ params }: ActionFunctionArgs) => {
   const mylistId = validateId(params.mylistId);
   await deleteMylist(mylistId);
-  return redirect(collectionRoute);
+  return redirect(collectionRoute());
 };

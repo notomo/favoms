@@ -29,7 +29,7 @@ export const action = createMylistAction;
 export const loader = getMylists;
 
 const AllItemsCollectionLink = () => {
-  return <CollectionLink path={allItemsRoute}>All</CollectionLink>;
+  return <CollectionLink path={allItemsRoute()}>All</CollectionLink>;
 };
 
 const Collections = ({ mylists }: { mylists: Mylist[] }) => {
