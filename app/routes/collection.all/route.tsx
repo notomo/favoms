@@ -1,11 +1,10 @@
-import { type MetaFunction, defer, LoaderFunctionArgs } from "@remix-run/node";
+import { type MetaFunction } from "@remix-run/node";
 import {
   Await,
   Outlet,
   useLoaderData,
   useSearchParams,
 } from "@remix-run/react";
-import { listItems } from "~/.server/persist/item";
 import { collectionItemRoute, getPage } from "~/routePath";
 import { ItemLink } from "./itemLink";
 import { Button } from "~/component/ui/button";
@@ -13,29 +12,13 @@ import { MoreHorizontal } from "lucide-react";
 import { Suspense, useState } from "react";
 import { Loading } from "~/component/ui/loading";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea";
+import { getItems } from "./loader";
 
 export const meta: MetaFunction = () => {
   return [{ title: "All | favoms" }];
 };
 
-const pageSize = 20;
-
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const searchParams = new URL(request.url).searchParams;
-  const page = getPage(searchParams);
-
-  const skip = pageSize * (page - 1);
-  const take = pageSize + 1;
-  const fetched = listItems({ skip, take: pageSize + 1 }).then((items) => {
-    return {
-      hasMorePage: items.length == take,
-      items: items.slice(0, pageSize),
-    };
-  });
-  return defer({
-    fetched,
-  });
-};
+export const loader = getItems;
 
 type Item = {
   id: number;
@@ -45,15 +28,15 @@ type Item = {
 const ItemRows = ({
   allItems,
   items,
-  setItems,
-  hasMorePage,
+  setAllItems,
+  hasNext,
   loadedPages,
   setLoadedPages,
 }: {
   allItems: Item[];
   items: Item[];
-  setItems: (items: Item[]) => void;
-  hasMorePage: boolean;
+  setAllItems: (items: Item[]) => void;
+  hasNext: boolean;
   loadedPages: Record<number, boolean>;
   setLoadedPages: (loadedPages: Record<number, boolean>) => void;
 }) => {
@@ -72,15 +55,15 @@ const ItemRows = ({
 
       <InfiniteScrollArea
         // TODO: load on scroll up
-        hasMorePage={hasMorePage}
         className="border"
-        page={page}
-        setPage={(nextPage) => {
-          setItems(currentItems);
+        hasNext={hasNext}
+        loadNext={() => {
+          setAllItems(currentItems);
           setLoadedPages({
             ...loadedPages,
             [page]: true,
           });
+          const nextPage = page + 1;
           setSearchParams({ page: nextPage.toString() });
         }}
       >
@@ -101,7 +84,7 @@ const ItemRows = ({
 
 export default function Page() {
   const loaderData = useLoaderData<typeof loader>();
-  const [allItems, setItems] = useState<Item[]>([]);
+  const [allItems, setAllItems] = useState<Item[]>([]);
   const [loadedPages, setLoadedPages] = useState<Record<number, boolean>>({});
 
   return (
@@ -111,9 +94,9 @@ export default function Page() {
           {(fetched) => (
             <ItemRows
               allItems={allItems}
+              setAllItems={setAllItems}
               items={fetched.items}
-              hasMorePage={fetched.hasMorePage}
-              setItems={setItems}
+              hasNext={fetched.hasNext}
               loadedPages={loadedPages}
               setLoadedPages={setLoadedPages}
             />

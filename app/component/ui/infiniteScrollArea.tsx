@@ -2,18 +2,7 @@ import { useEffect, useRef } from "react";
 import { Loading } from "~/component/ui/loading";
 import { ScrollArea } from "~/component/ui/scrollArea";
 
-export const InfiniteScrollArea = ({
-  hasMorePage,
-  className,
-  page,
-  setPage,
-  children,
-}: React.PropsWithChildren<{
-  hasMorePage: boolean;
-  className?: string;
-  page: number;
-  setPage: (page: number) => void;
-}>) => {
+const LoadingItem = ({ load }: { load: () => void }) => {
   const loadingWrapper = useRef(null);
 
   useEffect(() => {
@@ -22,7 +11,7 @@ export const InfiniteScrollArea = ({
         if (!entries[0].isIntersecting) {
           return;
         }
-        setPage(page + 1);
+        load();
       },
       {
         threshold: 0.0,
@@ -40,16 +29,29 @@ export const InfiniteScrollArea = ({
       }
       observer.unobserve(current);
     };
-  }, [loadingWrapper, page, setPage]);
+  }, [loadingWrapper, load]);
 
+  return (
+    <div ref={loadingWrapper}>
+      <Loading />
+    </div>
+  );
+};
+
+export const InfiniteScrollArea = ({
+  className,
+  hasNext,
+  loadNext,
+  children,
+}: React.PropsWithChildren<{
+  className?: string;
+  hasNext: boolean;
+  loadNext: () => void;
+}>) => {
   return (
     <ScrollArea className={className}>
       {children}
-      {hasMorePage ? (
-        <div ref={loadingWrapper}>
-          <Loading />
-        </div>
-      ) : null}
+      {hasNext ? <LoadingItem load={loadNext} /> : null}
     </ScrollArea>
   );
 };
