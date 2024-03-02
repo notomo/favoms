@@ -1,6 +1,6 @@
 import { NavLink } from "@remix-run/react";
 import { useEffect, useRef } from "react";
-import { cn } from "~/lib/util";
+import { cn } from "~/lib/tailwind";
 
 export const CollectionLink = ({
   children,

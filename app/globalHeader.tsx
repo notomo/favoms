@@ -7,7 +7,7 @@ import {
   navigationMenuTriggerStyle,
 } from "~/component/ui/navigationMenu";
 import { allItemsRoute, homeRoute, importRoute } from "./routePath";
-import { cn } from "~/lib/util";
+import { cn } from "~/lib/tailwind";
 
 const MenuLink = ({
   to,
