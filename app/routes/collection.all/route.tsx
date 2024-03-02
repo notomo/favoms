@@ -86,8 +86,7 @@ const ItemRows = ({
       >
         <ul className="flex h-full flex-col">
           {currentItems.map(({ id, name }) => {
-            // TODO: page parameter
-            const path = collectionItemRoute(id);
+            const path = collectionItemRoute(id, page);
             return (
               <ItemLink path={path} key={id}>
                 {name}

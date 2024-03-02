@@ -80,8 +80,10 @@ export const mylistItemRoute = (mylistId: number, itemId: number) => {
   return `/collection/mylist/${mylistId}/item/${itemId}` as const;
 };
 
-export const collectionItemRoute = (itemId: number) => {
-  return `/collection/all/item/${itemId}` as const;
+export const collectionItemRoute = (itemId: number, page: number) => {
+  const path = `/collection/all/item/${itemId}` as const;
+  const searchParams = new URLSearchParams({ [pageKey]: page.toString() });
+  return `${path}?${searchParams.toString()}` as const;
 };
 
 export const itemRoute = (itemId: number) => {
