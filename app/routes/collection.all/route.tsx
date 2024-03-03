@@ -5,7 +5,7 @@ import {
   useLoaderData,
   useSearchParams,
 } from "@remix-run/react";
-import { collectionItemRoute, getPage } from "~/routePath";
+import { collectionItemRoute } from "~/routePath";
 import { ItemLink } from "./itemLink";
 import { Button } from "~/component/ui/button";
 import { MoreHorizontal } from "lucide-react";
