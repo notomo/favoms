@@ -13,6 +13,7 @@ import { Suspense, useState } from "react";
 import { Loading } from "~/component/ui/loading";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea";
 import { getItems } from "./loader";
+import { PageRange } from "./pageRange";
 
 export const meta: MetaFunction = () => {
   return [{ title: "All | favoms" }];
@@ -32,17 +33,23 @@ const ItemRows = ({
   hasNext,
   loadedPages,
   setLoadedPages,
+  page,
 }: {
   allItems: Item[];
   items: Item[];
   setAllItems: (items: Item[]) => void;
   hasNext: boolean;
-  loadedPages: Record<number, boolean>;
-  setLoadedPages: (loadedPages: Record<number, boolean>) => void;
+  loadedPages: PageRange;
+  setLoadedPages: (loadedPages: PageRange) => void;
+  page: number;
 }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const page = getPage(searchParams);
-  const currentItems = loadedPages[page] ? allItems : [...allItems, ...items];
+  const [, setSearchParams] = useSearchParams();
+  const currentItems = [
+    ...(PageRange.isLower(loadedPages, page) ? items : []),
+    ...allItems,
+    ...(PageRange.isUpper(loadedPages, page) ? items : []),
+  ];
+  const hasPrevious = page > 1 && !PageRange.contains(loadedPages, page - 1);
 
   return (
     <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
@@ -54,17 +61,20 @@ const ItemRows = ({
       </div>
 
       <InfiniteScrollArea
-        // TODO: load on scroll up
         className="border"
-        hasNext={hasNext}
+        hasNext={hasNext && !PageRange.contains(loadedPages, page + 1)}
         loadNext={() => {
           setAllItems(currentItems);
-          setLoadedPages({
-            ...loadedPages,
-            [page]: true,
-          });
+          setLoadedPages(PageRange.load(loadedPages, page));
           const nextPage = page + 1;
           setSearchParams({ page: nextPage.toString() });
+        }}
+        hasPrevious={hasPrevious}
+        loadPrevious={() => {
+          setAllItems(currentItems);
+          setLoadedPages(PageRange.load(loadedPages, page));
+          const previousPage = page - 1;
+          setSearchParams({ page: previousPage.toString() });
         }}
       >
         <ul className="flex h-full flex-col">
@@ -85,7 +95,7 @@ const ItemRows = ({
 export default function Page() {
   const loaderData = useLoaderData<typeof loader>();
   const [allItems, setAllItems] = useState<Item[]>([]);
-  const [loadedPages, setLoadedPages] = useState<Record<number, boolean>>({});
+  const [loadedPages, setLoadedPages] = useState(PageRange.create());
 
   return (
     <div className="grid h-full w-full grid-cols-2 grid-rows-[100%] gap-x-4">
@@ -99,6 +109,7 @@ export default function Page() {
               hasNext={fetched.hasNext}
               loadedPages={loadedPages}
               setLoadedPages={setLoadedPages}
+              page={loaderData.page}
             />
           )}
         </Await>

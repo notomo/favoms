@@ -17,6 +17,7 @@ export const getItems = async ({ request }: LoaderFunctionArgs) => {
     };
   });
   return defer({
+    page,
     fetched,
   });
 };

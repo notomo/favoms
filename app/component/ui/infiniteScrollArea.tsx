@@ -42,14 +42,19 @@ export const InfiniteScrollArea = ({
   className,
   hasNext,
   loadNext,
+  hasPrevious,
+  loadPrevious,
   children,
 }: React.PropsWithChildren<{
   className?: string;
   hasNext: boolean;
   loadNext: () => void;
+  hasPrevious: boolean;
+  loadPrevious: () => void;
 }>) => {
   return (
     <ScrollArea className={className}>
+      {hasPrevious ? <LoadingItem load={loadPrevious} /> : null}
       {children}
       {hasNext ? <LoadingItem load={loadNext} /> : null}
     </ScrollArea>
