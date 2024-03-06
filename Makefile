@@ -28,6 +28,9 @@ typecheck:
 format:
 	npx prettier . --write 
 
+setup_local:
+	cp ./prisma/.env.sample ./prisma/.env
+
 prisma_generate:
 	npx prisma generate
 db_seed:
