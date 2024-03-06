@@ -27,6 +27,10 @@ typecheck:
 	npx tsc
 format:
 	npx prettier . --write 
+test_watch:
+	npx vitest
+test:
+	npx vitest run
 
 setup_local:
 	cp ./prisma/.env.sample ./prisma/.env

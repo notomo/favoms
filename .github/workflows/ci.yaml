@@ -22,6 +22,7 @@ jobs:
       - run: make typecheck
       - run: make build
       - run: make lint
+      - run: make test
 
   seed:
     runs-on: ubuntu-latest
