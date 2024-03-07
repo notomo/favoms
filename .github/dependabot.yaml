@@ -14,8 +14,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
-      day: "saturday"
+      interval: "daily"
       time: "12:00"
       timezone: "Asia/Tokyo"
     assignees:
