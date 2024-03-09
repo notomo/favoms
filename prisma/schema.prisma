@@ -15,10 +15,9 @@ model Mylist {
 }
 
 model MylistOrder {
-  id       Int    @id @default(autoincrement())
-  position Int    @unique @default(autoincrement())
+  mylistId Int    @id
   mylist   Mylist @relation(fields: [mylistId], references: [id], onDelete: Cascade)
-  mylistId Int    @unique
+  position Int    @unique @default(autoincrement())
 }
 
 model Item {
