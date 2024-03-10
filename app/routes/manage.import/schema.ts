@@ -1,5 +1,5 @@
 import { object, instance, mimeType, array } from "valibot";
-import { itemSchema } from "~/lib/schema/item";
+import { itemImportSchema } from "~/lib/schema/item";
 import { checkboxSchema } from "~/lib/schema/ui";
 
 export const schema = object({
@@ -9,5 +9,5 @@ export const schema = object({
 });
 
 export const fileSchema = object({
-  items: array(itemSchema),
+  items: array(itemImportSchema),
 });

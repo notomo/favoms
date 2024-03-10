@@ -1,9 +1,39 @@
-import { maxLength, minLength, object, string } from "valibot";
-import { idSchema } from "~/lib/schema/id";
+import {
+  object,
+  array,
+  union,
+  literal,
+  nullable,
+  date,
+  string,
+  minLength,
+  maxLength,
+  Output,
+} from "valibot";
 
-export const itemNameSchema = string([minLength(1), maxLength(1000)]);
+const nameSchema = ({ min, max }: { min: number; max: number }) => {
+  return string([minLength(min), maxLength(max)]);
+};
 
-export const itemSchema = object({
-  name: itemNameSchema,
-  id: idSchema,
+const bookAuthorSchema = object({
+  name: nameSchema({ min: 1, max: 1000 }),
+  nameRuby: nullable(nameSchema({ min: 0, max: 1000 }), ""),
 });
+
+const bookPublisherSchema = object({
+  name: nameSchema({ min: 1, max: 1000 }),
+  nameRuby: nullable(nameSchema({ min: 0, max: 1000 }), ""),
+});
+
+const bookSchema = object({
+  kind: literal("book"),
+  title: nameSchema({ min: 1, max: 1000 }),
+  titleRuby: nullable(nameSchema({ min: 0, max: 1000 }), ""),
+  authors: array(bookAuthorSchema),
+  publishers: array(bookPublisherSchema),
+  publishedAt: nullable(date()),
+});
+
+export const itemImportSchema = union([bookSchema]);
+
+export type ImportItem = Output<typeof itemImportSchema>;

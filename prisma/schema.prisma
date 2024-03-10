@@ -22,6 +22,37 @@ model MylistOrder {
 
 model Item {
   id      Int      @id @default(autoincrement())
-  name    String
   mylists Mylist[]
+
+  book Book?
+}
+
+model Book {
+  itemId Int  @id
+  item   Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  title     String
+  titleRuby String
+
+  authors     BookAuthor[]
+  publishers  BookPublisher[]
+  publishedAt DateTime?
+}
+
+model BookAuthor {
+  id Int @id @default(autoincrement())
+
+  name     String @unique
+  nameRuby String
+
+  books Book[]
+}
+
+model BookPublisher {
+  id Int @id @default(autoincrement())
+
+  name     String @unique
+  nameRuby String
+
+  books Book[]
 }

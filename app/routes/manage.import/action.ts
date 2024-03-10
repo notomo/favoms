@@ -30,11 +30,7 @@ export async function importRun({ request }: ActionFunctionArgs) {
   }
 
   if (!submission.value.dryRun) {
-    const upserts = validated.output.items.map((x) => ({
-      where: { id: x.id },
-      data: x,
-    }));
-    await importItems(upserts, submission.value.isReplace);
+    await importItems(validated.output.items, submission.value.isReplace);
   }
 
   return redirect(importRoute());

@@ -6,9 +6,12 @@ export type { Prisma } from "@prisma/client";
 type UpsertArgs<T> = Prisma.Args<T, "upsert">;
 export type UpsertWhere<T> = UpsertArgs<T>["where"];
 export type UpsertData<T> = UpsertArgs<T>["update"] & UpsertArgs<T>["create"];
+export type CreateData<T> = Prisma.Args<T, "create">["data"];
 
 const prismaClientSingleton = () => {
-  return new PrismaClient();
+  return new PrismaClient({
+    log: ["query", "info", "warn", "error"],
+  });
 };
 
 declare global {
