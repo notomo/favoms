@@ -9,9 +9,44 @@ export type UpsertData<T> = UpsertArgs<T>["update"] & UpsertArgs<T>["create"];
 export type CreateData<T> = Prisma.Args<T, "create">["data"];
 
 const prismaClientSingleton = () => {
-  return new PrismaClient({
-    log: ["query", "info", "warn", "error"],
+  const client = new PrismaClient<
+    Prisma.PrismaClientOptions,
+    "query" | "error" | "warn" | "info"
+  >({
+    log: [
+      {
+        emit: "event",
+        level: "query",
+      },
+      {
+        emit: "event",
+        level: "error",
+      },
+      {
+        emit: "stdout",
+        level: "warn",
+      },
+      {
+        emit: "stdout",
+        level: "info",
+      },
+    ],
   });
+  if (process.env.NODE_ENV !== "production") {
+    client.$on("query", (e) => {
+      console.log(JSON.stringify(e, null, 2));
+    });
+  }
+  client.$on("error", (e) => {
+    console.log(JSON.stringify(e, null, 2));
+  });
+  client.$on("warn", (e) => {
+    console.log(JSON.stringify(e, null, 2));
+  });
+  client.$on("info", (e) => {
+    console.log(JSON.stringify(e, null, 2));
+  });
+  return client;
 };
 
 declare global {
