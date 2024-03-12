@@ -6,7 +6,12 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "~/component/ui/navigationMenu";
-import { allItemsRoute, homeRoute, importRoute } from "./routePath";
+import {
+  allItemsRoute,
+  bookAuthorListRoute,
+  homeRoute,
+  importRoute,
+} from "./routePath";
 import { cn } from "~/lib/tailwind";
 
 const MenuLink = ({
@@ -31,6 +36,8 @@ export const GlobalHeader = ({ className }: { className?: string }) => {
         <MenuLink to={homeRoute()}>Home</MenuLink>
 
         <MenuLink to={allItemsRoute()}>Collection</MenuLink>
+
+        <MenuLink to={bookAuthorListRoute()}>Book Author</MenuLink>
 
         <MenuLink to={importRoute()}>Import</MenuLink>
       </NavigationMenuList>

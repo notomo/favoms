@@ -1,5 +1,5 @@
 import { ImportItem } from "~/lib/schema/item";
-import { prisma, UpsertData, UpsertWhere, CreateData } from "./prisma";
+import { prisma, UpsertData, UpsertWhere } from "./prisma";
 
 type Model = typeof prisma.item;
 
@@ -126,7 +126,7 @@ export async function importItems(items: ImportItem[], isReplace = false) {
   const bookPublisherRecord = toRecord(bookPublishers, "name");
 
   await prisma.$transaction([
-    prisma.item.deleteMany({ where: {} }),
+    ...(isReplace ? [prisma.item.deleteMany({ where: {} })] : []),
     ...items.map((x) => {
       return prisma.item.create({
         data: {

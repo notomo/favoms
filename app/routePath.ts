@@ -5,6 +5,8 @@ const collectionMylistPath = `${collectionPath}/mylist` as const;
 const collectionAllItemPath = `${collectionAllPath}/item` as const;
 const managePath = `manage` as const;
 const manageImportPath = `${managePath}/import` as const;
+const bookPath = `book` as const;
+const bookAuthorListPath = `${bookPath}/author` as const;
 
 export const homeRoute = () => {
   return "/" as const;
@@ -121,6 +123,18 @@ export const itemRoute = (itemId: number) => {
 
 export const importRoute = () => {
   return `/${manageImportPath}` as const;
+};
+
+export const bookAuthorListRoute = () => {
+  return `/${bookAuthorListPath}` as const;
+};
+
+export const bookAuthorRoute = (bookAuthorId: number) => {
+  return `${bookAuthorListRoute()}/${bookAuthorId}` as const;
+};
+
+export const bookAuthorBookRoute = (bookAuthorId: number, itemId: number) => {
+  return `${bookAuthorRoute(bookAuthorId)}/x/${itemId}` as const;
 };
 
 const build = <T extends string>(route: T, params: Record<string, string>) => {
