@@ -7,23 +7,30 @@ import {
   DropdownMenuTrigger,
   DropdownMenuButton,
 } from "~/component/ui/dropdownMenu";
-import { useState } from "react";
 import { DialogContent, Dialog } from "~/component/ui/dialog";
-import { mylistsEditRoute } from "~/routePath";
-import { Link } from "@remix-run/react";
+import {
+  CollectionDialogType,
+  allItemsRoute,
+  allItemsWithDialog,
+  mylistsEditRoute,
+} from "~/routePath";
+import { Link, useNavigate } from "@remix-run/react";
 
 export const CollectionsDropDownMenu = ({
   className,
+  dialogType,
 }: {
   className?: string;
+  dialogType: CollectionDialogType;
 }) => {
-  const [dialogIsOpened, setDialogIsOpened] = useState(false);
-  const openDialog = () => setDialogIsOpened(true);
-  const closeDialog = () => setDialogIsOpened(false);
+  const navigate = useNavigate();
+  const close = () => {
+    navigate(allItemsRoute());
+  };
 
   return (
     <div className={className}>
-      <Dialog open={dialogIsOpened} onOpenChange={closeDialog}>
+      <Dialog open={dialogType !== undefined} onOpenChange={close}>
         <DialogContent>
           <CreateMylistDialog />
         </DialogContent>
@@ -37,7 +44,9 @@ export const CollectionsDropDownMenu = ({
         </DropdownMenuTrigger>
 
         <DropdownMenuContent className="border" align="start">
-          <DropdownMenuButton onClick={openDialog}>New</DropdownMenuButton>
+          <DropdownMenuButton asChild>
+            <Link to={allItemsWithDialog()}>New</Link>
+          </DropdownMenuButton>
 
           <DropdownMenuButton asChild>
             <Link to={mylistsEditRoute()}>Edit mylists</Link>

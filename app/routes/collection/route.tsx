@@ -2,11 +2,14 @@ import {
   Await,
   Outlet,
   useLoaderData,
-  useNavigation,
   useSearchParams,
 } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scrollArea";
-import { allItemsRoute, isMylistsEditRoute } from "~/routePath";
+import {
+  allItemsRoute,
+  getCollectionDialogType,
+  isMylistsEditRoute,
+} from "~/routePath";
 import { CollectionLink } from "./collectionLink";
 import { type MetaFunction } from "@remix-run/node";
 import { CollectionsDropDownMenu } from "./collectionsDropdownMenu";
@@ -33,12 +36,14 @@ const AllItemsCollectionLink = () => {
 };
 
 const Collections = ({ mylists }: { mylists: Mylist[] }) => {
-  const navigation = useNavigation();
+  const [searchParams] = useSearchParams();
+  const dialogType = getCollectionDialogType(searchParams);
 
   return (
     <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
       <CollectionsDropDownMenu
-        key={navigation.location?.key}
+        key={dialogType}
+        dialogType={dialogType}
         className="self-center justify-self-end"
       />
 

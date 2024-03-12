@@ -10,13 +10,17 @@ export const homeRoute = () => {
   return "/" as const;
 };
 
-const editKey = "edit" as const;
-const editItemsValue = "items" as const;
-const editMylistsValue = "mylists" as const;
+const collectionDialogKey = "dialog" as const;
+const newDialog = "new" as const;
+export type CollectionDialogType = typeof newDialog | undefined;
 
 export const collectionRoute = () => {
   return `/${collectionPath}` as const;
 };
+
+const editKey = "edit" as const;
+const editItemsValue = "items" as const;
+const editMylistsValue = "mylists" as const;
 
 export const mylistsEditRoute = () => {
   const route = allItemsRoute();
@@ -36,6 +40,21 @@ export const allItemsRoute = () => {
 export const allItemsWithPageRoute = (page: number) => {
   const route = allItemsRoute();
   return build(route, { [pageKey]: page.toString() });
+};
+
+export const allItemsWithDialog = () => {
+  const route = allItemsRoute();
+  return build(route, { [collectionDialogKey]: newDialog });
+};
+
+export const getCollectionDialogType = (
+  searchParams: URLSearchParams,
+): CollectionDialogType => {
+  const dialogType = searchParams.get(collectionDialogKey);
+  if (dialogType === newDialog) {
+    return newDialog;
+  }
+  return undefined;
 };
 
 export const getPage = (searchParams: URLSearchParams): number => {
