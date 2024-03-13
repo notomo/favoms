@@ -1,5 +1,5 @@
 import { bookAuthorRoute } from "~/routePath";
-import { CollectionLink } from "./bookAuthorLink";
+import { BookAuthorLink } from "./bookAuthorLink";
 import { BookAuthor } from "./loader";
 
 export const BookAuthorLinks = ({
@@ -10,9 +10,9 @@ export const BookAuthorLinks = ({
   return bookAuthors.map(({ id, name }) => {
     const path = bookAuthorRoute(id);
     return (
-      <CollectionLink path={path} key={id}>
+      <BookAuthorLink path={path} key={id}>
         {name}
-      </CollectionLink>
+      </BookAuthorLink>
     );
   });
 };

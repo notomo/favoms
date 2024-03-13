@@ -1,40 +1,18 @@
-import { NavLink } from "@remix-run/react";
-import { useEffect, useRef } from "react";
+import { NavigationLink } from "~/component/ui/navigationLink";
 import { cn } from "~/lib/tailwind";
 
-export const CollectionLink = ({
+export const BookAuthorLink = ({
   children,
   path,
 }: React.PropsWithChildren<{ path: string }>) => {
-  const scrollTarget = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    scrollTarget.current?.scrollIntoView({ behavior: "instant" });
-  }, []);
-
   return (
-    <NavLink
-      className={({ isActive }) =>
-        isActive ? "bg-stone-500 font-bold text-stone-50" : ""
-      }
-      to={path}
-    >
-      {({ isActive }) => {
-        const row = <CollectionRow>{children}</CollectionRow>;
-        if (isActive) {
-          return (
-            <>
-              <div ref={scrollTarget}></div>
-              {row}
-            </>
-          );
-        }
-        return row;
-      }}
-    </NavLink>
+    <NavigationLink path={path}>
+      <BookAuthorRow>{children}</BookAuthorRow>
+    </NavigationLink>
   );
 };
 
-export const CollectionRow = ({
+export const BookAuthorRow = ({
   children,
   className,
 }: React.PropsWithChildren<{ className?: string }>) => {

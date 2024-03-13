@@ -3,7 +3,7 @@ import { Await, Outlet, useLoaderData } from "@remix-run/react";
 import { Suspense, useEffect } from "react";
 import { ScrollArea } from "~/component/ui/scrollArea";
 import { BookAuthor, getBookAuthorWithBooks } from "./loader";
-import { ItemLinks } from "./bookItemLinks";
+import { BookItemLinks } from "./bookItemLinks";
 import { Loading } from "~/component/ui/loading";
 
 export const meta: MetaFunction = ({ params }) => {
@@ -22,7 +22,7 @@ const BookAuthorBookList = ({ bookAuthor }: { bookAuthor: BookAuthor }) => {
   return (
     <ScrollArea className="border">
       <ul className="flex h-full flex-col">
-        <ItemLinks books={bookAuthor.books} mylistId={bookAuthor.id} />
+        <BookItemLinks books={bookAuthor.books} mylistId={bookAuthor.id} />
       </ul>
     </ScrollArea>
   );

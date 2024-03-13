@@ -2,7 +2,7 @@ import { bookAuthorBookRoute } from "~/routePath";
 import { ItemLink } from "~/routes/collection.all/itemLink";
 import { Book } from "./loader";
 
-export const ItemLinks = ({
+export const BookItemLinks = ({
   mylistId,
   books,
 }: {
