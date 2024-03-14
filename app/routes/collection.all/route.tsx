@@ -11,9 +11,8 @@ import { Button } from "~/component/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { Suspense, useState } from "react";
 import { Loading } from "~/component/ui/loading";
-import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea";
+import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
 import { getItems } from "./loader";
-import { PageRange } from "./pageRange";
 
 export const meta: MetaFunction = () => {
   return [{ title: "All | favoms" }];
@@ -28,28 +27,18 @@ type Item = {
 
 const ItemRows = ({
   allItems,
-  items,
+  addedItems,
   setAllItems,
   hasNext,
-  loadedPages,
-  setLoadedPages,
   page,
 }: {
   allItems: Item[];
-  items: Item[];
+  addedItems: Item[];
   setAllItems: (items: Item[]) => void;
   hasNext: boolean;
-  loadedPages: PageRange;
-  setLoadedPages: (loadedPages: PageRange) => void;
   page: number;
 }) => {
   const [, setSearchParams] = useSearchParams();
-  const currentItems = [
-    ...(PageRange.isLower(loadedPages, page) ? items : []),
-    ...allItems,
-    ...(PageRange.isUpper(loadedPages, page) ? items : []),
-  ];
-  const hasPrevious = page > 1 && !PageRange.contains(loadedPages, page - 1);
 
   return (
     <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
@@ -62,32 +51,28 @@ const ItemRows = ({
 
       <InfiniteScrollArea
         className="border"
-        hasNext={hasNext && !PageRange.contains(loadedPages, page + 1)}
-        loadNext={() => {
-          setAllItems(currentItems);
-          setLoadedPages(PageRange.load(loadedPages, page));
-          const nextPage = page + 1;
-          setSearchParams({ page: nextPage.toString() });
+        existsNextPage={hasNext}
+        page={page}
+        pageKey="page"
+        allItems={allItems}
+        addedItems={addedItems}
+        setAllItems={setAllItems}
+        setSearchParams={setSearchParams}
+        content={(currentItems) => {
+          return (
+            <ul className="flex h-full flex-col">
+              {currentItems.map(({ id, name }) => {
+                const path = collectionItemRoute(id, page);
+                return (
+                  <ItemLink path={path} key={id}>
+                    {name}
+                  </ItemLink>
+                );
+              })}
+            </ul>
+          );
         }}
-        hasPrevious={hasPrevious}
-        loadPrevious={() => {
-          setAllItems(currentItems);
-          setLoadedPages(PageRange.load(loadedPages, page));
-          const previousPage = page - 1;
-          setSearchParams({ page: previousPage.toString() });
-        }}
-      >
-        <ul className="flex h-full flex-col">
-          {currentItems.map(({ id, name }) => {
-            const path = collectionItemRoute(id, page);
-            return (
-              <ItemLink path={path} key={id}>
-                {name}
-              </ItemLink>
-            );
-          })}
-        </ul>
-      </InfiniteScrollArea>
+      />
     </div>
   );
 };
@@ -95,7 +80,6 @@ const ItemRows = ({
 export default function Page() {
   const loaderData = useLoaderData<typeof loader>();
   const [allItems, setAllItems] = useState<Item[]>([]);
-  const [loadedPages, setLoadedPages] = useState(PageRange.create());
 
   return (
     <div className="grid h-full w-full grid-cols-2 grid-rows-[100%] gap-x-4">
@@ -105,10 +89,8 @@ export default function Page() {
             <ItemRows
               allItems={allItems}
               setAllItems={setAllItems}
-              items={fetched.items}
+              addedItems={fetched.items}
               hasNext={fetched.hasNext}
-              loadedPages={loadedPages}
-              setLoadedPages={setLoadedPages}
               page={loaderData.page}
             />
           )}
