@@ -1,15 +1,10 @@
 import { type MetaFunction } from "@remix-run/node";
-import {
-  Await,
-  Outlet,
-  useLoaderData,
-  useSearchParams,
-} from "@remix-run/react";
+import { Await, Outlet, useLoaderData } from "@remix-run/react";
 import { collectionItemRoute } from "~/routePath";
 import { ItemLink } from "./itemLink";
 import { Button } from "~/component/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { Loading } from "~/component/ui/loading";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
 import { getItems } from "./loader";
@@ -26,20 +21,14 @@ type Item = {
 };
 
 const ItemRows = ({
-  allItems,
   addedItems,
-  setAllItems,
-  hasNext,
+  existsNextPage,
   page,
 }: {
-  allItems: Item[];
   addedItems: Item[];
-  setAllItems: (items: Item[]) => void;
-  hasNext: boolean;
+  existsNextPage: boolean;
   page: number;
 }) => {
-  const [, setSearchParams] = useSearchParams();
-
   return (
     <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
       <div className="flex items-center justify-between">
@@ -51,13 +40,10 @@ const ItemRows = ({
 
       <InfiniteScrollArea
         className="border"
-        existsNextPage={hasNext}
         page={page}
         pageKey="page"
-        allItems={allItems}
         addedItems={addedItems}
-        setAllItems={setAllItems}
-        setSearchParams={setSearchParams}
+        existsNextPage={existsNextPage}
         content={(currentItems) => {
           return (
             <ul className="flex h-full flex-col">
@@ -79,7 +65,6 @@ const ItemRows = ({
 
 export default function Page() {
   const loaderData = useLoaderData<typeof loader>();
-  const [allItems, setAllItems] = useState<Item[]>([]);
 
   return (
     <div className="grid h-full w-full grid-cols-2 grid-rows-[100%] gap-x-4">
@@ -87,10 +72,8 @@ export default function Page() {
         <Await resolve={loaderData.fetched}>
           {(fetched) => (
             <ItemRows
-              allItems={allItems}
-              setAllItems={setAllItems}
               addedItems={fetched.items}
-              hasNext={fetched.hasNext}
+              existsNextPage={fetched.existsNextPage}
               page={loaderData.page}
             />
           )}

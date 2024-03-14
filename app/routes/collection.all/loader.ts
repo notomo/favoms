@@ -12,7 +12,7 @@ export const getItems = async ({ request }: LoaderFunctionArgs) => {
   const take = pageSize + 1;
   const fetched = listItems({ skip, take }).then((items) => {
     return {
-      hasNext: items.length == take,
+      existsNextPage: items.length == take,
       items: items.slice(0, pageSize),
     };
   });

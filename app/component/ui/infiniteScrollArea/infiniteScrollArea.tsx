@@ -1,10 +1,16 @@
-import { useNavigation } from "@remix-run/react";
+import { useNavigation, useSearchParams } from "@remix-run/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { PageRange } from "~/component/ui/infiniteScrollArea/pageRange";
 import { Loading } from "~/component/ui/loading";
 import { ScrollArea } from "~/component/ui/scrollArea";
 
-const LoadingItem = ({ has, load }: { has: boolean; load: () => void }) => {
+const LoadingItem = ({
+  canLoad,
+  load,
+}: {
+  canLoad: boolean;
+  load: () => void;
+}) => {
   const loadingWrapper = useRef(null);
 
   useEffect(() => {
@@ -13,10 +19,9 @@ const LoadingItem = ({ has, load }: { has: boolean; load: () => void }) => {
         if (!entries[0].isIntersecting) {
           return;
         }
-        if (!has) {
+        if (!canLoad) {
           return;
         }
-        observer.disconnect();
         load();
       },
       {
@@ -35,33 +40,30 @@ const LoadingItem = ({ has, load }: { has: boolean; load: () => void }) => {
       }
       observer.unobserve(current);
     };
-  }, [loadingWrapper, load, has]);
+  }, [loadingWrapper, load, canLoad]);
 
-  return <div ref={loadingWrapper}>{has ? <Loading /> : null}</div>;
+  return <div ref={loadingWrapper}>{canLoad ? <Loading /> : null}</div>;
 };
 
-export const InfiniteScrollArea = <T extends { id: number }>({
+export const InfiniteScrollArea = <T,>({
   className,
-  existsNextPage,
-  allItems,
-  setAllItems,
-  addedItems,
   page,
   pageKey,
-  setSearchParams,
+  existsNextPage,
+  addedItems,
   content,
 }: React.PropsWithChildren<{
   className?: string;
-  allItems: T[];
-  setAllItems: (items: T[]) => void;
-  addedItems: T[];
   page: number;
   pageKey: string;
-  setSearchParams: (params: Record<string, string>) => void;
+  addedItems: T[];
   existsNextPage: boolean;
   content: (items: T[]) => React.ReactNode;
 }>) => {
-  const [loadedPages, setLoadedPages] = useState(PageRange.create());
+  const [loadedPages, setLoadedPages] = useState(PageRange.create(page));
+  const [allItems, setAllItems] = useState<T[]>(addedItems);
+  const [, setSearchParams] = useSearchParams();
+
   const currentItems = useMemo(
     () => [
       ...(PageRange.isLower(loadedPages, page) ? addedItems : []),
@@ -71,41 +73,39 @@ export const InfiniteScrollArea = <T extends { id: number }>({
     [addedItems, allItems, loadedPages, page],
   );
 
+  const nextPage = page + 1;
   const loadNext = useCallback(() => {
-    if (PageRange.contains(loadedPages, page)) {
+    if (PageRange.contains(loadedPages, nextPage)) {
       return;
     }
-    setAllItems(currentItems);
     setLoadedPages(PageRange.load(loadedPages, page));
-    const nextPage = page + 1;
+
+    setAllItems(currentItems);
     setSearchParams({ [pageKey]: nextPage.toString() });
-  }, [currentItems, loadedPages, page, pageKey, setAllItems, setSearchParams]);
+  }, [loadedPages, page, nextPage, currentItems, setSearchParams, pageKey]);
 
+  const previousPage = page - 1;
   const loadPrevious = useCallback(() => {
-    if (PageRange.contains(loadedPages, page)) {
+    if (PageRange.contains(loadedPages, previousPage)) {
       return;
     }
-    setAllItems(currentItems);
     setLoadedPages(PageRange.load(loadedPages, page));
-    const previousPage = page - 1;
-    setSearchParams({ [pageKey]: previousPage.toString() });
-  }, [currentItems, loadedPages, page, pageKey, setAllItems, setSearchParams]);
 
-  const navigation = useNavigation();
+    setAllItems(currentItems);
+    setSearchParams({ [pageKey]: previousPage.toString() });
+  }, [loadedPages, page, previousPage, currentItems, setSearchParams, pageKey]);
+
+  const isIdle = useNavigation().state === "idle";
   const hasNext =
-    navigation.state === "idle" &&
-    existsNextPage &&
-    !PageRange.contains(loadedPages, page + 1);
+    isIdle && existsNextPage && !PageRange.contains(loadedPages, nextPage);
   const hasPrevious =
-    navigation.state === "idle" &&
-    page > 1 &&
-    !PageRange.contains(loadedPages, page - 1);
+    isIdle && page > 1 && !PageRange.contains(loadedPages, previousPage);
 
   return (
     <ScrollArea className={className}>
-      <LoadingItem load={loadPrevious} has={hasPrevious} />
-      {content(currentItems)}
-      <LoadingItem load={loadNext} has={hasNext} />
+      <LoadingItem load={loadPrevious} canLoad={hasPrevious} />
+      {content(allItems)}
+      <LoadingItem load={loadNext} canLoad={hasNext} />
     </ScrollArea>
   );
 };

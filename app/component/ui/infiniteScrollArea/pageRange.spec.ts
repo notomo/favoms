@@ -23,14 +23,6 @@ describe("load", () => {
       max: 2,
     });
   });
-
-  it("changes min if page range is initial value", () => {
-    const pageRange = PageRange.create();
-    expect(PageRange.load(pageRange, 2)).toStrictEqual({
-      min: 2,
-      max: 2,
-    });
-  });
 });
 
 describe("contains", () => {
@@ -48,10 +40,5 @@ describe("contains", () => {
       max: 2,
     };
     expect(PageRange.contains(pageRange, 3)).toBe(false);
-  });
-
-  it("returns false if page range is initial value", () => {
-    const pageRange = PageRange.create();
-    expect(PageRange.contains(pageRange, 1)).toBe(false);
   });
 });
