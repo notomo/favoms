@@ -89,7 +89,12 @@ export const InfiniteScrollArea = <T,>({
     setSearchParams({ [pageKey]: nextPage.toString() });
   };
 
-  const previousPage = page - 1;
+  const minPage = Math.min(
+    ...Object.entries(currentEachPageItems)
+      .filter(([, items]) => items.length > 0)
+      .map(([x]) => Number(x)),
+  );
+  const previousPage = minPage - 1;
   const loadPrevious = () => {
     setEachPageItems({
       ...currentEachPageItems,
