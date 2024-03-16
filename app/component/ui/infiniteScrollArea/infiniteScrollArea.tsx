@@ -1,6 +1,5 @@
 import { useNavigation, useSearchParams } from "@remix-run/react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { PageRange } from "~/component/ui/infiniteScrollArea/pageRange";
+import { useEffect, useRef, useState } from "react";
 import { Loading } from "~/component/ui/loading";
 import { ScrollArea } from "~/component/ui/scrollArea";
 
@@ -14,6 +13,7 @@ const LoadingItem = ({
   const loadingWrapper = useRef(null);
 
   useEffect(() => {
+    const current = loadingWrapper.current;
     const observer = new IntersectionObserver(
       (entries) => {
         if (!entries[0].isIntersecting) {
@@ -23,13 +23,17 @@ const LoadingItem = ({
           return;
         }
         load();
+
+        if (!current) {
+          return;
+        }
+        observer.unobserve(current);
       },
       {
         threshold: 0.0,
       },
     );
 
-    const current = loadingWrapper.current;
     if (current) {
       observer.observe(current);
     }
@@ -60,51 +64,50 @@ export const InfiniteScrollArea = <T,>({
   existsNextPage: boolean;
   content: (items: T[]) => React.ReactNode;
 }>) => {
-  const [loadedPages, setLoadedPages] = useState(PageRange.create(page));
-  const [allItems, setAllItems] = useState<T[]>(addedItems);
   const [, setSearchParams] = useSearchParams();
 
-  const currentItems = useMemo(
-    () => [
-      ...(PageRange.isLower(loadedPages, page) ? addedItems : []),
-      ...allItems,
-      ...(PageRange.isUpper(loadedPages, page) ? addedItems : []),
-    ],
-    [addedItems, allItems, loadedPages, page],
+  const [eachPageItems, setEachPageItems] = useState<Record<number, T[]>>({});
+  const currentEachPageItems = {
+    ...eachPageItems,
+    [page]: addedItems,
+  };
+  const currentItems = Object.entries(currentEachPageItems)
+    .map(([, x]) => x)
+    .flat();
+
+  const maxPage = Math.max(
+    ...Object.entries(currentEachPageItems)
+      .filter(([, items]) => items.length > 0)
+      .map(([x]) => Number(x)),
   );
-
-  const nextPage = page + 1;
-  const loadNext = useCallback(() => {
-    if (PageRange.contains(loadedPages, nextPage)) {
-      return;
-    }
-    setLoadedPages(PageRange.load(loadedPages, page));
-
-    setAllItems(currentItems);
+  const nextPage = maxPage + 1;
+  const loadNext = () => {
+    setEachPageItems({
+      ...currentEachPageItems,
+      [nextPage]: [],
+    });
     setSearchParams({ [pageKey]: nextPage.toString() });
-  }, [loadedPages, page, nextPage, currentItems, setSearchParams, pageKey]);
+  };
 
   const previousPage = page - 1;
-  const loadPrevious = useCallback(() => {
-    if (PageRange.contains(loadedPages, previousPage)) {
-      return;
-    }
-    setLoadedPages(PageRange.load(loadedPages, page));
-
-    setAllItems(currentItems);
+  const loadPrevious = () => {
+    setEachPageItems({
+      ...currentEachPageItems,
+      [previousPage]: [],
+    });
     setSearchParams({ [pageKey]: previousPage.toString() });
-  }, [loadedPages, page, previousPage, currentItems, setSearchParams, pageKey]);
+  };
 
   const isIdle = useNavigation().state === "idle";
   const hasNext =
-    isIdle && existsNextPage && !PageRange.contains(loadedPages, nextPage);
+    isIdle && existsNextPage && currentEachPageItems[nextPage] === undefined;
   const hasPrevious =
-    isIdle && page > 1 && !PageRange.contains(loadedPages, previousPage);
+    isIdle && page > 1 && currentEachPageItems[previousPage] === undefined;
 
   return (
     <ScrollArea className={className}>
       <LoadingItem load={loadPrevious} canLoad={hasPrevious} />
-      {content(allItems)}
+      {content(currentItems)}
       <LoadingItem load={loadNext} canLoad={hasNext} />
     </ScrollArea>
   );

@@ -30,7 +30,7 @@ format:
 test_watch:
 	npx vitest
 test:
-	npx vitest run
+	npx vitest run --passWithNoTests
 
 setup_local:
 	cp ./prisma/.env.sample ./prisma/.env
