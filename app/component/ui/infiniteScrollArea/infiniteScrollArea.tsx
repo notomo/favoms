@@ -94,7 +94,7 @@ export const InfiniteScrollArea = <T,>({
       .filter(([, items]) => items.length > 0)
       .map(([x]) => Number(x)),
   );
-  const previousPage = minPage - 1;
+  const previousPage = Math.max(1, minPage - 1);
   const loadPrevious = () => {
     setEachPageItems({
       ...currentEachPageItems,

@@ -62,7 +62,7 @@ export const getCollectionDialogType = (
 export const getPage = (searchParams: URLSearchParams): number => {
   const page = searchParams.get(pageKey);
   if (page) {
-    return Number(page);
+    return Math.max(1, Number(page));
   }
   return 1;
 };
