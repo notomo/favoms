@@ -1,10 +1,16 @@
 import { type MetaFunction } from "@remix-run/node";
-import { Await, Outlet, useLoaderData } from "@remix-run/react";
+import {
+  Await,
+  Outlet,
+  useLoaderData,
+  useSearchParams,
+} from "@remix-run/react";
 import { Suspense, useEffect } from "react";
 import { ScrollArea } from "~/component/ui/scrollArea";
 import { BookAuthor, getBookAuthorWithBooks } from "./loader";
 import { BookItemLinks } from "./bookItemLinks";
 import { Loading } from "~/component/ui/loading";
+import { getPage } from "~/routePath";
 
 export const meta: MetaFunction = ({ params }) => {
   const bookAuthorId = params.bookAuthorId || "(invalid)";
@@ -19,10 +25,17 @@ const BookAuthorBookList = ({ bookAuthor }: { bookAuthor: BookAuthor }) => {
     document.title = `${bookAuthor.name} | favoms`;
   }, [bookAuthor.name]);
 
+  const [searchParams] = useSearchParams();
+  const page = getPage(searchParams);
+
   return (
     <ScrollArea className="border">
       <ul className="flex h-full flex-col">
-        <BookItemLinks books={bookAuthor.books} mylistId={bookAuthor.id} />
+        <BookItemLinks
+          books={bookAuthor.books}
+          mylistId={bookAuthor.id}
+          page={page}
+        />
       </ul>
     </ScrollArea>
   );

@@ -1,15 +1,28 @@
-import { defer } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { LoaderFunctionArgs, defer } from "@remix-run/node";
 import { listBookAuthors } from "~/.server/persist/bookAuthor";
+import { getPage } from "~/routePath";
 
-export const getBookAuthors = async () => {
-  const bookAuthors = listBookAuthors();
+const pageSize = 20;
+
+export const getBookAuthors = async ({ request }: LoaderFunctionArgs) => {
+  const searchParams = new URL(request.url).searchParams;
+  const page = getPage(searchParams);
+
+  const skip = pageSize * (page - 1);
+  const take = pageSize + 1;
+  const fetched = listBookAuthors({ skip, take }).then((items) => {
+    return {
+      existsNextPage: items.length == take,
+      bookAuthors: items.slice(0, pageSize),
+    };
+  });
   return defer({
-    bookAuthors,
+    fetched,
+    page,
   });
 };
 
-export type LoaderData = ReturnType<
-  typeof useLoaderData<typeof getBookAuthors>
->;
-export type BookAuthor = Awaited<LoaderData["bookAuthors"]>[number];
+export type BookAuthor = Readonly<{
+  id: number;
+  name: string;
+}>;

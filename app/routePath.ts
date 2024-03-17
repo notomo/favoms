@@ -129,12 +129,18 @@ export const bookAuthorListRoute = () => {
   return `/${bookAuthorListPath}` as const;
 };
 
-export const bookAuthorRoute = (bookAuthorId: number) => {
-  return `${bookAuthorListRoute()}/${bookAuthorId}` as const;
+export const bookAuthorRoute = (bookAuthorId: number, page: number) => {
+  const route = `${bookAuthorListRoute()}/${bookAuthorId}` as const;
+  return build(route, { [pageKey]: page.toString() });
 };
 
-export const bookAuthorBookRoute = (bookAuthorId: number, itemId: number) => {
-  return `${bookAuthorRoute(bookAuthorId)}/x/${itemId}` as const;
+export const bookAuthorBookRoute = (
+  bookAuthorId: number,
+  itemId: number,
+  page: number,
+) => {
+  const route = `${bookAuthorListRoute()}/${bookAuthorId}/x/${itemId}` as const;
+  return build(route, { [pageKey]: page.toString() });
 };
 
 const build = <T extends string>(route: T, params: Record<string, string>) => {

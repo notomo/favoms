@@ -1,6 +1,12 @@
 import { prisma } from "./prisma";
 
-export async function listBookAuthors() {
+export async function listBookAuthors({
+  skip,
+  take,
+}: {
+  skip: number;
+  take: number;
+}) {
   return await prisma.bookAuthor.findMany({
     where: {},
     orderBy: { id: "asc" },
@@ -9,5 +15,7 @@ export async function listBookAuthors() {
       name: true,
       nameRuby: true,
     },
+    skip,
+    take,
   });
 }
