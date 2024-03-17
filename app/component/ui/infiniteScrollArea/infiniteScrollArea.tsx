@@ -6,9 +6,11 @@ import { ScrollArea } from "~/component/ui/scrollArea";
 const LoadingItem = ({
   canLoad,
   load,
+  className,
 }: {
   canLoad: boolean;
   load: () => void;
+  className?: string;
 }) => {
   const loadingWrapper = useRef(null);
 
@@ -47,7 +49,7 @@ const LoadingItem = ({
   }, [loadingWrapper, load, canLoad]);
 
   return (
-    <div className="p-4" ref={loadingWrapper}>
+    <div className={className} ref={loadingWrapper}>
       {canLoad ? <Loading /> : null}
     </div>
   );
@@ -135,7 +137,7 @@ export const InfiniteScrollArea = <T,>({
         canLoad={hasPrevious && scrollAtLeastOnce}
       />
       {content(currentItems)}
-      <LoadingItem load={loadNext} canLoad={hasNext} />
+      <LoadingItem className="p-4" load={loadNext} canLoad={hasNext} />
     </ScrollArea>
   );
 };
