@@ -46,7 +46,11 @@ const LoadingItem = ({
     };
   }, [loadingWrapper, load, canLoad]);
 
-  return <div ref={loadingWrapper}>{canLoad ? <Loading /> : null}</div>;
+  return (
+    <div className="p-4" ref={loadingWrapper}>
+      {canLoad ? <Loading /> : null}
+    </div>
+  );
 };
 
 export const InfiniteScrollArea = <T,>({
@@ -65,6 +69,7 @@ export const InfiniteScrollArea = <T,>({
   content: (items: T[]) => React.ReactNode;
 }>) => {
   const [, setSearchParams] = useSearchParams();
+  const [scrollAtLeastOnce, setScrollAtLeastOnce] = useState(false); // to prevent load all previous page automatically
 
   const [eachPageItems, setEachPageItems] = useState<Record<number, T[]>>({});
   const currentEachPageItems = {
@@ -101,6 +106,7 @@ export const InfiniteScrollArea = <T,>({
       [previousPage]: [],
     });
     setSearchParams({ [pageKey]: previousPage.toString() });
+    setScrollAtLeastOnce(false);
   };
 
   const isIdle = useNavigation().state === "idle";
@@ -109,9 +115,25 @@ export const InfiniteScrollArea = <T,>({
   const hasPrevious =
     isIdle && page > 1 && currentEachPageItems[previousPage] === undefined;
 
+  const scrollHandler = scrollAtLeastOnce
+    ? undefined
+    : () => {
+        if (!hasPrevious) {
+          return;
+        }
+        setScrollAtLeastOnce(true);
+      };
+
   return (
-    <ScrollArea className={className}>
-      <LoadingItem load={loadPrevious} canLoad={hasPrevious} />
+    <ScrollArea
+      className={className}
+      onScroll={scrollHandler}
+      onWheel={scrollHandler}
+    >
+      <LoadingItem
+        load={loadPrevious}
+        canLoad={hasPrevious && scrollAtLeastOnce}
+      />
       {content(currentItems)}
       <LoadingItem load={loadNext} canLoad={hasNext} />
     </ScrollArea>
