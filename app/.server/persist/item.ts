@@ -11,7 +11,15 @@ export async function getItem(id: number) {
     select: {
       id: true,
       book: {
-        select: { title: true },
+        select: {
+          title: true,
+          authors: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
       },
     },
   });
@@ -21,6 +29,7 @@ export async function getItem(id: number) {
   return {
     id: item.id,
     name: item.book?.title || "",
+    authors: item.book?.authors || [],
   };
 }
 
