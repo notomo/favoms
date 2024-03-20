@@ -1,16 +1,17 @@
 import { LoaderFunctionArgs, defer } from "@remix-run/node";
 import { listBookAuthors } from "~/.server/persist/bookAuthor";
-import { getPage } from "~/routePath";
+import { getPage, getQuery } from "~/routePath";
 
 const pageSize = 20;
 
 export const getBookAuthors = async ({ request }: LoaderFunctionArgs) => {
   const searchParams = new URL(request.url).searchParams;
   const page = getPage(searchParams);
+  const query = getQuery(searchParams);
 
   const skip = pageSize * (page - 1);
   const take = pageSize + 1;
-  const fetched = listBookAuthors({ skip, take }).then((items) => {
+  const fetched = listBookAuthors({ query, skip, take }).then((items) => {
     return {
       existsNextPage: items.length == take,
       bookAuthors: items.slice(0, pageSize),
@@ -19,6 +20,7 @@ export const getBookAuthors = async ({ request }: LoaderFunctionArgs) => {
   return defer({
     fetched,
     page,
+    query,
   });
 };
 

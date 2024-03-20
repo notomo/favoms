@@ -1,14 +1,24 @@
 import { prisma } from "./prisma";
 
 export async function listBookAuthors({
+  query,
   skip,
   take,
 }: {
+  query: string;
   skip: number;
   take: number;
 }) {
+  const nameQuery = query
+    ? {
+        contains: query,
+      }
+    : undefined;
+
   return await prisma.bookAuthor.findMany({
-    where: {},
+    where: {
+      name: nameQuery,
+    },
     orderBy: { id: "asc" },
     select: {
       id: true,

@@ -67,6 +67,11 @@ export const getPage = (searchParams: URLSearchParams): number => {
   return 1;
 };
 
+const queryKey = "query";
+export const getQuery = (searchParams: URLSearchParams): string => {
+  return searchParams.get(queryKey) || "";
+};
+
 const mylistDialogKey = "dialog" as const;
 const editDialog = "edit" as const;
 const deleteDialog = "delete" as const;
@@ -129,18 +134,29 @@ export const bookAuthorListRoute = () => {
   return `/${bookAuthorListPath}` as const;
 };
 
-export const bookAuthorRoute = (bookAuthorId: number, page: number) => {
+export const bookAuthorRoute = (
+  bookAuthorId: number,
+  page: number,
+  query: string,
+) => {
   const route = `${bookAuthorListRoute()}/${bookAuthorId}` as const;
-  return build(route, { [pageKey]: page.toString() });
+  return build(route, {
+    [pageKey]: page.toString(),
+    [queryKey]: query,
+  });
 };
 
 export const bookAuthorBookRoute = (
   bookAuthorId: number,
   itemId: number,
   page: number,
+  query: string,
 ) => {
   const route = `${bookAuthorListRoute()}/${bookAuthorId}/x/${itemId}` as const;
-  return build(route, { [pageKey]: page.toString() });
+  return build(route, {
+    [pageKey]: page.toString(),
+    [queryKey]: query,
+  });
 };
 
 const build = <T extends string>(route: T, params: Record<string, string>) => {

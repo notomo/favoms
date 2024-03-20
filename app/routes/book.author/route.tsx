@@ -1,10 +1,19 @@
-import { Await, Outlet, useLoaderData } from "@remix-run/react";
+import {
+  Await,
+  Form,
+  Outlet,
+  useLoaderData,
+  useNavigation,
+} from "@remix-run/react";
 import { type MetaFunction } from "@remix-run/node";
 import { Suspense } from "react";
-import { Loading } from "~/component/ui/loading";
+import { Loading, LoadingOr } from "~/component/ui/loading";
 import { BookAuthor, getBookAuthors } from "./loader";
 import { BookAuthorLinks } from "./bookAuthorLinks";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
+import { Input } from "~/component/ui/input";
+import { Search } from "lucide-react";
+import { Button } from "~/component/ui/button";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Book Authors | favoms" }];
@@ -16,28 +25,52 @@ const BookAuthorList = ({
   bookAuthors,
   existsNextPage,
   page,
+  query,
 }: {
   bookAuthors: BookAuthor[];
   existsNextPage: boolean;
   page: number;
+  query: string;
 }) => {
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading";
+
   return (
-    <InfiniteScrollArea
-      className="border"
-      page={page}
-      pageKey="page"
-      addedItems={bookAuthors}
-      existsNextPage={existsNextPage}
-      content={(bookAuthors) => {
-        return (
-          <nav className="h-full">
-            <ul className="flex h-full flex-col">
-              <BookAuthorLinks bookAuthors={bookAuthors} page={page} />
-            </ul>
-          </nav>
-        );
-      }}
-    />
+    <div className="grid h-full w-full grid-cols-[100%] grid-rows-[6%_94%] gap-y-1">
+      <Form method="GET" className="flex items-center gap-2">
+        <Input
+          defaultValue={query}
+          placeholder="Search author name"
+          name="query"
+        />
+        <Button type="submit" size="icon" variant="ghost" disabled={isLoading}>
+          <LoadingOr isLoading={isLoading}>
+            <Search size={24} />
+          </LoadingOr>
+        </Button>
+      </Form>
+      <InfiniteScrollArea
+        key={query}
+        className="border"
+        page={page}
+        pageKey="page"
+        addedItems={bookAuthors}
+        existsNextPage={existsNextPage}
+        content={(bookAuthors) => {
+          return (
+            <nav className="h-full">
+              <ul className="flex h-full flex-col">
+                <BookAuthorLinks
+                  bookAuthors={bookAuthors}
+                  page={page}
+                  query={query}
+                />
+              </ul>
+            </nav>
+          );
+        }}
+      />
+    </div>
   );
 };
 
@@ -52,6 +85,7 @@ export default function Page() {
               bookAuthors={fetched.bookAuthors}
               existsNextPage={fetched.existsNextPage}
               page={loaderData.page}
+              query={loaderData.query}
             />
           )}
         </Await>

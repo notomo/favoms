@@ -10,7 +10,7 @@ import { ScrollArea } from "~/component/ui/scrollArea";
 import { BookAuthor, getBookAuthorWithBooks } from "./loader";
 import { BookItemLinks } from "./bookItemLinks";
 import { Loading } from "~/component/ui/loading";
-import { getPage } from "~/routePath";
+import { getPage, getQuery } from "~/routePath";
 
 export const meta: MetaFunction = ({ params }) => {
   const bookAuthorId = params.bookAuthorId || "(invalid)";
@@ -27,6 +27,7 @@ const BookAuthorBookList = ({ bookAuthor }: { bookAuthor: BookAuthor }) => {
 
   const [searchParams] = useSearchParams();
   const page = getPage(searchParams);
+  const query = getQuery(searchParams);
 
   return (
     <ScrollArea className="border">
@@ -35,6 +36,7 @@ const BookAuthorBookList = ({ bookAuthor }: { bookAuthor: BookAuthor }) => {
           books={bookAuthor.books}
           mylistId={bookAuthor.id}
           page={page}
+          query={query}
         />
       </ul>
     </ScrollArea>

@@ -70,7 +70,7 @@ export const InfiniteScrollArea = <T,>({
   existsNextPage: boolean;
   content: (items: T[]) => React.ReactNode;
 }>) => {
-  const [, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [scrollAtLeastOnce, setScrollAtLeastOnce] = useState(false); // to prevent load all previous page automatically
 
   const [eachPageItems, setEachPageItems] = useState<Record<number, T[]>>({});
@@ -93,7 +93,10 @@ export const InfiniteScrollArea = <T,>({
       ...currentEachPageItems,
       [nextPage]: [],
     });
-    setSearchParams({ [pageKey]: nextPage.toString() });
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      [pageKey]: nextPage.toString(),
+    });
   };
 
   const minPage = Math.min(
@@ -107,7 +110,10 @@ export const InfiniteScrollArea = <T,>({
       ...currentEachPageItems,
       [previousPage]: [],
     });
-    setSearchParams({ [pageKey]: previousPage.toString() });
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      [pageKey]: previousPage.toString(),
+    });
     setScrollAtLeastOnce(false);
   };
 
