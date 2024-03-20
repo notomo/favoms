@@ -32,7 +32,7 @@ export default function Page() {
         Authors:
         {authors.map((author) => {
           return (
-            <Link to={bookAuthorRoute(author.id, 1)} key={author.id}>
+            <Link to={bookAuthorRoute(author.id, 1, "")} key={author.id}>
               {author.name}
             </Link>
           );
