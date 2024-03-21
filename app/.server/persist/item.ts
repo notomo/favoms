@@ -19,6 +19,7 @@ export async function getItem(id: number) {
               name: true,
             },
           },
+          publishedAt: true,
         },
       },
     },
@@ -30,6 +31,7 @@ export async function getItem(id: number) {
     id: item.id,
     name: item.book?.title || "",
     authors: item.book?.authors || [],
+    publishedAt: item.book?.publishedAt?.toLocaleString(),
   };
 }
 
