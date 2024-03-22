@@ -4,11 +4,11 @@ import {
   union,
   literal,
   nullable,
-  date,
   string,
   minLength,
   maxLength,
   Output,
+  transform,
 } from "valibot";
 
 const nameSchema = ({ min, max }: { min: number; max: number }) => {
@@ -31,7 +31,8 @@ const bookSchema = object({
   titleRuby: nullable(nameSchema({ min: 0, max: 1000 }), ""),
   authors: array(bookAuthorSchema),
   publishers: array(bookPublisherSchema),
-  publishedAt: nullable(date()),
+  // TODO: validate date format
+  publishedAt: transform(nullable(string()), (x) => (x ? new Date(x) : null)),
 });
 
 export const itemImportSchema = union([bookSchema]);
