@@ -11,7 +11,7 @@ import {
   bookAuthorListRoute,
   homeRoute,
   importRoute,
-} from "./routePath";
+} from "~/routePath";
 import { cn } from "~/lib/tailwind";
 
 const MenuLink = ({
