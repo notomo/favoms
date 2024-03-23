@@ -23,11 +23,11 @@ const prismaClientSingleton = () => {
         level: "error",
       },
       {
-        emit: "stdout",
+        emit: "event",
         level: "warn",
       },
       {
-        emit: "stdout",
+        emit: "event",
         level: "info",
       },
     ],
