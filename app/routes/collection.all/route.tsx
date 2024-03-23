@@ -1,13 +1,20 @@
 import { type MetaFunction } from "@remix-run/node";
-import { Await, Outlet, useLoaderData } from "@remix-run/react";
+import {
+  Await,
+  Form,
+  Outlet,
+  useLoaderData,
+  useNavigation,
+} from "@remix-run/react";
 import { collectionItemRoute } from "~/routePath";
 import { ItemLink } from "./itemLink";
 import { Button } from "~/component/ui/button";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, Search } from "lucide-react";
 import { Suspense } from "react";
-import { Loading } from "~/component/ui/loading";
+import { Loading, LoadingOr } from "~/component/ui/loading";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
 import { getItems } from "./loader";
+import { Input } from "~/component/ui/input";
 
 export const meta: MetaFunction = () => {
   return [{ title: "All | favoms" }];
@@ -24,13 +31,18 @@ const ItemRows = ({
   addedItems,
   existsNextPage,
   page,
+  query,
 }: {
   addedItems: Item[];
   existsNextPage: boolean;
   page: number;
+  query: string;
 }) => {
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading";
+
   return (
-    <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
+    <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_6%_86%]">
       <div className="flex items-center justify-between">
         <div className="px-4 text-xl">All</div>
         <Button disabled variant="ghost" size="icon">
@@ -38,7 +50,21 @@ const ItemRows = ({
         </Button>
       </div>
 
+      <Form method="GET" className="flex items-center gap-2">
+        <Input
+          defaultValue={query}
+          placeholder="Search item name"
+          name="query"
+        />
+        <Button type="submit" size="icon" variant="ghost" disabled={isLoading}>
+          <LoadingOr isLoading={isLoading}>
+            <Search size={24} />
+          </LoadingOr>
+        </Button>
+      </Form>
+
       <InfiniteScrollArea
+        key={query}
         className="border"
         page={page}
         pageKey="page"
@@ -48,7 +74,7 @@ const ItemRows = ({
           return (
             <ul className="flex h-full flex-col">
               {currentItems.map(({ id, name }) => {
-                const path = collectionItemRoute(id, page);
+                const path = collectionItemRoute(id, page, query);
                 return (
                   <ItemLink path={path} key={id}>
                     {name}
@@ -75,6 +101,7 @@ export default function Page() {
               addedItems={fetched.items}
               existsNextPage={fetched.existsNextPage}
               page={loaderData.page}
+              query={loaderData.query}
             />
           )}
         </Await>

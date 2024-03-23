@@ -36,14 +36,26 @@ export async function getItem(id: number) {
 }
 
 export async function listItems({
+  query,
   skip,
   take,
 }: {
+  query: string;
   skip: number;
   take: number;
 }) {
+  const nameQuery = query
+    ? {
+        contains: query,
+      }
+    : undefined;
+
   const items = await prisma.item.findMany({
-    where: {},
+    where: {
+      book: {
+        title: nameQuery,
+      },
+    },
     select: {
       id: true,
       book: {

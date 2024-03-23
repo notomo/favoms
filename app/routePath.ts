@@ -117,9 +117,16 @@ export const mylistItemRoute = (mylistId: number, itemId: number) => {
   return `${mylistRoute(mylistId)}/${itemPath}/${itemId}` as const;
 };
 
-export const collectionItemRoute = (itemId: number, page: number) => {
+export const collectionItemRoute = (
+  itemId: number,
+  page: number,
+  query: string,
+) => {
   const route = `/${collectionAllItemPath}/${itemId}` as const;
-  return build(route, { [pageKey]: page.toString() });
+  return build(route, {
+    [pageKey]: page.toString(),
+    [queryKey]: query,
+  });
 };
 
 export const itemRoute = (itemId: number) => {
