@@ -19,12 +19,26 @@ export default defineConfig(({ mode }) => {
   };
 });
 
+const jsonLogFormat: morgan.FormatFn = (tokens, req, res) => {
+  return JSON.stringify(
+    {
+      timestamp: tokens["date"](req, res, "iso"),
+      method: tokens["method"](req, res),
+      path: tokens["url"](req, res),
+      status: tokens["status"](req, res),
+      duration: tokens["response-time"](req, res),
+    },
+    null,
+    2,
+  );
+};
+
 function morganPlugin() {
   return {
     name: "morgan-plugin",
     configureServer(server: ViteDevServer) {
       return () => {
-        server.middlewares.use(morgan("tiny"));
+        server.middlewares.use(morgan(jsonLogFormat));
       };
     },
   };
