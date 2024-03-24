@@ -25,7 +25,8 @@ model Item {
   id      Int      @id @default(autoincrement())
   mylists Mylist[]
 
-  book Book?
+  book  Book?
+  video Video?
 }
 
 model Book {
@@ -56,4 +57,24 @@ model BookPublisher {
   nameRuby String
 
   books Book[]
+}
+
+model Video {
+  itemId Int  @id
+  item   Item @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  title     String
+  titleRuby String
+
+  casts       Cast[]
+  publishedAt DateTime?
+}
+
+model Cast {
+  id Int @id @default(autoincrement())
+
+  name     String @unique
+  nameRuby String
+
+  videos Video[]
 }
