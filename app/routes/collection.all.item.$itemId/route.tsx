@@ -2,7 +2,7 @@ import { LoaderFunctionArgs, type MetaFunction, json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scrollArea";
 import { getItem } from "~/.server/persist/item";
-import { bookAuthorRoute, itemRoute } from "~/routePath";
+import { bookAuthorRoute, castRoute, itemRoute } from "~/routePath";
 import { validateId } from "~/lib/schema/validation/params";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
@@ -22,7 +22,8 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 };
 
 export default function Page() {
-  const { id, name, authors, publishedAt } = useLoaderData<typeof loader>();
+  const { id, name, authors, casts, publishedAt } =
+    useLoaderData<typeof loader>();
   return (
     <ScrollArea className="h-full w-full border">
       <div className="flex flex-col">
@@ -35,6 +36,16 @@ export default function Page() {
             return (
               <Link to={bookAuthorRoute(author.id, 1, "")} key={author.id}>
                 {author.name}
+              </Link>
+            );
+          })}
+        </div>
+        <div className="flex gap-2">
+          Casts:
+          {casts.map((cast) => {
+            return (
+              <Link to={castRoute(cast.id, 1, "")} key={cast.id}>
+                {cast.name}
               </Link>
             );
           })}

@@ -7,6 +7,7 @@ const managePath = `manage` as const;
 const manageImportPath = `${managePath}/import` as const;
 const bookPath = `book` as const;
 const bookAuthorListPath = `${bookPath}/author` as const;
+const castListPath = `cast` as const;
 
 export const homeRoute = () => {
   return "/" as const;
@@ -160,6 +161,31 @@ export const bookAuthorBookRoute = (
   query: string,
 ) => {
   const route = `${bookAuthorListRoute()}/${bookAuthorId}/x/${itemId}` as const;
+  return build(route, {
+    [pageKey]: page.toString(),
+    [queryKey]: query,
+  });
+};
+
+export const castListRoute = () => {
+  return `/${castListPath}` as const;
+};
+
+export const castRoute = (castId: number, page: number, query: string) => {
+  const route = `${castListRoute()}/${castId}` as const;
+  return build(route, {
+    [pageKey]: page.toString(),
+    [queryKey]: query,
+  });
+};
+
+export const castVideoRoute = (
+  castId: number,
+  itemId: number,
+  page: number,
+  query: string,
+) => {
+  const route = `${castListRoute()}/${castId}/x/${itemId}` as const;
   return build(route, {
     [pageKey]: page.toString(),
     [queryKey]: query,

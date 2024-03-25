@@ -17,6 +17,9 @@ export async function getMylist(id: number) {
             book: {
               select: { title: true },
             },
+            video: {
+              select: { title: true },
+            },
           },
         },
       },
@@ -31,7 +34,7 @@ export async function getMylist(id: number) {
         items: e?.items.map((item) => {
           return {
             id: item.id,
-            name: item.book?.title || "",
+            name: item.book?.title || item.video?.title || "",
           };
         }),
       };

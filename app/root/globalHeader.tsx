@@ -9,6 +9,7 @@ import {
 import {
   allItemsRoute,
   bookAuthorListRoute,
+  castListRoute,
   homeRoute,
   importRoute,
 } from "~/routePath";
@@ -38,6 +39,8 @@ export const GlobalHeader = ({ className }: { className?: string }) => {
         <MenuLink to={allItemsRoute()}>Collection</MenuLink>
 
         <MenuLink to={bookAuthorListRoute()}>Book Author</MenuLink>
+
+        <MenuLink to={castListRoute()}>Cast</MenuLink>
 
         <MenuLink to={importRoute()}>Import</MenuLink>
       </NavigationMenuList>

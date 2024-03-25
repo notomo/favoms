@@ -22,6 +22,18 @@ export async function getItem(id: number) {
           publishedAt: true,
         },
       },
+      video: {
+        select: {
+          title: true,
+          casts: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          publishedAt: true,
+        },
+      },
     },
   });
   if (item === null) {
@@ -29,9 +41,12 @@ export async function getItem(id: number) {
   }
   return {
     id: item.id,
-    name: item.book?.title || "",
+    name: item.book?.title || item.video?.title || "",
     authors: item.book?.authors || [],
-    publishedAt: item.book?.publishedAt?.toLocaleString(),
+    casts: item.video?.casts || [],
+    publishedAt:
+      item.book?.publishedAt?.toLocaleString() ||
+      item.video?.publishedAt?.toLocaleString(),
   };
 }
 
@@ -52,13 +67,27 @@ export async function listItems({
 
   const items = await prisma.item.findMany({
     where: {
-      book: {
-        title: nameQuery,
-      },
+      OR: [
+        {
+          book: {
+            title: nameQuery,
+          },
+        },
+        {
+          video: {
+            title: nameQuery,
+          },
+        },
+      ],
     },
     select: {
       id: true,
       book: {
+        select: {
+          title: true,
+        },
+      },
+      video: {
         select: {
           title: true,
         },
@@ -70,7 +99,7 @@ export async function listItems({
   return items.map((e) => {
     return {
       id: e.id,
-      name: e.book?.title || "",
+      name: e.book?.title || e.video?.title || "",
     };
   });
 }
