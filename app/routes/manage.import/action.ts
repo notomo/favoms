@@ -4,7 +4,8 @@ import { safeParse, flatten } from "valibot";
 import { json, redirect, useActionData } from "@remix-run/react";
 import { importRoute } from "~/routePath";
 import { importItems } from "~/.server/persist/item";
-import { fileSchema, schema } from "./schema";
+import { schema } from "./schema";
+import { itemImportSchema } from "~/lib/schema/item";
 
 export async function importRun({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
@@ -18,7 +19,7 @@ export async function importRun({ request }: ActionFunctionArgs) {
 
   const fileContent = await submission.value.targetFile.text();
   const parsedJson = JSON.parse(fileContent);
-  const validated = safeParse(fileSchema, parsedJson);
+  const validated = safeParse(itemImportSchema, parsedJson);
   if (!validated.success) {
     const error = JSON.stringify(flatten(validated.issues), null, 2);
     return json({
@@ -30,7 +31,7 @@ export async function importRun({ request }: ActionFunctionArgs) {
   }
 
   if (!submission.value.dryRun) {
-    await importItems(validated.output.items, submission.value.isReplace);
+    await importItems(validated.output, submission.value.isReplace);
   }
 
   return redirect(importRoute());

@@ -1,7 +1,6 @@
 import {
   object,
   array,
-  union,
   literal,
   nullable,
   string,
@@ -35,6 +34,23 @@ const bookSchema = object({
   publishedAt: transform(nullable(string()), (x) => (x ? new Date(x) : null)),
 });
 
-export const itemImportSchema = union([bookSchema]);
+const castSchema = object({
+  name: nameSchema({ min: 1, max: 1000 }),
+  nameRuby: nullable(nameSchema({ min: 0, max: 1000 }), ""),
+});
 
-export type ImportItem = Output<typeof itemImportSchema>;
+const videoSchema = object({
+  kind: literal("video"),
+  title: nameSchema({ min: 1, max: 1000 }),
+  titleRuby: nullable(nameSchema({ min: 0, max: 1000 }), ""),
+  casts: array(castSchema),
+  // TODO: validate date format
+  publishedAt: transform(nullable(string()), (x) => (x ? new Date(x) : null)),
+});
+
+export const itemImportSchema = object({
+  books: array(bookSchema),
+  videos: array(videoSchema),
+});
+
+export type ItemImport = Output<typeof itemImportSchema>;

@@ -1,4 +1,4 @@
-import { ImportItem } from "~/lib/schema/item";
+import { ItemImport } from "~/lib/schema/item";
 import { prisma, UpsertData, UpsertWhere } from "./prisma";
 
 type Model = typeof prisma.item;
@@ -102,17 +102,21 @@ const toRecord = <
   );
 };
 
-export async function importItems(items: ImportItem[], isReplace = false) {
+export async function importItems(itemImport: ItemImport, isReplace = false) {
+  const books = itemImport.books;
+  const videos = itemImport.videos;
+
   const uniqueBookAuthors = uniqueByKey(
-    items.map((x) => x.authors).flat(),
+    books.map((x) => x.authors).flat(),
     "name",
   );
   const uniqueBookPublishers = uniqueByKey(
-    items.map((x) => x.publishers).flat(),
+    books.map((x) => x.publishers).flat(),
     "name",
   );
+  const uniqueCasts = uniqueByKey(videos.map((x) => x.casts).flat(), "name");
 
-  const [bookAuthors, bookPublishers] = await prisma.$transaction(
+  const [bookAuthors, bookPublishers, casts] = await prisma.$transaction(
     async (tx) => {
       return await Promise.all([
         Promise.all([
@@ -141,16 +145,30 @@ export async function importItems(items: ImportItem[], isReplace = false) {
             });
           }),
         ]),
+        Promise.all([
+          ...uniqueCasts.map((x) => {
+            return tx.cast.upsert({
+              where: { name: x.name },
+              create: x,
+              update: x,
+              select: {
+                id: true,
+                name: true,
+              },
+            });
+          }),
+        ]),
       ]);
     },
   );
 
   const bookAuthorRecord = toRecord(bookAuthors, "name");
   const bookPublisherRecord = toRecord(bookPublishers, "name");
+  const castRecord = toRecord(casts, "name");
 
   await prisma.$transaction([
     ...(isReplace ? [prisma.item.deleteMany({ where: {} })] : []),
-    ...items.map((x) => {
+    ...books.map((x) => {
       return prisma.item.create({
         data: {
           book: {
@@ -166,6 +184,24 @@ export async function importItems(items: ImportItem[], isReplace = false) {
               publishers: {
                 connect: x.publishers.map((publisher) => ({
                   id: bookPublisherRecord[publisher.name].id,
+                })),
+              },
+            },
+          },
+        },
+      });
+    }),
+    ...videos.map((x) => {
+      return prisma.item.create({
+        data: {
+          video: {
+            create: {
+              title: x.title,
+              titleRuby: x.titleRuby,
+              publishedAt: x.publishedAt,
+              casts: {
+                connect: x.casts.map((cast) => ({
+                  id: castRecord[cast.name].id,
                 })),
               },
             },
