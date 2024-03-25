@@ -61,25 +61,27 @@ export async function listItems({
 }) {
   const nameQuery = query
     ? {
-        contains: query,
+        OR: [
+          {
+            book: {
+              title: {
+                contains: query,
+              },
+            },
+          },
+          {
+            video: {
+              title: {
+                contains: query,
+              },
+            },
+          },
+        ],
       }
-    : undefined;
+    : {};
 
   const items = await prisma.item.findMany({
-    where: {
-      OR: [
-        {
-          book: {
-            title: nameQuery,
-          },
-        },
-        {
-          video: {
-            title: nameQuery,
-          },
-        },
-      ],
-    },
+    where: nameQuery,
     select: {
       id: true,
       book: {
