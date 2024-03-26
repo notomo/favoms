@@ -22,35 +22,45 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 };
 
 export default function Page() {
-  const { id, name, authors, casts, publishedAt } =
-    useLoaderData<typeof loader>();
+  const item = useLoaderData<typeof loader>();
+
+  const authorList =
+    item.kind === "book" ? (
+      <div className="flex gap-2">
+        Authors:
+        {item.authors.map((author) => {
+          return (
+            <Link to={bookAuthorRoute(author.id, 1, "")} key={author.id}>
+              {author.name}
+            </Link>
+          );
+        })}
+      </div>
+    ) : null;
+
+  const castList =
+    item.kind === "video" ? (
+      <div className="flex gap-2">
+        Casts:
+        {item.casts.map((cast) => {
+          return (
+            <Link to={castRoute(cast.id, 1, "")} key={cast.id}>
+              {cast.name}
+            </Link>
+          );
+        })}
+      </div>
+    ) : null;
+
   return (
     <ScrollArea className="h-full w-full border">
       <div className="flex flex-col">
-        <Link to={itemRoute(id)} target="_blank" rel="noreferrer">
-          item {id}: {name}
+        <Link to={itemRoute(item.id)} target="_blank" rel="noreferrer">
+          {item.name}
         </Link>
-        <div className="flex gap-2">
-          Authors:
-          {authors.map((author) => {
-            return (
-              <Link to={bookAuthorRoute(author.id, 1, "")} key={author.id}>
-                {author.name}
-              </Link>
-            );
-          })}
-        </div>
-        <div className="flex gap-2">
-          Casts:
-          {casts.map((cast) => {
-            return (
-              <Link to={castRoute(cast.id, 1, "")} key={cast.id}>
-                {cast.name}
-              </Link>
-            );
-          })}
-        </div>
-        <div>Published at: {publishedAt || ""}</div>
+        {authorList}
+        {castList}
+        <div>Published at: {item.publishedAt || ""}</div>
       </div>
     </ScrollArea>
   );

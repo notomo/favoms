@@ -1,5 +1,6 @@
 import { ItemImport } from "~/lib/schema/item";
 import { prisma, UpsertData, UpsertWhere } from "./prisma";
+import { switchKind } from "~/.server/persist/kind";
 
 type Model = typeof prisma.item;
 
@@ -39,15 +40,25 @@ export async function getItem(id: number) {
   if (item === null) {
     return null;
   }
-  return {
+
+  const content = switchKind(item.book, item.video);
+  const shared = {
     id: item.id,
-    name: item.book?.title || item.video?.title || "",
-    authors: item.book?.authors || [],
-    casts: item.video?.casts || [],
-    publishedAt:
-      item.book?.publishedAt?.toLocaleString() ||
-      item.video?.publishedAt?.toLocaleString(),
+    name: content.inner.title || "",
+    publishedAt: content.inner.publishedAt?.toLocaleString(),
   };
+  if (content.kind === "book") {
+    return {
+      ...shared,
+      kind: "book",
+      authors: content.inner.authors || [],
+    } as const;
+  }
+  return {
+    ...shared,
+    kind: "video",
+    casts: item.video?.casts || [],
+  } as const;
 }
 
 export async function listItems({
@@ -98,10 +109,11 @@ export async function listItems({
     skip,
     take,
   });
-  return items.map((e) => {
+  return items.map((item) => {
+    const content = switchKind(item.book, item.video);
     return {
-      id: e.id,
-      name: e.book?.title || e.video?.title || "",
+      id: item.id,
+      name: content.inner.title || "",
     };
   });
 }

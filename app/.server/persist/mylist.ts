@@ -1,4 +1,5 @@
 import { UpsertData, UpsertWhere, prisma } from "./prisma";
+import { switchKind } from "./kind";
 
 type Model = typeof prisma.mylist;
 
@@ -32,9 +33,11 @@ export async function getMylist(id: number) {
         id: e.id,
         name: e.name,
         items: e?.items.map((item) => {
+          const content = switchKind(item.book, item.video);
           return {
             id: item.id,
-            name: item.book?.title || item.video?.title || "",
+            kind: content.kind,
+            name: content.inner.title || "",
           };
         }),
       };
