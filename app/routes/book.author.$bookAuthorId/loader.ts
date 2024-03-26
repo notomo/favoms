@@ -1,6 +1,6 @@
 import { LoaderFunctionArgs, defer } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { getBookAuthor } from "~/.server/persist/book";
+import { getBookAuthor } from "~/.server/persist/bookAuthor";
 import { validateId } from "~/lib/schema/validation/params";
 
 export const getBookAuthorWithBooks = async ({
