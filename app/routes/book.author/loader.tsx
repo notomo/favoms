@@ -4,7 +4,7 @@ import { getPage, getQuery } from "~/routePath";
 
 const pageSize = 20;
 
-export const getBookAuthors = async ({ request }: LoaderFunctionArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const searchParams = new URL(request.url).searchParams;
   const page = getPage(searchParams);
   const query = getQuery(searchParams);

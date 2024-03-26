@@ -7,7 +7,7 @@ import {
 } from "@remix-run/react";
 import { Suspense, useEffect } from "react";
 import { ScrollArea } from "~/component/ui/scrollArea";
-import { BookAuthor, getBookAuthorWithBooks } from "./loader";
+import { BookAuthor, loader } from "./loader";
 import { BookItemLinks } from "./bookItemLinks";
 import { Loading } from "~/component/ui/loading";
 import { getPage, getQuery } from "~/routePath";
@@ -17,7 +17,7 @@ export const meta: MetaFunction = ({ params }) => {
   return [{ title: `Book author ${bookAuthorId} | favoms` }];
 };
 
-export const loader = getBookAuthorWithBooks;
+export { loader } from "./loader";
 
 const BookAuthorBookList = ({ bookAuthor }: { bookAuthor: BookAuthor }) => {
   useEffect(() => {

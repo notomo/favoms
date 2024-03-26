@@ -13,14 +13,14 @@ import { MoreHorizontal, Search } from "lucide-react";
 import { Suspense } from "react";
 import { Loading, LoadingOr } from "~/component/ui/loading";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
-import { getItems } from "./loader";
+import { loader } from "./loader";
 import { Input } from "~/component/ui/input";
 
 export const meta: MetaFunction = () => {
   return [{ title: "All | favoms" }];
 };
 
-export const loader = getItems;
+export { loader } from "./loader";
 
 type Item = {
   id: number;

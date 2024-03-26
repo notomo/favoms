@@ -17,7 +17,7 @@ import {
   DoneMylistsEditButton,
   EditableMylistRows,
 } from "~/routes/collection/mylistsEdit";
-import { Mylist, getMylists } from "./loader";
+import { Mylist, loader } from "./loader";
 import { MylistLinks } from "~/routes/collection/mylistLinks";
 import { Suspense, useState } from "react";
 import { Loading } from "~/component/ui/loading";
@@ -29,7 +29,7 @@ export const meta: MetaFunction = () => {
 
 export const action = createMylistAction;
 
-export const loader = getMylists;
+export { loader } from "./loader";
 
 const AllItemsCollectionLink = () => {
   return <CollectionLink path={allItemsRoute()}>All</CollectionLink>;

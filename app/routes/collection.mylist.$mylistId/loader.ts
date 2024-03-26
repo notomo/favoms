@@ -1,9 +1,8 @@
 import { LoaderFunctionArgs, defer } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
 import { getMylist } from "~/.server/persist/mylist";
 import { validateId } from "~/lib/schema/validation/params";
 
-export const getMylistWithItems = async ({ params }: LoaderFunctionArgs) => {
+export const loader = async ({ params }: LoaderFunctionArgs) => {
   const mylistId = validateId(params.mylistId);
   const mylist = getMylist(mylistId);
   return defer({
@@ -11,9 +10,6 @@ export const getMylistWithItems = async ({ params }: LoaderFunctionArgs) => {
   });
 };
 
-export type LoaderData = ReturnType<
-  typeof useLoaderData<typeof getMylistWithItems>
->;
 export type MylistItem = {
   id: number;
   name: string;

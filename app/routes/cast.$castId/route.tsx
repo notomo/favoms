@@ -7,7 +7,7 @@ import {
 } from "@remix-run/react";
 import { Suspense, useEffect } from "react";
 import { ScrollArea } from "~/component/ui/scrollArea";
-import { Cast, getCastWithVideos } from "./loader";
+import { Cast, loader } from "./loader";
 import { CastLinks } from "./castLinks";
 import { Loading } from "~/component/ui/loading";
 import { getPage, getQuery } from "~/routePath";
@@ -17,7 +17,7 @@ export const meta: MetaFunction = ({ params }) => {
   return [{ title: `Cast ${castId} | favoms` }];
 };
 
-export const loader = getCastWithVideos;
+export { loader } from "./loader";
 
 const CastVideoList = ({ cast }: { cast: Cast }) => {
   useEffect(() => {

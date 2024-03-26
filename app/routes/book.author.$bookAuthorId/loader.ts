@@ -1,21 +1,14 @@
 import { LoaderFunctionArgs, defer } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
 import { getBookAuthor } from "~/.server/persist/bookAuthor";
 import { validateId } from "~/lib/schema/validation/params";
 
-export const getBookAuthorWithBooks = async ({
-  params,
-}: LoaderFunctionArgs) => {
+export const loader = async ({ params }: LoaderFunctionArgs) => {
   const bookAuthorId = validateId(params.bookAuthorId);
   const bookAuthor = getBookAuthor(bookAuthorId);
   return defer({
     bookAuthor,
   });
 };
-
-export type LoaderData = ReturnType<
-  typeof useLoaderData<typeof getBookAuthorWithBooks>
->;
 
 export type BookAuthor = {
   id: number;

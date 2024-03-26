@@ -1,6 +1,4 @@
-import { getBookAuthors } from "~/routes/book.author/loader";
-
-export const loader = getBookAuthors;
+export { loader } from "~/routes/book.author/loader";
 
 export default function Page() {
   return (

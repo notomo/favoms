@@ -8,7 +8,7 @@ import {
 import { type MetaFunction } from "@remix-run/node";
 import { Suspense } from "react";
 import { Loading, LoadingOr } from "~/component/ui/loading";
-import { BookAuthor, getBookAuthors } from "./loader";
+import { BookAuthor, loader } from "./loader";
 import { BookAuthorLinks } from "./bookAuthorLinks";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
 import { Input } from "~/component/ui/input";
@@ -19,7 +19,7 @@ export const meta: MetaFunction = () => {
   return [{ title: "Book Authors | favoms" }];
 };
 
-export const loader = getBookAuthors;
+export { loader } from "./loader";
 
 const BookAuthorList = ({
   bookAuthors,

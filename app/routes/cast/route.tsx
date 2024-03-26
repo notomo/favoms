@@ -8,7 +8,7 @@ import {
 import { type MetaFunction } from "@remix-run/node";
 import { Suspense } from "react";
 import { Loading, LoadingOr } from "~/component/ui/loading";
-import { Cast, getCasts } from "./loader";
+import { Cast, loader } from "./loader";
 import { CastLinks } from "./castLinks";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
 import { Input } from "~/component/ui/input";
@@ -19,7 +19,7 @@ export const meta: MetaFunction = () => {
   return [{ title: "Casts | favoms" }];
 };
 
-export const loader = getCasts;
+export { loader } from "./loader";
 
 const CastList = ({
   casts,

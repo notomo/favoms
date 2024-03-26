@@ -10,7 +10,7 @@ import { ScrollArea } from "~/component/ui/scrollArea";
 import { getMylistDialogType, isMylistItemsEditRoute } from "~/routePath";
 import { MylistDropDownMenu } from "./mylistDropdownMenu";
 import { DoneMylistItemsEditButton, EditableItemRows } from "./mylistItemsEdit";
-import { MylistItem, getMylistWithItems } from "./loader";
+import { MylistItem, loader } from "./loader";
 import { ItemLinks } from "./mylistItemLinks";
 import { Loading } from "~/component/ui/loading";
 
@@ -19,7 +19,7 @@ export const meta: MetaFunction = ({ params }) => {
   return [{ title: `Mylist ${mylistId} | favoms` }];
 };
 
-export const loader = getMylistWithItems;
+export { loader } from "./loader";
 
 const MylistItemRows = ({
   mylistId,

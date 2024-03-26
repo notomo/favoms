@@ -1,6 +1,4 @@
-import { getCasts } from "~/routes/cast/loader";
-
-export const loader = getCasts;
+export { loader } from "~/routes/cast/loader";
 
 export default function Page() {
   return (
