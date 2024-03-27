@@ -51,7 +51,7 @@ export const DoneMylistsEditButton = ({
   );
 };
 
-export const EditableMylistRow = ({
+const EditableMylistRow = ({
   id,
   children,
 }: React.PropsWithChildren<{ id: number }>) => {
@@ -94,7 +94,7 @@ export const EditableMylistRow = ({
   );
 };
 
-export const EditableMylistRows = ({
+export const EditableMylistList = ({
   mylistRecords,
   mylistIds,
   setMylistIds,

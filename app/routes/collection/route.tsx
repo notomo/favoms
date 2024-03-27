@@ -6,7 +6,7 @@ import { type MetaFunction } from "@remix-run/node";
 import { CollectionsDropDownMenu } from "./collectionsDropdownMenu";
 import {
   DoneMylistsEditButton,
-  EditableMylistRows,
+  EditableMylistList,
 } from "~/routes/collection/mylistsEdit";
 import { Mylist, loader } from "./loader";
 import { useState } from "react";
@@ -22,7 +22,7 @@ export const action = createMylistAction;
 
 export { loader } from "./loader";
 
-const Collections = ({ mylists }: { mylists: Mylist[] }) => {
+const CollectionList = ({ mylists }: { mylists: Mylist[] }) => {
   const [searchParams] = useSearchParams();
   const dialogType = getCollectionDialogType(searchParams);
 
@@ -43,7 +43,7 @@ const Collections = ({ mylists }: { mylists: Mylist[] }) => {
   );
 };
 
-const EditableCollections = ({ mylists }: { mylists: Mylist[] }) => {
+const EditableCollectionList = ({ mylists }: { mylists: Mylist[] }) => {
   const [mylistIds, setMylistIds] = useState(mylists.map((x) => x.id));
 
   const mylistRecords: Record<number, Mylist> = {};
@@ -61,7 +61,7 @@ const EditableCollections = ({ mylists }: { mylists: Mylist[] }) => {
       <ScrollArea className="border">
         <AllItemsCollectionLink />
 
-        <EditableMylistRows
+        <EditableMylistList
           mylistRecords={mylistRecords}
           mylistIds={mylistIds}
           setMylistIds={setMylistIds}
@@ -82,9 +82,9 @@ export default function Page() {
       <LazyLoad resolve={loaderData.mylists}>
         {(mylists) =>
           editable ? (
-            <EditableCollections mylists={mylists} />
+            <EditableCollectionList mylists={mylists} />
           ) : (
-            <Collections mylists={mylists} />
+            <CollectionList mylists={mylists} />
           )
         }
       </LazyLoad>

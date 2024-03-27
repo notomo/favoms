@@ -42,7 +42,7 @@ export const DoneMylistItemsEditButton = ({
   );
 };
 
-export const EditableItemRow = ({
+const EditableItemRow = ({
   children,
   willBeRemoved,
   onClickToRemove,
@@ -67,7 +67,7 @@ export const EditableItemRow = ({
   );
 };
 
-export const EditableItemRows = ({
+export const EditableItemList = ({
   items,
   willBeRemovedItemIds,
   setWillBeRemovedItemIds,

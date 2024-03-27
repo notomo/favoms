@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ScrollArea } from "~/component/ui/scrollArea";
 import { getMylistDialogType, isMylistItemsEditRoute } from "~/routePath";
 import { MylistDropDownMenu } from "./mylistDropdownMenu";
-import { DoneMylistItemsEditButton, EditableItemRows } from "./mylistItemsEdit";
+import { DoneMylistItemsEditButton, EditableItemList } from "./mylistItemsEdit";
 import { Mylist, loader } from "./loader";
 import { ItemLinks } from "./rowLink";
 import { LazyLoad } from "~/component/lazyLoad";
@@ -17,7 +17,7 @@ export const meta: MetaFunction = ({ params }) => {
 
 export { loader } from "./loader";
 
-const MylistItemRows = ({ mylist }: { mylist: Mylist }) => {
+const MylistItemList = ({ mylist }: { mylist: Mylist }) => {
   useEffect(() => {
     // HACK
     document.title = `${mylist.name} | favoms`;
@@ -51,7 +51,7 @@ const MylistItemRows = ({ mylist }: { mylist: Mylist }) => {
 
       <ScrollArea className="border">
         {editable ? (
-          <EditableItemRows
+          <EditableItemList
             willBeRemovedItemIds={willBeRemovedItemIds}
             items={mylist.items}
             setWillBeRemovedItemIds={setWillBeRemovedItemIds}
@@ -70,7 +70,7 @@ export default function Page() {
   return (
     <TwoColumn>
       <LazyLoad resolve={loaderData.mylist}>
-        {(mylist) => <MylistItemRows mylist={mylist} />}
+        {(mylist) => <MylistItemList mylist={mylist} />}
       </LazyLoad>
 
       <Outlet />

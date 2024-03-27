@@ -15,7 +15,7 @@ export const meta: MetaFunction = () => {
 
 export { loader } from "./loader";
 
-const ItemRows = ({
+const ItemList = ({
   items,
   existsNextPage,
   page,
@@ -59,7 +59,7 @@ export default function Page() {
     <TwoColumn>
       <LazyLoad resolve={loaderData.fetched}>
         {(fetched) => (
-          <ItemRows
+          <ItemList
             page={loaderData.page}
             query={loaderData.query}
             {...fetched}
