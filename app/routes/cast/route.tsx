@@ -37,11 +37,9 @@ const CastList = ({
         existsNextPage={existsNextPage}
         content={(casts) => {
           return (
-            <nav className="h-full">
-              <ul className="flex h-full flex-col">
-                <CastLinks casts={casts} page={page} query={query} />
-              </ul>
-            </nav>
+            <ul className="flex h-full flex-col">
+              <CastLinks casts={casts} page={page} query={query} />
+            </ul>
           );
         }}
       />

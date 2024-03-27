@@ -44,13 +44,11 @@ const Collections = ({ mylists }: { mylists: Mylist[] }) => {
       />
 
       <ScrollArea className="border">
-        <nav className="h-full">
-          <ul className="flex h-full flex-col">
-            <AllItemsCollectionLink />
+        <ul className="flex h-full flex-col">
+          <AllItemsCollectionLink />
 
-            <MylistLinks mylists={mylists} />
-          </ul>
-        </nav>
+          <MylistLinks mylists={mylists} />
+        </ul>
       </ScrollArea>
     </div>
   );
@@ -72,17 +70,15 @@ const EditableCollections = ({ mylists }: { mylists: Mylist[] }) => {
       />
 
       <ScrollArea className="border">
-        <nav className="h-full">
-          <ul className="flex h-full flex-col">
-            <AllItemsCollectionLink />
+        <ul className="flex h-full flex-col">
+          <AllItemsCollectionLink />
 
-            <EditableMylistRows
-              mylistRecords={mylistRecords}
-              mylistIds={mylistIds}
-              setMylistIds={setMylistIds}
-            />
-          </ul>
-        </nav>
+          <EditableMylistRows
+            mylistRecords={mylistRecords}
+            mylistIds={mylistIds}
+            setMylistIds={setMylistIds}
+          />
+        </ul>
       </ScrollArea>
     </div>
   );

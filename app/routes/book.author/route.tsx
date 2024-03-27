@@ -37,15 +37,13 @@ const BookAuthorList = ({
         existsNextPage={existsNextPage}
         content={(bookAuthors) => {
           return (
-            <nav className="h-full">
-              <ul className="flex h-full flex-col">
-                <BookAuthorLinks
-                  bookAuthors={bookAuthors}
-                  page={page}
-                  query={query}
-                />
-              </ul>
-            </nav>
+            <ul className="flex h-full flex-col">
+              <BookAuthorLinks
+                bookAuthors={bookAuthors}
+                page={page}
+                query={query}
+              />
+            </ul>
           );
         }}
       />
