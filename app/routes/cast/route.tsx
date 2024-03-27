@@ -36,11 +36,7 @@ const CastList = ({
         addedItems={casts}
         existsNextPage={existsNextPage}
         content={(casts) => {
-          return (
-            <ul className="flex h-full flex-col">
-              <CastLinks casts={casts} page={page} query={query} />
-            </ul>
-          );
+          return <CastLinks casts={casts} page={page} query={query} />;
         }}
       />
     </div>

@@ -16,5 +16,7 @@ export const CastRow = ({
   children,
   className,
 }: React.PropsWithChildren<{ className?: string }>) => {
-  return <li className={cn("border-b p-4", className)}>{children}</li>;
+  return (
+    <div className={cn("border-b bg-inherit p-4", className)}>{children}</div>
+  );
 };

@@ -27,14 +27,12 @@ const CastVideoList = ({ cast }: { cast: Cast }) => {
 
   return (
     <ScrollArea className="border">
-      <ul className="flex h-full flex-col">
-        <CastLinks
-          videos={cast.videos}
-          mylistId={cast.id}
-          page={page}
-          query={query}
-        />
-      </ul>
+      <CastLinks
+        videos={cast.videos}
+        mylistId={cast.id}
+        page={page}
+        query={query}
+      />
     </ScrollArea>
   );
 };

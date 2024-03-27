@@ -50,17 +50,15 @@ const MylistItemRows = ({ mylist }: { mylist: Mylist }) => {
       </div>
 
       <ScrollArea className="border">
-        <ul className="flex h-full flex-col">
-          {editable ? (
-            <EditableItemRows
-              willBeRemovedItemIds={willBeRemovedItemIds}
-              items={mylist.items}
-              setWillBeRemovedItemIds={setWillBeRemovedItemIds}
-            />
-          ) : (
-            <ItemLinks items={mylist.items} mylistId={mylist.id} />
-          )}
-        </ul>
+        {editable ? (
+          <EditableItemRows
+            willBeRemovedItemIds={willBeRemovedItemIds}
+            items={mylist.items}
+            setWillBeRemovedItemIds={setWillBeRemovedItemIds}
+          />
+        ) : (
+          <ItemLinks items={mylist.items} mylistId={mylist.id} />
+        )}
       </ScrollArea>
     </div>
   );

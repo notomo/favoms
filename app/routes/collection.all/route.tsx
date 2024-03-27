@@ -52,7 +52,7 @@ const ItemRows = ({
         existsNextPage={existsNextPage}
         content={(currentItems) => {
           return (
-            <ul className="flex h-full flex-col">
+            <>
               {currentItems.map(({ id, name }) => {
                 const path = collectionItemRoute(id, page, query);
                 return (
@@ -61,7 +61,7 @@ const ItemRows = ({
                   </ItemLink>
                 );
               })}
-            </ul>
+            </>
           );
         }}
       />

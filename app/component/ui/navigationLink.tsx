@@ -13,7 +13,7 @@ export const NavigationLink = ({
   return (
     <NavLink
       className={({ isActive }) =>
-        isActive ? "bg-stone-500 font-bold text-stone-50" : ""
+        isActive ? "bg-stone-500 text-stone-50" : ""
       }
       to={path}
     >

@@ -27,14 +27,12 @@ const BookAuthorBookList = ({ bookAuthor }: { bookAuthor: BookAuthor }) => {
 
   return (
     <ScrollArea className="border">
-      <ul className="flex h-full flex-col">
-        <BookItemLinks
-          books={bookAuthor.books}
-          mylistId={bookAuthor.id}
-          page={page}
-          query={query}
-        />
-      </ul>
+      <BookItemLinks
+        books={bookAuthor.books}
+        mylistId={bookAuthor.id}
+        page={page}
+        query={query}
+      />
     </ScrollArea>
   );
 };
