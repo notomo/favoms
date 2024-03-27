@@ -1,14 +1,13 @@
 import { type MetaFunction } from "@remix-run/node";
-import { Form, Outlet, useLoaderData, useNavigation } from "@remix-run/react";
+import { Outlet, useLoaderData } from "@remix-run/react";
 import { collectionItemRoute } from "~/routePath";
 import { ItemLink } from "./itemLink";
 import { Button } from "~/component/ui/button";
-import { MoreHorizontal, Search } from "lucide-react";
-import { LoadingOr } from "~/component/ui/loading";
+import { MoreHorizontal } from "lucide-react";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
 import { loader } from "./loader";
-import { Input } from "~/component/ui/input";
 import { LazyLoad } from "~/component/lazyLoad";
+import { SearchForm } from "~/component/ui/searchForm";
 
 export const meta: MetaFunction = () => {
   return [{ title: "All | favoms" }];
@@ -32,9 +31,6 @@ const ItemRows = ({
   page: number;
   query: string;
 }) => {
-  const navigation = useNavigation();
-  const isLoading = navigation.state === "loading";
-
   return (
     <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_6%_86%]">
       <div className="flex items-center justify-between">
@@ -44,18 +40,7 @@ const ItemRows = ({
         </Button>
       </div>
 
-      <Form method="GET" className="flex items-center gap-2">
-        <Input
-          defaultValue={query}
-          placeholder="Search item name"
-          name="query"
-        />
-        <Button type="submit" size="icon" variant="ghost" disabled={isLoading}>
-          <LoadingOr isLoading={isLoading}>
-            <Search size={24} />
-          </LoadingOr>
-        </Button>
-      </Form>
+      <SearchForm query={query} placeholder={"Search item name"} />
 
       <InfiniteScrollArea
         key={query}

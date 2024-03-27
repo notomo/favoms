@@ -1,13 +1,10 @@
-import { Form, Outlet, useLoaderData, useNavigation } from "@remix-run/react";
+import { Outlet, useLoaderData } from "@remix-run/react";
 import { type MetaFunction } from "@remix-run/node";
-import { LoadingOr } from "~/component/ui/loading";
 import { BookAuthor, loader } from "./loader";
 import { BookAuthorLinks } from "./bookAuthorLinks";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
-import { Input } from "~/component/ui/input";
-import { Search } from "lucide-react";
-import { Button } from "~/component/ui/button";
 import { LazyLoad } from "~/component/lazyLoad";
+import { SearchForm } from "~/component/ui/searchForm";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Book Authors | favoms" }];
@@ -26,23 +23,10 @@ const BookAuthorList = ({
   page: number;
   query: string;
 }) => {
-  const navigation = useNavigation();
-  const isLoading = navigation.state === "loading";
-
   return (
     <div className="grid h-full w-full grid-cols-[100%] grid-rows-[6%_94%] gap-y-1">
-      <Form method="GET" className="flex items-center gap-2">
-        <Input
-          defaultValue={query}
-          placeholder="Search author name"
-          name="query"
-        />
-        <Button type="submit" size="icon" variant="ghost" disabled={isLoading}>
-          <LoadingOr isLoading={isLoading}>
-            <Search size={24} />
-          </LoadingOr>
-        </Button>
-      </Form>
+      <SearchForm query={query} placeholder={"Search author name"} />
+
       <InfiniteScrollArea
         key={query}
         className="border"
