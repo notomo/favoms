@@ -17,6 +17,7 @@ import { MylistLinks } from "~/routes/collection/mylistLinks";
 import { useState } from "react";
 import { createMylistAction } from "~/routes/collection/createMylistAction";
 import { LazyLoad } from "~/component/lazyLoad";
+import { LeftNavigationTwoColumn } from "~/component/layout/leftNavigationTwoColumn";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Collections | favoms" }];
@@ -93,7 +94,7 @@ export default function Page() {
 
   const loaderData = useLoaderData<typeof loader>();
   return (
-    <div className="grid h-full w-full grid-cols-[20%_calc(80%-1rem)] grid-rows-[100%] gap-[1rem] p-4">
+    <LeftNavigationTwoColumn>
       <LazyLoad resolve={loaderData.mylists}>
         {(mylists) =>
           editable ? (
@@ -103,7 +104,8 @@ export default function Page() {
           )
         }
       </LazyLoad>
+
       <Outlet />
-    </div>
+    </LeftNavigationTwoColumn>
   );
 }

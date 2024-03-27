@@ -5,6 +5,7 @@ import { BookAuthorLinks } from "./bookAuthorLinks";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
 import { LazyLoad } from "~/component/lazyLoad";
 import { SearchForm } from "~/component/ui/searchForm";
+import { LeftNavigationTwoColumn } from "~/component/layout/leftNavigationTwoColumn";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Book Authors | favoms" }];
@@ -55,7 +56,7 @@ const BookAuthorList = ({
 export default function Page() {
   const loaderData = useLoaderData<typeof loader>();
   return (
-    <div className="grid h-full w-full grid-cols-[20%_calc(80%-1rem)] grid-rows-[100%] gap-[1rem] p-4">
+    <LeftNavigationTwoColumn>
       <LazyLoad resolve={loaderData.fetched}>
         {(fetched) => (
           <BookAuthorList
@@ -65,7 +66,8 @@ export default function Page() {
           />
         )}
       </LazyLoad>
+
       <Outlet />
-    </div>
+    </LeftNavigationTwoColumn>
   );
 }

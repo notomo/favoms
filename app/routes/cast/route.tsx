@@ -5,6 +5,7 @@ import { CastLinks } from "./castLinks";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
 import { LazyLoad } from "~/component/lazyLoad";
 import { SearchForm } from "~/component/ui/searchForm";
+import { LeftNavigationTwoColumn } from "~/component/layout/leftNavigationTwoColumn";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Casts | favoms" }];
@@ -51,7 +52,7 @@ const CastList = ({
 export default function Page() {
   const loaderData = useLoaderData<typeof loader>();
   return (
-    <div className="grid h-full w-full grid-cols-[20%_calc(80%-1rem)] grid-rows-[100%] gap-[1rem] p-4">
+    <LeftNavigationTwoColumn>
       <LazyLoad resolve={loaderData.fetched}>
         {(fetched) => (
           <CastList
@@ -61,7 +62,8 @@ export default function Page() {
           />
         )}
       </LazyLoad>
+
       <Outlet />
-    </div>
+    </LeftNavigationTwoColumn>
   );
 }

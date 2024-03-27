@@ -6,6 +6,7 @@ import { BookAuthor, loader } from "./loader";
 import { BookItemLinks } from "./bookItemLinks";
 import { getPage, getQuery } from "~/routePath";
 import { LazyLoad } from "~/component/lazyLoad";
+import { TwoColumn } from "~/component/layout/twoColumn";
 
 export const meta: MetaFunction = ({ params }) => {
   const bookAuthorId = params.bookAuthorId || "(invalid)";
@@ -42,11 +43,12 @@ export default function Page() {
   const loaderData = useLoaderData<typeof loader>();
 
   return (
-    <div className="grid h-full w-full grid-cols-2 grid-rows-[100%] gap-x-4">
+    <TwoColumn>
       <LazyLoad resolve={loaderData.bookAuthor}>
         {(bookAuthor) => <BookAuthorBookList bookAuthor={bookAuthor} />}
       </LazyLoad>
+
       <Outlet />
-    </div>
+    </TwoColumn>
   );
 }

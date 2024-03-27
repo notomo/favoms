@@ -8,6 +8,7 @@ import { DoneMylistItemsEditButton, EditableItemRows } from "./mylistItemsEdit";
 import { Mylist, loader } from "./loader";
 import { ItemLinks } from "./mylistItemLinks";
 import { LazyLoad } from "~/component/lazyLoad";
+import { TwoColumn } from "~/component/layout/twoColumn";
 
 export const meta: MetaFunction = ({ params }) => {
   const mylistId = params.mylistId || "(invalid)";
@@ -69,11 +70,12 @@ export default function Page() {
   const loaderData = useLoaderData<typeof loader>();
 
   return (
-    <div className="grid h-full w-full grid-cols-2 grid-rows-[100%] gap-x-4">
+    <TwoColumn>
       <LazyLoad resolve={loaderData.mylist}>
         {(mylist) => <MylistItemRows mylist={mylist} />}
       </LazyLoad>
+
       <Outlet />
-    </div>
+    </TwoColumn>
   );
 }

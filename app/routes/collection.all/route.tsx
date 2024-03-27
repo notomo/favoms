@@ -8,6 +8,7 @@ import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteSc
 import { loader } from "./loader";
 import { LazyLoad } from "~/component/lazyLoad";
 import { SearchForm } from "~/component/ui/searchForm";
+import { TwoColumn } from "~/component/layout/twoColumn";
 
 export const meta: MetaFunction = () => {
   return [{ title: "All | favoms" }];
@@ -72,7 +73,7 @@ export default function Page() {
   const loaderData = useLoaderData<typeof loader>();
 
   return (
-    <div className="grid h-full w-full grid-cols-2 grid-rows-[100%] gap-x-4">
+    <TwoColumn>
       <LazyLoad resolve={loaderData.fetched}>
         {(fetched) => (
           <ItemRows
@@ -82,7 +83,8 @@ export default function Page() {
           />
         )}
       </LazyLoad>
+
       <Outlet />
-    </div>
+    </TwoColumn>
   );
 }
