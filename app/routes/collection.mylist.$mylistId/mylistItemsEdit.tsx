@@ -3,7 +3,7 @@ import { Check, Trash, Undo } from "lucide-react";
 import { FormEvent } from "react";
 import { Button } from "~/component/ui/button";
 import { LoadingOr } from "~/component/ui/loading";
-import { ItemRow } from "~/routes/collection.all/itemLink";
+import { ItemRow } from "~/routes/collection.all/rowLink";
 import { MylistItem } from "~/routes/collection.mylist.$mylistId/loader";
 
 export const DoneMylistItemsEditButton = ({

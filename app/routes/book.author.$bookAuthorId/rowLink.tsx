@@ -1,20 +1,20 @@
 import { bookAuthorBookRoute } from "~/routePath";
-import { ItemLink } from "~/routes/collection.all/itemLink";
+import { ItemLink } from "~/routes/collection.all/rowLink";
 import { Book } from "./loader";
 
 export const BookItemLinks = ({
-  mylistId,
+  bookAuthorId,
   books,
   page,
   query,
 }: {
-  mylistId: number;
+  bookAuthorId: number;
   books: Book[];
   page: number;
   query: string;
 }) => {
   return books.map(({ itemId, title }) => {
-    const path = bookAuthorBookRoute(mylistId, itemId, page, query);
+    const path = bookAuthorBookRoute(bookAuthorId, itemId, page, query);
     return (
       <ItemLink path={path} key={itemId}>
         {title}

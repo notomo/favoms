@@ -1,11 +1,10 @@
 import { type MetaFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
-import { collectionItemRoute } from "~/routePath";
-import { ItemLink } from "./itemLink";
+import { ItemLinks } from "./rowLink";
 import { Button } from "~/component/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
-import { loader } from "./loader";
+import { Item, loader } from "./loader";
 import { LazyLoad } from "~/component/lazyLoad";
 import { SearchForm } from "~/component/ui/searchForm";
 import { TwoColumn } from "~/component/layout/twoColumn";
@@ -15,11 +14,6 @@ export const meta: MetaFunction = () => {
 };
 
 export { loader } from "./loader";
-
-type Item = {
-  id: number;
-  name: string;
-};
 
 const ItemRows = ({
   items,
@@ -51,18 +45,7 @@ const ItemRows = ({
         addedItems={items}
         existsNextPage={existsNextPage}
         content={(currentItems) => {
-          return (
-            <>
-              {currentItems.map(({ id, name }) => {
-                const path = collectionItemRoute(id, page, query);
-                return (
-                  <ItemLink path={path} key={id}>
-                    {name}
-                  </ItemLink>
-                );
-              })}
-            </>
-          );
+          return <ItemLinks page={page} query={query} items={currentItems} />;
         }}
       />
     </div>

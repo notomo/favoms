@@ -1,5 +1,5 @@
 import { mylistItemRoute } from "~/routePath";
-import { ItemLink } from "~/routes/collection.all/itemLink";
+import { ItemLink } from "~/routes/collection.all/rowLink";
 import { MylistItem } from "./loader";
 
 export const ItemLinks = ({

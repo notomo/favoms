@@ -3,7 +3,7 @@ import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
 import { useEffect } from "react";
 import { ScrollArea } from "~/component/ui/scrollArea";
 import { Cast, loader } from "./loader";
-import { CastLinks } from "./castLinks";
+import { CastVideoLinks } from "./rowLink";
 import { getPage, getQuery } from "~/routePath";
 import { LazyLoad } from "~/component/lazyLoad";
 import { TwoColumn } from "~/component/layout/twoColumn";
@@ -27,9 +27,9 @@ const CastVideoList = ({ cast }: { cast: Cast }) => {
 
   return (
     <ScrollArea className="border">
-      <CastLinks
+      <CastVideoLinks
         videos={cast.videos}
-        mylistId={cast.id}
+        castId={cast.id}
         page={page}
         query={query}
       />

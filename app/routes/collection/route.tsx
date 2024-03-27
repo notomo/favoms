@@ -1,11 +1,7 @@
 import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scrollArea";
-import {
-  allItemsRoute,
-  getCollectionDialogType,
-  isMylistsEditRoute,
-} from "~/routePath";
-import { CollectionLink } from "./collectionLink";
+import { getCollectionDialogType, isMylistsEditRoute } from "~/routePath";
+import { MylistLinks, AllItemsCollectionLink } from "./rowLink";
 import { type MetaFunction } from "@remix-run/node";
 import { CollectionsDropDownMenu } from "./collectionsDropdownMenu";
 import {
@@ -13,7 +9,6 @@ import {
   EditableMylistRows,
 } from "~/routes/collection/mylistsEdit";
 import { Mylist, loader } from "./loader";
-import { MylistLinks } from "~/routes/collection/mylistLinks";
 import { useState } from "react";
 import { createMylistAction } from "~/routes/collection/createMylistAction";
 import { LazyLoad } from "~/component/lazyLoad";
@@ -26,10 +21,6 @@ export const meta: MetaFunction = () => {
 export const action = createMylistAction;
 
 export { loader } from "./loader";
-
-const AllItemsCollectionLink = () => {
-  return <CollectionLink path={allItemsRoute()}>All</CollectionLink>;
-};
 
 const Collections = ({ mylists }: { mylists: Mylist[] }) => {
   const [searchParams] = useSearchParams();
@@ -85,6 +76,7 @@ export default function Page() {
   const editable = isMylistsEditRoute(searchParams);
 
   const loaderData = useLoaderData<typeof loader>();
+
   return (
     <LeftNavigationTwoColumn>
       <LazyLoad resolve={loaderData.mylists}>

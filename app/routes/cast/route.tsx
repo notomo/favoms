@@ -1,7 +1,7 @@
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { type MetaFunction } from "@remix-run/node";
 import { Cast, loader } from "./loader";
-import { CastLinks } from "./castLinks";
+import { CastLinks } from "./rowLink";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
 import { LazyLoad } from "~/component/lazyLoad";
 import { SearchForm } from "~/component/ui/searchForm";
@@ -45,6 +45,7 @@ const CastList = ({
 
 export default function Page() {
   const loaderData = useLoaderData<typeof loader>();
+
   return (
     <LeftNavigationTwoColumn>
       <LazyLoad resolve={loaderData.fetched}>

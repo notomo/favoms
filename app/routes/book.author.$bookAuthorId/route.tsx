@@ -3,7 +3,7 @@ import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
 import { useEffect } from "react";
 import { ScrollArea } from "~/component/ui/scrollArea";
 import { BookAuthor, loader } from "./loader";
-import { BookItemLinks } from "./bookItemLinks";
+import { BookItemLinks } from "./rowLink";
 import { getPage, getQuery } from "~/routePath";
 import { LazyLoad } from "~/component/lazyLoad";
 import { TwoColumn } from "~/component/layout/twoColumn";
@@ -29,7 +29,7 @@ const BookAuthorBookList = ({ bookAuthor }: { bookAuthor: BookAuthor }) => {
     <ScrollArea className="border">
       <BookItemLinks
         books={bookAuthor.books}
-        mylistId={bookAuthor.id}
+        bookAuthorId={bookAuthor.id}
         page={page}
         query={query}
       />

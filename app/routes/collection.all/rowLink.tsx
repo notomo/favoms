@@ -1,5 +1,26 @@
 import { NavigationLink } from "~/component/ui/navigationLink";
 import { cn } from "~/lib/tailwind";
+import { Item } from "./loader";
+import { collectionItemRoute } from "~/routePath";
+
+export const ItemLinks = ({
+  items,
+  page,
+  query,
+}: {
+  items: Item[];
+  page: number;
+  query: string;
+}) => {
+  return items.map(({ id, name }) => {
+    const path = collectionItemRoute(id, page, query);
+    return (
+      <ItemLink path={path} key={id}>
+        {name}
+      </ItemLink>
+    );
+  });
+};
 
 export const ItemLink = ({
   children,

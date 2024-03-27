@@ -6,7 +6,7 @@ import { getMylistDialogType, isMylistItemsEditRoute } from "~/routePath";
 import { MylistDropDownMenu } from "./mylistDropdownMenu";
 import { DoneMylistItemsEditButton, EditableItemRows } from "./mylistItemsEdit";
 import { Mylist, loader } from "./loader";
-import { ItemLinks } from "./mylistItemLinks";
+import { ItemLinks } from "./rowLink";
 import { LazyLoad } from "~/component/lazyLoad";
 import { TwoColumn } from "~/component/layout/twoColumn";
 

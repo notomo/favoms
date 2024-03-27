@@ -23,3 +23,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     fetched,
   });
 };
+
+export type Item = {
+  id: number;
+  name: string;
+};
