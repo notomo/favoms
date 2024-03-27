@@ -1,18 +1,13 @@
 import { type MetaFunction } from "@remix-run/node";
-import {
-  Await,
-  Outlet,
-  useLoaderData,
-  useSearchParams,
-} from "@remix-run/react";
-import { Suspense, useEffect, useState } from "react";
+import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
+import { useEffect, useState } from "react";
 import { ScrollArea } from "~/component/ui/scrollArea";
 import { getMylistDialogType, isMylistItemsEditRoute } from "~/routePath";
 import { MylistDropDownMenu } from "./mylistDropdownMenu";
 import { DoneMylistItemsEditButton, EditableItemRows } from "./mylistItemsEdit";
-import { MylistItem, loader } from "./loader";
+import { Mylist, loader } from "./loader";
 import { ItemLinks } from "./mylistItemLinks";
-import { Loading } from "~/component/ui/loading";
+import { LazyLoad } from "~/component/lazyLoad";
 
 export const meta: MetaFunction = ({ params }) => {
   const mylistId = params.mylistId || "(invalid)";
@@ -21,19 +16,11 @@ export const meta: MetaFunction = ({ params }) => {
 
 export { loader } from "./loader";
 
-const MylistItemRows = ({
-  mylistId,
-  mylistName,
-  items,
-}: {
-  mylistId: number;
-  mylistName: string;
-  items: MylistItem[];
-}) => {
+const MylistItemRows = ({ mylist }: { mylist: Mylist }) => {
   useEffect(() => {
     // HACK
-    document.title = `${mylistName} | favoms`;
-  }, [mylistId, mylistName]);
+    document.title = `${mylist.name} | favoms`;
+  }, [mylist.id, mylist.name]);
 
   const [willBeRemovedItemIds, setWillBeRemovedItemIds] = useState<
     Record<number, boolean>
@@ -46,7 +33,7 @@ const MylistItemRows = ({
   return (
     <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
       <div className="flex items-center justify-between">
-        <div className="truncate px-4 text-xl">{mylistName}</div>
+        <div className="truncate px-4 text-xl">{mylist.name}</div>
         {editable ? (
           <DoneMylistItemsEditButton
             willBeRemovedItemIds={willBeRemovedItemIds}
@@ -54,8 +41,8 @@ const MylistItemRows = ({
         ) : (
           <MylistDropDownMenu
             key={dialogType}
-            mylistId={mylistId}
-            mylistName={mylistName}
+            mylistId={mylist.id}
+            mylistName={mylist.name}
             dialogType={dialogType}
           />
         )}
@@ -66,11 +53,11 @@ const MylistItemRows = ({
           {editable ? (
             <EditableItemRows
               willBeRemovedItemIds={willBeRemovedItemIds}
-              items={items}
+              items={mylist.items}
               setWillBeRemovedItemIds={setWillBeRemovedItemIds}
             />
           ) : (
-            <ItemLinks items={items} mylistId={mylistId} />
+            <ItemLinks items={mylist.items} mylistId={mylist.id} />
           )}
         </ul>
       </ScrollArea>
@@ -83,21 +70,9 @@ export default function Page() {
 
   return (
     <div className="grid h-full w-full grid-cols-2 grid-rows-[100%] gap-x-4">
-      <Suspense fallback={<Loading />}>
-        <Await resolve={loaderData.mylist}>
-          {(mylist) =>
-            mylist === null ? (
-              <div>mylist is not found</div>
-            ) : (
-              <MylistItemRows
-                mylistId={mylist.id}
-                mylistName={mylist.name}
-                items={mylist.items}
-              />
-            )
-          }
-        </Await>
-      </Suspense>
+      <LazyLoad resolve={loaderData.mylist}>
+        {(mylist) => <MylistItemRows mylist={mylist} />}
+      </LazyLoad>
       <Outlet />
     </div>
   );

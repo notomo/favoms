@@ -1,19 +1,13 @@
-import {
-  Await,
-  Form,
-  Outlet,
-  useLoaderData,
-  useNavigation,
-} from "@remix-run/react";
+import { Form, Outlet, useLoaderData, useNavigation } from "@remix-run/react";
 import { type MetaFunction } from "@remix-run/node";
-import { Suspense } from "react";
-import { Loading, LoadingOr } from "~/component/ui/loading";
+import { LoadingOr } from "~/component/ui/loading";
 import { BookAuthor, loader } from "./loader";
 import { BookAuthorLinks } from "./bookAuthorLinks";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
 import { Input } from "~/component/ui/input";
 import { Search } from "lucide-react";
 import { Button } from "~/component/ui/button";
+import { LazyLoad } from "~/component/lazyLoad";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Book Authors | favoms" }];
@@ -78,18 +72,15 @@ export default function Page() {
   const loaderData = useLoaderData<typeof loader>();
   return (
     <div className="grid h-full w-full grid-cols-[20%_calc(80%-1rem)] grid-rows-[100%] gap-[1rem] p-4">
-      <Suspense fallback={<Loading />}>
-        <Await resolve={loaderData.fetched}>
-          {(fetched) => (
-            <BookAuthorList
-              bookAuthors={fetched.bookAuthors}
-              existsNextPage={fetched.existsNextPage}
-              page={loaderData.page}
-              query={loaderData.query}
-            />
-          )}
-        </Await>
-      </Suspense>
+      <LazyLoad resolve={loaderData.fetched}>
+        {(fetched) => (
+          <BookAuthorList
+            page={loaderData.page}
+            query={loaderData.query}
+            {...fetched}
+          />
+        )}
+      </LazyLoad>
       <Outlet />
     </div>
   );

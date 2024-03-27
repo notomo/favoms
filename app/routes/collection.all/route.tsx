@@ -1,20 +1,14 @@
 import { type MetaFunction } from "@remix-run/node";
-import {
-  Await,
-  Form,
-  Outlet,
-  useLoaderData,
-  useNavigation,
-} from "@remix-run/react";
+import { Form, Outlet, useLoaderData, useNavigation } from "@remix-run/react";
 import { collectionItemRoute } from "~/routePath";
 import { ItemLink } from "./itemLink";
 import { Button } from "~/component/ui/button";
 import { MoreHorizontal, Search } from "lucide-react";
-import { Suspense } from "react";
-import { Loading, LoadingOr } from "~/component/ui/loading";
+import { LoadingOr } from "~/component/ui/loading";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
 import { loader } from "./loader";
 import { Input } from "~/component/ui/input";
+import { LazyLoad } from "~/component/lazyLoad";
 
 export const meta: MetaFunction = () => {
   return [{ title: "All | favoms" }];
@@ -28,12 +22,12 @@ type Item = {
 };
 
 const ItemRows = ({
-  addedItems,
+  items,
   existsNextPage,
   page,
   query,
 }: {
-  addedItems: Item[];
+  items: Item[];
   existsNextPage: boolean;
   page: number;
   query: string;
@@ -68,7 +62,7 @@ const ItemRows = ({
         className="border"
         page={page}
         pageKey="page"
-        addedItems={addedItems}
+        addedItems={items}
         existsNextPage={existsNextPage}
         content={(currentItems) => {
           return (
@@ -94,18 +88,15 @@ export default function Page() {
 
   return (
     <div className="grid h-full w-full grid-cols-2 grid-rows-[100%] gap-x-4">
-      <Suspense fallback={<Loading />}>
-        <Await resolve={loaderData.fetched}>
-          {(fetched) => (
-            <ItemRows
-              addedItems={fetched.items}
-              existsNextPage={fetched.existsNextPage}
-              page={loaderData.page}
-              query={loaderData.query}
-            />
-          )}
-        </Await>
-      </Suspense>
+      <LazyLoad resolve={loaderData.fetched}>
+        {(fetched) => (
+          <ItemRows
+            page={loaderData.page}
+            query={loaderData.query}
+            {...fetched}
+          />
+        )}
+      </LazyLoad>
       <Outlet />
     </div>
   );

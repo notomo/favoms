@@ -1,9 +1,4 @@
-import {
-  Await,
-  Outlet,
-  useLoaderData,
-  useSearchParams,
-} from "@remix-run/react";
+import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scrollArea";
 import {
   allItemsRoute,
@@ -19,9 +14,9 @@ import {
 } from "~/routes/collection/mylistsEdit";
 import { Mylist, loader } from "./loader";
 import { MylistLinks } from "~/routes/collection/mylistLinks";
-import { Suspense, useState } from "react";
-import { Loading } from "~/component/ui/loading";
+import { useState } from "react";
 import { createMylistAction } from "~/routes/collection/createMylistAction";
+import { LazyLoad } from "~/component/lazyLoad";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Collections | favoms" }];
@@ -99,17 +94,15 @@ export default function Page() {
   const loaderData = useLoaderData<typeof loader>();
   return (
     <div className="grid h-full w-full grid-cols-[20%_calc(80%-1rem)] grid-rows-[100%] gap-[1rem] p-4">
-      <Suspense fallback={<Loading />}>
-        <Await resolve={loaderData.mylists}>
-          {(mylists) =>
-            editable ? (
-              <EditableCollections mylists={mylists} />
-            ) : (
-              <Collections mylists={mylists} />
-            )
-          }
-        </Await>
-      </Suspense>
+      <LazyLoad resolve={loaderData.mylists}>
+        {(mylists) =>
+          editable ? (
+            <EditableCollections mylists={mylists} />
+          ) : (
+            <Collections mylists={mylists} />
+          )
+        }
+      </LazyLoad>
       <Outlet />
     </div>
   );

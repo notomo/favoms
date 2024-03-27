@@ -1,16 +1,11 @@
 import { type MetaFunction } from "@remix-run/node";
-import {
-  Await,
-  Outlet,
-  useLoaderData,
-  useSearchParams,
-} from "@remix-run/react";
-import { Suspense, useEffect } from "react";
+import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
+import { useEffect } from "react";
 import { ScrollArea } from "~/component/ui/scrollArea";
 import { BookAuthor, loader } from "./loader";
 import { BookItemLinks } from "./bookItemLinks";
-import { Loading } from "~/component/ui/loading";
 import { getPage, getQuery } from "~/routePath";
+import { LazyLoad } from "~/component/lazyLoad";
 
 export const meta: MetaFunction = ({ params }) => {
   const bookAuthorId = params.bookAuthorId || "(invalid)";
@@ -48,17 +43,9 @@ export default function Page() {
 
   return (
     <div className="grid h-full w-full grid-cols-2 grid-rows-[100%] gap-x-4">
-      <Suspense fallback={<Loading />}>
-        <Await resolve={loaderData.bookAuthor}>
-          {(bookAuthor) =>
-            bookAuthor === null ? (
-              <div>book author is not found</div>
-            ) : (
-              <BookAuthorBookList bookAuthor={bookAuthor} />
-            )
-          }
-        </Await>
-      </Suspense>
+      <LazyLoad resolve={loaderData.bookAuthor}>
+        {(bookAuthor) => <BookAuthorBookList bookAuthor={bookAuthor} />}
+      </LazyLoad>
       <Outlet />
     </div>
   );
