@@ -1,7 +1,7 @@
 import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scrollArea";
 import { getCollectionDialogType, isMylistsEditRoute } from "~/routePath";
-import { MylistLinks, AllItemsCollectionLink } from "./rowLink";
+import { MylistLinks, AllItemsLink } from "./rowLink";
 import { type MetaFunction } from "@remix-run/node";
 import { CollectionsDropDownMenu } from "./collectionsDropdownMenu";
 import {
@@ -35,7 +35,7 @@ const CollectionList = ({ mylists }: { mylists: Mylist[] }) => {
       />
 
       <ScrollArea className="border">
-        <AllItemsCollectionLink />
+        <AllItemsLink />
 
         <MylistLinks mylists={mylists} />
       </ScrollArea>
@@ -59,7 +59,7 @@ const EditableCollectionList = ({ mylists }: { mylists: Mylist[] }) => {
       />
 
       <ScrollArea className="border">
-        <AllItemsCollectionLink />
+        <AllItemsLink />
 
         <EditableMylistList
           mylistRecords={mylistRecords}

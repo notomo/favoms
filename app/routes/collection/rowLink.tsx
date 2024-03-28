@@ -3,6 +3,10 @@ import { cn } from "~/lib/tailwind";
 import { allItemsRoute, mylistRoute } from "~/routePath";
 import { Mylist } from "./loader";
 
+export const AllItemsLink = () => {
+  return <CollectionLink path={allItemsRoute()}>All</CollectionLink>;
+};
+
 export const MylistLinks = ({ mylists }: { mylists: Mylist[] }) => {
   return mylists.map(({ id, name }) => {
     const path = mylistRoute(id);
@@ -32,8 +36,4 @@ export const CollectionRow = ({
   return (
     <div className={cn("border-b bg-inherit p-4", className)}>{children}</div>
   );
-};
-
-export const AllItemsCollectionLink = () => {
-  return <CollectionLink path={allItemsRoute()}>All</CollectionLink>;
 };
