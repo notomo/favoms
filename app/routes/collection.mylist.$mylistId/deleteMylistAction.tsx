@@ -1,6 +1,6 @@
 import { ActionFunctionArgs, redirect } from "@remix-run/node";
-import { deleteMylist } from "~/.server/persist/mylist";
 import { validateId } from "~/lib/schema/validation/params";
+import { prisma } from "~/lib/prisma";
 import { collectionRoute } from "~/routePath";
 
 export const deleteMylistAction = async ({ params }: ActionFunctionArgs) => {
@@ -8,3 +8,9 @@ export const deleteMylistAction = async ({ params }: ActionFunctionArgs) => {
   await deleteMylist(mylistId);
   return redirect(collectionRoute());
 };
+
+async function deleteMylist(id: number) {
+  return await prisma.mylist.delete({
+    where: { id: id },
+  });
+}

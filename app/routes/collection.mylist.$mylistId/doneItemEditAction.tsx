@@ -1,6 +1,6 @@
 import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
 import { parseWithValibot } from "conform-to-valibot";
-import { removeItemsFromMylist } from "~/.server/persist/mylist";
+import { prisma } from "~/lib/prisma";
 import { validateId } from "~/lib/schema/validation/params";
 import { mylistRoute } from "~/routePath";
 import { editMylistItemsSchema } from "~/routes/collection.mylist.$mylistId/schema";
@@ -23,3 +23,16 @@ export const doneItemEditAction = async ({
   await removeItemsFromMylist(mylistId, itemIds);
   return redirect(mylistRoute(mylistId));
 };
+
+async function removeItemsFromMylist(mylistId: number, itemIds: number[]) {
+  return await prisma.mylist.update({
+    where: {
+      id: mylistId,
+    },
+    data: {
+      items: {
+        disconnect: itemIds.map((id) => ({ id: id })),
+      },
+    },
+  });
+}

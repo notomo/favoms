@@ -1,5 +1,6 @@
 import { LoaderFunctionArgs, defer } from "@remix-run/node";
-import { listBookAuthors } from "~/.server/persist/bookAuthor";
+import { prisma } from "~/lib/prisma";
+
 import { getPage, getQuery } from "~/routePath";
 
 const pageSize = 20;
@@ -28,3 +29,33 @@ export type BookAuthor = Readonly<{
   id: number;
   name: string;
 }>;
+
+export async function listBookAuthors({
+  query,
+  skip,
+  take,
+}: {
+  query: string;
+  skip: number;
+  take: number;
+}): Promise<BookAuthor[]> {
+  const nameQuery = query
+    ? {
+        contains: query,
+      }
+    : undefined;
+
+  return await prisma.bookAuthor.findMany({
+    where: {
+      name: nameQuery,
+    },
+    orderBy: { id: "asc" },
+    select: {
+      id: true,
+      name: true,
+      nameRuby: true,
+    },
+    skip,
+    take,
+  });
+}

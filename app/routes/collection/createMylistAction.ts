@@ -1,7 +1,7 @@
 import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import { parseWithValibot } from "conform-to-valibot";
-import { createMylist } from "~/.server/persist/mylist";
+import { prisma } from "~/lib/prisma";
 import { mylistRoute } from "~/routePath";
 import { createMylistSchema } from "~/routes/collection/schema";
 
@@ -23,3 +23,25 @@ export const createMylistAction = async ({ request }: ActionFunctionArgs) => {
 export type ActionData = ReturnType<
   typeof useActionData<typeof createMylistAction>
 >;
+
+async function createMylist(name: string) {
+  return await prisma.$transaction(async (tx) => {
+    const mylist = await tx.mylist.create({
+      data: {
+        name: name,
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+    await tx.mylistOrder.create({
+      data: {
+        mylist: {
+          connect: mylist,
+        },
+      },
+    });
+    return mylist;
+  });
+}

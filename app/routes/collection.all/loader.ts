@@ -1,5 +1,6 @@
 import { defer, LoaderFunctionArgs } from "@remix-run/node";
-import { listItems } from "~/.server/persist/item";
+import { switchKind } from "~/lib/schema/validation/kind";
+import { prisma } from "~/lib/prisma";
 import { getPage, getQuery } from "~/routePath";
 
 const pageSize = 20;
@@ -28,3 +29,60 @@ export type Item = {
   id: number;
   name: string;
 };
+
+async function listItems({
+  query,
+  skip,
+  take,
+}: {
+  query: string;
+  skip: number;
+  take: number;
+}): Promise<Item[]> {
+  const nameQuery = query
+    ? {
+        OR: [
+          {
+            book: {
+              title: {
+                contains: query,
+              },
+            },
+          },
+          {
+            video: {
+              title: {
+                contains: query,
+              },
+            },
+          },
+        ],
+      }
+    : {};
+
+  const items = await prisma.item.findMany({
+    where: nameQuery,
+    select: {
+      id: true,
+      book: {
+        select: {
+          title: true,
+        },
+      },
+      video: {
+        select: {
+          title: true,
+        },
+      },
+    },
+    skip,
+    take,
+  });
+  return items.map((item) => {
+    const content = switchKind(item.book, item.video);
+    return {
+      id: item.id,
+      name: content.inner.title || "",
+    };
+  });
+}

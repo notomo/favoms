@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs, defer } from "@remix-run/node";
-import { getCast } from "~/.server/persist/cast";
+import { prisma } from "~/lib/prisma";
 import { assertNotFound } from "~/lib/response";
 import { validateId } from "~/lib/schema/validation/params";
 
@@ -24,3 +24,21 @@ export type Video = {
   itemId: number;
   title: string;
 };
+
+async function getCast(castId: number): Promise<Cast | null> {
+  return await prisma.cast.findUnique({
+    where: { id: castId },
+    select: {
+      id: true,
+      name: true,
+      nameRuby: true,
+      videos: {
+        select: {
+          title: true,
+          titleRuby: true,
+          itemId: true,
+        },
+      },
+    },
+  });
+}

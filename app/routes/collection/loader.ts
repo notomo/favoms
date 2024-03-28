@@ -1,6 +1,5 @@
 import { LoaderFunctionArgs, defer, redirect } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-import { listMylists } from "~/.server/persist/mylist";
+import { prisma } from "~/lib/prisma";
 import { allItemsRoute, collectionRoute } from "~/routePath";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -16,5 +15,23 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   });
 };
 
-type LoaderData = ReturnType<typeof useLoaderData<typeof loader>>;
-export type Mylist = Awaited<LoaderData["mylists"]>[number];
+export type Mylist = {
+  id: number;
+  name: string;
+};
+
+async function listMylists(): Promise<Mylist[]> {
+  const mylistOrders = await prisma.mylistOrder.findMany({
+    where: {},
+    orderBy: { position: "asc" },
+    select: {
+      mylist: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+  });
+  return mylistOrders.map((e) => e.mylist);
+}

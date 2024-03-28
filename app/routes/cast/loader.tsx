@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs, defer } from "@remix-run/node";
-import { listCasts } from "~/.server/persist/cast";
+import { prisma } from "~/lib/prisma";
 import { getPage, getQuery } from "~/routePath";
 
 const pageSize = 20;
@@ -28,3 +28,33 @@ export type Cast = Readonly<{
   id: number;
   name: string;
 }>;
+
+async function listCasts({
+  query,
+  skip,
+  take,
+}: {
+  query: string;
+  skip: number;
+  take: number;
+}): Promise<Cast[]> {
+  const nameQuery = query
+    ? {
+        contains: query,
+      }
+    : undefined;
+
+  return await prisma.cast.findMany({
+    where: {
+      name: nameQuery,
+    },
+    orderBy: { id: "asc" },
+    select: {
+      id: true,
+      name: true,
+      nameRuby: true,
+    },
+    skip,
+    take,
+  });
+}

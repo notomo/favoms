@@ -1,5 +1,4 @@
-import { upsertBookItems } from "~/.server/persist/item";
-import { upsertMylist } from "~/.server/persist/mylist";
+import { prisma, UpsertData, UpsertWhere } from "~/lib/prisma";
 
 async function main() {
   const bookItems = await upsertBookItems(
@@ -50,3 +49,53 @@ async function main() {
 }
 
 main();
+
+export async function upsertMylist(
+  where: UpsertWhere<typeof prisma.mylist>,
+  data: Pick<UpsertData<typeof prisma.mylist>, "name" | "items">,
+) {
+  return await prisma.$transaction(async (tx) => {
+    const mylist = await tx.mylist.upsert({
+      where,
+      create: data,
+      update: data,
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+    await tx.mylistOrder.create({
+      data: {
+        mylist: {
+          connect: mylist,
+        },
+      },
+    });
+    return mylist;
+  });
+}
+
+export async function upsertBookItems(
+  upserts: {
+    where: UpsertWhere<typeof prisma.item>;
+    data: Omit<UpsertData<typeof prisma.book>, "item">;
+  }[],
+) {
+  return await prisma.$transaction(
+    upserts.map((upsert) => {
+      return prisma.item.upsert({
+        where: upsert.where,
+        create: {
+          book: {
+            create: upsert.data,
+          },
+        },
+        update: {
+          book: {
+            update: upsert.data,
+          },
+        },
+      });
+    }),
+  );
+}

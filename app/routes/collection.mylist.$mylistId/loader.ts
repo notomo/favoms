@@ -1,5 +1,6 @@
 import { LoaderFunctionArgs, defer } from "@remix-run/node";
-import { getMylist } from "~/.server/persist/mylist";
+import { prisma } from "~/lib/prisma";
+import { switchKind } from "~/lib/schema/validation/kind";
 import { assertNotFound } from "~/lib/response";
 import { validateId } from "~/lib/schema/validation/params";
 
@@ -24,3 +25,44 @@ export type MylistItem = {
   id: number;
   name: string;
 };
+
+export async function getMylist(id: number): Promise<Mylist | null> {
+  return prisma.mylist
+    .findUnique({
+      where: {
+        id: id,
+      },
+      select: {
+        id: true,
+        name: true,
+        items: {
+          select: {
+            id: true,
+            book: {
+              select: { title: true },
+            },
+            video: {
+              select: { title: true },
+            },
+          },
+        },
+      },
+    })
+    .then((e) => {
+      if (e === null) {
+        return null;
+      }
+      return {
+        id: e.id,
+        name: e.name,
+        items: e?.items.map((item) => {
+          const content = switchKind(item.book, item.video);
+          return {
+            id: item.id,
+            kind: content.kind,
+            name: content.inner.title || "",
+          };
+        }),
+      };
+    });
+}

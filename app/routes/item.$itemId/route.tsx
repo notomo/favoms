@@ -1,21 +1,9 @@
-import { type MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-import { ScrollArea } from "~/component/ui/scrollArea";
-import { loader } from "./loader";
+import * as CollectionItemRoute from "~/routes/collection.all.item.$itemId/route";
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  return [{ title: `${data?.name} | favoms` }];
-};
+export const meta = CollectionItemRoute.meta;
 
-export { loader } from "./loader";
+export const loader = CollectionItemRoute.loader;
 
 export default function Page() {
-  const { id, name } = useLoaderData<typeof loader>();
-  return (
-    <ScrollArea className="h-full w-full border">
-      <div>
-        item {id}: {name}
-      </div>
-    </ScrollArea>
-  );
+  return CollectionItemRoute.default();
 }
