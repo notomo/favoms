@@ -1,18 +1,19 @@
-import { bookAuthorBookRoute } from "~/routePath";
+import { bookAuthorBookRoute, getPage, getQuery } from "~/routePath";
 import { ItemLink } from "~/routes/collection.all/rowLink";
 import { Book } from "./loader";
+import { useSearchParams } from "@remix-run/react";
 
 export const BookItemLinks = ({
   bookAuthorId,
   books,
-  page,
-  query,
 }: {
   bookAuthorId: number;
   books: Book[];
-  page: number;
-  query: string;
 }) => {
+  const [searchParams] = useSearchParams();
+  const page = getPage(searchParams);
+  const query = getQuery(searchParams);
+
   return books.map(({ itemId, title }) => {
     const path = bookAuthorBookRoute(bookAuthorId, itemId, page, query);
     return (

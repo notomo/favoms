@@ -1,18 +1,19 @@
-import { castVideoRoute } from "~/routePath";
+import { castVideoRoute, getPage, getQuery } from "~/routePath";
 import { ItemLink } from "~/routes/collection.all/rowLink";
 import { Video } from "./loader";
+import { useSearchParams } from "@remix-run/react";
 
 export const CastVideoLinks = ({
   castId,
   videos,
-  page,
-  query,
 }: {
   castId: number;
   videos: Video[];
-  page: number;
-  query: string;
 }) => {
+  const [searchParams] = useSearchParams();
+  const page = getPage(searchParams);
+  const query = getQuery(searchParams);
+
   return videos.map(({ itemId, title }) => {
     const path = castVideoRoute(castId, itemId, page, query);
     return (
