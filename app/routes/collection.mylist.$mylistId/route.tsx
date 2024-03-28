@@ -1,6 +1,5 @@
-import { type MetaFunction } from "@remix-run/node";
 import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ScrollArea } from "~/component/ui/scrollArea";
 import { getMylistDialogType, isMylistItemsEditRoute } from "~/routePath";
 import { MylistDropDownMenu } from "./mylistDropdownMenu";
@@ -9,19 +8,12 @@ import { Mylist, loader } from "./loader";
 import { ItemLinks } from "./rowLink";
 import { LazyLoad } from "~/component/lazyLoad";
 import { TwoColumn } from "~/component/layout/twoColumn";
-
-export const meta: MetaFunction = ({ params }) => {
-  const mylistId = params.mylistId || "(invalid)";
-  return [{ title: `Mylist ${mylistId} | favoms` }];
-};
+import { useForceTitle } from "~/lib/meta";
 
 export { loader } from "./loader";
 
 const MylistItemList = ({ mylist }: { mylist: Mylist }) => {
-  useEffect(() => {
-    // HACK
-    document.title = `${mylist.name} | favoms`;
-  }, [mylist.id, mylist.name]);
+  useForceTitle(`${mylist.name} | favoms`);
 
   const [willBeRemovedItemIds, setWillBeRemovedItemIds] = useState<
     Record<number, boolean>

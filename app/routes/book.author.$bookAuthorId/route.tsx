@@ -1,25 +1,16 @@
-import { type MetaFunction } from "@remix-run/node";
 import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
-import { useEffect } from "react";
 import { ScrollArea } from "~/component/ui/scrollArea";
 import { BookAuthor, loader } from "./loader";
 import { BookItemLinks } from "./rowLink";
 import { getPage, getQuery } from "~/routePath";
 import { LazyLoad } from "~/component/lazyLoad";
 import { TwoColumn } from "~/component/layout/twoColumn";
-
-export const meta: MetaFunction = ({ params }) => {
-  const bookAuthorId = params.bookAuthorId || "(invalid)";
-  return [{ title: `Book author ${bookAuthorId} | favoms` }];
-};
+import { useForceTitle } from "~/lib/meta";
 
 export { loader } from "./loader";
 
 const BookAuthorBookList = ({ bookAuthor }: { bookAuthor: BookAuthor }) => {
-  useEffect(() => {
-    // HACK
-    document.title = `${bookAuthor.name} | favoms`;
-  }, [bookAuthor.name]);
+  useForceTitle(`${bookAuthor.name} | favoms`);
 
   const [searchParams] = useSearchParams();
   const page = getPage(searchParams);

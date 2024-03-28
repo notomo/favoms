@@ -1,25 +1,16 @@
-import { type MetaFunction } from "@remix-run/node";
 import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
-import { useEffect } from "react";
 import { ScrollArea } from "~/component/ui/scrollArea";
 import { Cast, loader } from "./loader";
 import { CastVideoLinks } from "./rowLink";
 import { getPage, getQuery } from "~/routePath";
 import { LazyLoad } from "~/component/lazyLoad";
 import { TwoColumn } from "~/component/layout/twoColumn";
-
-export const meta: MetaFunction = ({ params }) => {
-  const castId = params.castId || "(invalid)";
-  return [{ title: `Cast ${castId} | favoms` }];
-};
+import { useForceTitle } from "~/lib/meta";
 
 export { loader } from "./loader";
 
 const CastVideoList = ({ cast }: { cast: Cast }) => {
-  useEffect(() => {
-    // HACK
-    document.title = `${cast.name} | favoms`;
-  }, [cast.name]);
+  useForceTitle(`${cast.name} | favoms`);
 
   const [searchParams] = useSearchParams();
   const page = getPage(searchParams);
