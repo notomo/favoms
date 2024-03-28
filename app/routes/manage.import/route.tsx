@@ -2,7 +2,7 @@ import type { MetaFunction } from "@remix-run/node";
 import { useForm } from "@conform-to/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { useFetcher } from "@remix-run/react";
-import { ActionData, importRun } from "./action";
+import { ActionData, runImportAction } from "./action";
 import { schema } from "./schema";
 import { BooleanInput, FileInput, SubmitButton } from "./input";
 import { ContentErrorMessage } from "~/routes/manage.import/contentErrorMessage";
@@ -11,7 +11,7 @@ export const meta: MetaFunction = () => {
   return [{ title: "Import | favoms" }];
 };
 
-export const action = importRun;
+export const action = runImportAction;
 
 export default function Index() {
   const fetcher = useFetcher<ActionData>();

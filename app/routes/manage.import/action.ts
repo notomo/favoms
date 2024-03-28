@@ -7,7 +7,7 @@ import { importItems } from "~/.server/persist/item";
 import { schema } from "./schema";
 import { itemImportSchema } from "~/lib/schema/item";
 
-export async function importRun({ request }: ActionFunctionArgs) {
+export async function runImportAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const submission = parseWithValibot(formData, {
     schema,
@@ -37,4 +37,6 @@ export async function importRun({ request }: ActionFunctionArgs) {
   return redirect(importRoute());
 }
 
-export type ActionData = ReturnType<typeof useActionData<typeof importRun>>;
+export type ActionData = ReturnType<
+  typeof useActionData<typeof runImportAction>
+>;
