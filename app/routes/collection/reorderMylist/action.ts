@@ -3,7 +3,7 @@ import { useActionData } from "@remix-run/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { prisma } from "~/lib/prisma";
 import { collectionRoute } from "~/routePath";
-import { editMylistsSchema } from "~/routes/collection/schema";
+import { editMylistsSchema } from "~/routes/collection/reorderMylist/schema";
 
 export const doneMylistsEditAction = async ({
   request,

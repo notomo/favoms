@@ -1,3 +1,3 @@
-import { doneMylistsEditAction } from "~/routes/collection/mylistsEditAction";
+import { doneMylistsEditAction } from "~/routes/collection/reorderMylist/action";
 
 export const action = doneMylistsEditAction;

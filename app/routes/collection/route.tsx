@@ -3,14 +3,14 @@ import { ScrollArea } from "~/component/ui/scrollArea";
 import { getCollectionDialogType, isMylistsEditRoute } from "~/routePath";
 import { MylistLinks, AllItemsLink } from "./rowLink";
 import { type MetaFunction } from "@remix-run/node";
-import { CollectionsDropDownMenu } from "./collectionsDropdownMenu";
+import { CollectionsDropDownMenu } from "./dropdownMenu";
 import {
   DoneMylistsEditButton,
   EditableMylistList,
-} from "~/routes/collection/mylistsEdit";
+} from "~/routes/collection/reorderMylist/editableList";
 import { Mylist, loader } from "./loader";
 import { useState } from "react";
-import { createMylistAction } from "~/routes/collection/createMylistAction";
+import { createMylistAction } from "~/routes/collection/createMylist/action";
 import { LazyLoad } from "~/component/lazyLoad";
 import { LeftNavigationTwoColumn } from "~/component/layout/leftNavigationTwoColumn";
 

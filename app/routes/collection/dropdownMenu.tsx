@@ -1,4 +1,4 @@
-import { CreateMylistDialog } from "./createMylistDialog";
+import { CreateMylistDialog } from "./createMylist/dialog";
 import { Button } from "~/component/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import {
