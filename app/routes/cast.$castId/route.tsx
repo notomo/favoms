@@ -10,7 +10,7 @@ import { useForceTitle } from "~/lib/meta";
 export { loader } from "./loader";
 
 const CastVideoList = ({ cast }: { cast: Cast }) => {
-  useForceTitle(`${cast.name} | favoms`);
+  useForceTitle(`${cast.name} | Cast | favoms`);
 
   const [searchParams] = useSearchParams();
   const page = getPage(searchParams);

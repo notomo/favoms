@@ -13,7 +13,7 @@ import { useForceTitle } from "~/lib/meta";
 export { loader } from "./loader";
 
 const MylistItemList = ({ mylist }: { mylist: Mylist }) => {
-  useForceTitle(`${mylist.name} | favoms`);
+  useForceTitle(`${mylist.name} | Mylist | favoms`);
 
   const [willBeRemovedItemIds, setWillBeRemovedItemIds] = useState<
     Record<number, boolean>

@@ -15,7 +15,7 @@ import { LazyLoad } from "~/component/lazyLoad";
 import { LeftNavigationTwoColumn } from "~/component/layout/leftNavigationTwoColumn";
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Collections | favoms" }];
+  return [{ title: "Collection | favoms" }];
 };
 
 export const action = createMylistAction;

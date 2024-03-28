@@ -1,4 +1,3 @@
-import { type MetaFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { ItemLinks } from "./rowLink";
 import { Button } from "~/component/ui/button";
@@ -8,10 +7,6 @@ import { Item, loader } from "./loader";
 import { LazyLoad } from "~/component/lazyLoad";
 import { SearchForm } from "~/component/ui/searchForm";
 import { TwoColumn } from "~/component/layout/twoColumn";
-
-export const meta: MetaFunction = () => {
-  return [{ title: "All | favoms" }];
-};
 
 export { loader } from "./loader";
 

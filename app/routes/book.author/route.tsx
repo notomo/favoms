@@ -1,15 +1,10 @@
 import { Outlet, useLoaderData } from "@remix-run/react";
-import { type MetaFunction } from "@remix-run/node";
 import { BookAuthor, loader } from "./loader";
 import { BookAuthorLinks } from "./rowLink";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
 import { LazyLoad } from "~/component/lazyLoad";
 import { SearchForm } from "~/component/ui/searchForm";
 import { LeftNavigationTwoColumn } from "~/component/layout/leftNavigationTwoColumn";
-
-export const meta: MetaFunction = () => {
-  return [{ title: "Book Authors | favoms" }];
-};
 
 export { loader } from "./loader";
 

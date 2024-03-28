@@ -10,7 +10,7 @@ import { useForceTitle } from "~/lib/meta";
 export { loader } from "./loader";
 
 const BookAuthorBookList = ({ bookAuthor }: { bookAuthor: BookAuthor }) => {
-  useForceTitle(`${bookAuthor.name} | favoms`);
+  useForceTitle(`${bookAuthor.name} | Author | favoms`);
 
   const [searchParams] = useSearchParams();
   const page = getPage(searchParams);
