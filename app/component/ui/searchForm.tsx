@@ -1,8 +1,45 @@
 import { Form, useNavigation } from "@remix-run/react";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
+import { useRef } from "react";
 import { Button } from "~/component/ui/button";
 import { Input } from "~/component/ui/input";
 import { LoadingOr } from "~/component/ui/loading";
+
+const ResetableInput = ({
+  query,
+  placeholder,
+}: {
+  query: string;
+  placeholder: string;
+}) => {
+  const input = useRef<HTMLInputElement>(null);
+  return (
+    <div className="flex w-full gap-2 rounded-md border border-input">
+      <Input
+        ref={input}
+        defaultValue={query}
+        placeholder={placeholder}
+        name="query"
+        autoComplete="off"
+        className="border-none focus-visible:ring-0"
+      />
+      <Button
+        type="button"
+        size="icon"
+        variant="ghost"
+        onClick={() => {
+          const current = input.current;
+          if (current === null) {
+            return;
+          }
+          current.value = "";
+        }}
+      >
+        <X size={20} />
+      </Button>
+    </div>
+  );
+};
 
 export const SearchForm = ({
   query,
@@ -16,7 +53,7 @@ export const SearchForm = ({
 
   return (
     <Form method="GET" className="flex items-center gap-2">
-      <Input defaultValue={query} placeholder={placeholder} name="query" />
+      <ResetableInput query={query} placeholder={placeholder} />
       <Button type="submit" size="icon" variant="ghost" disabled={isLoading}>
         <LoadingOr isLoading={isLoading}>
           <Search size={24} />
