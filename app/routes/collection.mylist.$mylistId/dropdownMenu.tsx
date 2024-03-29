@@ -7,8 +7,8 @@ import {
   DropdownMenuTrigger,
   DropdownMenuButton,
 } from "~/component/ui/dropdownMenu";
-import { EditMylistInfoDialog } from "./editMylistInfoDialog";
-import { DeleteMylistDialog } from "~/routes/collection.mylist.$mylistId/deleteMylistDialog";
+import { EditMylistInfoDialog } from "./editMylistInfo/dialog";
+import { DeleteMylistDialog } from "~/routes/collection.mylist.$mylistId/deleteMylist/dialog";
 import { Dialog, DialogContent } from "~/component/ui/dialog";
 import { Link, useNavigate } from "@remix-run/react";
 import {

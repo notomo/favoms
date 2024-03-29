@@ -2,7 +2,7 @@ import { useFetcher } from "@remix-run/react";
 import { Check, GripVertical } from "lucide-react";
 import { FormEvent } from "react";
 import { Button } from "~/component/ui/button";
-import { type Mylist } from "./loader";
+import { type Mylist } from "../loader";
 import { CollectionRow } from "~/routes/collection/rowLink";
 import {
   SortableContext,

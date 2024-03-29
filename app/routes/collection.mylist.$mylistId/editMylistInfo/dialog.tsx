@@ -5,8 +5,8 @@ import { DialogFooter, DialogHeader, DialogTitle } from "~/component/ui/dialog";
 import { Input } from "~/component/ui/input";
 import { getInputProps, useForm } from "@conform-to/react";
 import { parseWithValibot } from "conform-to-valibot";
-import { editMylistInfoSchema } from "~/routes/collection.mylist.$mylistId/schema";
-import { EditMylistInfoActionData } from "~/routes/collection.mylist.$mylistId/editMylistInfoAction";
+import { editMylistInfoSchema } from "~/routes/collection.mylist.$mylistId/editMylistInfo/schema";
+import { EditMylistInfoActionData } from "~/routes/collection.mylist.$mylistId/editMylistInfo/action";
 import { ErrorMessage } from "~/component/ui/form";
 import { LoadingOr } from "~/component/ui/loading";
 
