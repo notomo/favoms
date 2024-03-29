@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { Button } from "~/component/ui/button";
 import { Input } from "~/component/ui/input";
 import { LoadingOr } from "~/component/ui/loading";
+import { useHotkeys } from "react-hotkeys-hook";
 
 const ResetableInput = ({
   query,
@@ -13,6 +14,27 @@ const ResetableInput = ({
   placeholder: string;
 }) => {
   const input = useRef<HTMLInputElement>(null);
+
+  useHotkeys(
+    "/",
+    (event) => {
+      event.preventDefault();
+
+      const current = input.current;
+      if (current === null) {
+        return;
+      }
+
+      const end = current.value.length;
+      current.focus();
+      current.setSelectionRange(end, end);
+    },
+    {
+      preventDefault: true,
+    },
+    [input.current],
+  );
+
   return (
     <div className="flex w-full gap-2 rounded-md border border-input">
       <Input
