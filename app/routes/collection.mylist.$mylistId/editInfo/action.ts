@@ -4,7 +4,7 @@ import { parseWithValibot } from "conform-to-valibot";
 import { prisma } from "~/lib/prisma";
 import { validateId } from "~/lib/schema/validation/params";
 import { mylistRoute } from "~/routePath";
-import { editMylistInfoSchema } from "~/routes/collection.mylist.$mylistId/editMylistInfo/schema";
+import { editMylistInfoSchema } from "./schema";
 
 export const editMylistInfoAction = async ({
   params,

@@ -20,7 +20,7 @@ export const DoneMylistItemsEditButton = ({
         .map(([id]) => id)
         .join(","),
     };
-    fetcher.submit(data, { method: "POST", action: "doneItemsEdit" });
+    fetcher.submit(data, { method: "POST", action: "editItems" });
     e.preventDefault();
   };
 

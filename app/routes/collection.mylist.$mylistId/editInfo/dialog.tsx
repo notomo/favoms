@@ -5,8 +5,8 @@ import { DialogFooter, DialogHeader, DialogTitle } from "~/component/ui/dialog";
 import { Input } from "~/component/ui/input";
 import { getInputProps, useForm } from "@conform-to/react";
 import { parseWithValibot } from "conform-to-valibot";
-import { editMylistInfoSchema } from "~/routes/collection.mylist.$mylistId/editMylistInfo/schema";
-import { EditMylistInfoActionData } from "~/routes/collection.mylist.$mylistId/editMylistInfo/action";
+import { editMylistInfoSchema } from "./schema";
+import { EditMylistInfoActionData } from "./action";
 import { ErrorMessage } from "~/component/ui/form";
 import { LoadingOr } from "~/component/ui/loading";
 
@@ -35,7 +35,7 @@ export const EditMylistInfoDialog = ({
       id={form.id}
       onSubmit={form.onSubmit}
       method="post"
-      action="editName"
+      action="editInfo"
       className="flex flex-col gap-4"
     >
       <DialogHeader className="flex flex-col gap-2">

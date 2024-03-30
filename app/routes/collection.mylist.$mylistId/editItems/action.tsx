@@ -3,7 +3,7 @@ import { parseWithValibot } from "conform-to-valibot";
 import { prisma } from "~/lib/prisma";
 import { validateId } from "~/lib/schema/validation/params";
 import { mylistRoute } from "~/routePath";
-import { editMylistItemsSchema } from "~/routes/collection.mylist.$mylistId/editItems/schema";
+import { editMylistItemsSchema } from "./schema";
 
 export const doneItemEditAction = async ({
   params,

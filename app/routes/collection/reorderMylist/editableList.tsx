@@ -29,7 +29,7 @@ export const DoneMylistsEditButton = ({
     const data = {
       mylistIds: mylistIds.join(","),
     };
-    fetcher.submit(data, { method: "POST", action: "doneMylistsEdit" });
+    fetcher.submit(data, { method: "POST", action: "reorderMylist" });
     e.preventDefault();
   };
 

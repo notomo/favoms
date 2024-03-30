@@ -3,7 +3,7 @@ import { useActionData } from "@remix-run/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { prisma } from "~/lib/prisma";
 import { mylistRoute } from "~/routePath";
-import { createMylistSchema } from "~/routes/collection/createMylist/schema";
+import { createMylistSchema } from "./schema";
 
 export const createMylistAction = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();

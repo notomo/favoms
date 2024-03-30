@@ -7,10 +7,10 @@ import { CollectionsDropDownMenu } from "./dropdownMenu";
 import {
   DoneMylistsEditButton,
   EditableMylistList,
-} from "~/routes/collection/reorderMylist/editableList";
+} from "./reorderMylist/editableList";
 import { Mylist, loader } from "./loader";
 import { useState } from "react";
-import { createMylistAction } from "~/routes/collection/createMylist/action";
+import { createMylistAction } from "./createMylist/action";
 import { LazyLoad } from "~/component/lazyLoad";
 import { LeftNavigationTwoColumn } from "~/component/layout/leftNavigationTwoColumn";
 

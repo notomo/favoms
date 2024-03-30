@@ -1,9 +1,8 @@
 import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
-import { useActionData } from "@remix-run/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { prisma } from "~/lib/prisma";
 import { collectionRoute } from "~/routePath";
-import { editMylistsSchema } from "~/routes/collection/reorderMylist/schema";
+import { editMylistsSchema } from "./schema";
 
 export const doneMylistsEditAction = async ({
   request,
@@ -20,10 +19,6 @@ export const doneMylistsEditAction = async ({
   await reorderMylists(mylistIds);
   return redirect(collectionRoute());
 };
-
-export type DoneMylistsEditActionData = ReturnType<
-  typeof useActionData<typeof doneMylistsEditAction>
->;
 
 async function reorderMylists(mylistIds: number[]) {
   await prisma.$transaction([

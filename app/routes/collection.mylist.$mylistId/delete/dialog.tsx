@@ -13,7 +13,7 @@ export const DeleteMylistDialog = () => {
   const isSubmitting = fetcher.state === "submitting";
 
   return (
-    <fetcher.Form method="delete" action="destroy">
+    <fetcher.Form method="delete" action="delete">
       <DialogHeader>
         <DialogTitle>Confirm</DialogTitle>
         <DialogDescription>
