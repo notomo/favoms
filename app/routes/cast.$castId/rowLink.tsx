@@ -3,7 +3,7 @@ import { ItemLink } from "~/routes/collection.all/rowLink";
 import { Video } from "./loader";
 import { useSearchParams } from "@remix-run/react";
 
-export const CastVideoLinks = ({
+export const CastsVideoLinks = ({
   castId,
   videos,
 }: {

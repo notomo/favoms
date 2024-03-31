@@ -1,7 +1,7 @@
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scrollArea";
 import { Cast, loader } from "./loader";
-import { CastVideoLinks } from "./rowLink";
+import { CastsVideoLinks } from "./rowLink";
 import { LazyLoad } from "~/component/lazyLoad";
 import { TwoColumn } from "~/component/layout/twoColumn";
 import { useForceTitle } from "~/lib/meta";
@@ -13,7 +13,7 @@ const CastVideoList = ({ cast }: { cast: Cast }) => {
 
   return (
     <ScrollArea className="border">
-      <CastVideoLinks videos={cast.videos} castId={cast.id} />
+      <CastsVideoLinks videos={cast.videos} castId={cast.id} />
     </ScrollArea>
   );
 };

@@ -3,7 +3,7 @@ import { ItemLink } from "~/routes/collection.all/rowLink";
 import { Book } from "./loader";
 import { useSearchParams } from "@remix-run/react";
 
-export const BookItemLinks = ({
+export const BookAuthorsItemLinks = ({
   bookAuthorId,
   books,
 }: {

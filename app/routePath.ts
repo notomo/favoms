@@ -138,6 +138,10 @@ export const importRoute = () => {
   return `/${manageImportPath}` as const;
 };
 
+export const importHistoryRoute = (importHistoryId: number) => {
+  return `${importRoute()}/history/${importHistoryId}` as const;
+};
+
 export const bookAuthorListRoute = () => {
   return `/${bookAuthorListPath}` as const;
 };

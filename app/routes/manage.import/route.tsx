@@ -1,11 +1,14 @@
 import type { MetaFunction } from "@remix-run/node";
 import { useForm } from "@conform-to/react";
 import { parseWithValibot } from "conform-to-valibot";
-import { useFetcher } from "@remix-run/react";
+import { Outlet, useFetcher } from "@remix-run/react";
 import { ActionData, runImportAction } from "./action";
 import { schema } from "./schema";
 import { BooleanInput, FileInput, SubmitButton } from "./input";
 import { ContentErrorMessage } from "~/routes/manage.import/contentErrorMessage";
+import { ScrollArea } from "~/component/ui/scrollArea";
+import { importHistoryRoute } from "~/routePath";
+import { HistoryLink } from "~/routes/manage.import/rowLink";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Import | favoms" }];
@@ -13,7 +16,7 @@ export const meta: MetaFunction = () => {
 
 export const action = runImportAction;
 
-export default function Index() {
+export default function Page() {
   const fetcher = useFetcher<ActionData>();
 
   const [form, fields] = useForm({
@@ -34,7 +37,7 @@ export default function Index() {
         id={form.id}
         onSubmit={form.onSubmit}
         encType="multipart/form-data"
-        className="flex flex-col gap-8 p-4"
+        className="flex flex-col gap-4 p-4"
       >
         <SubmitButton isSubmitting={isSubmitting}>Import</SubmitButton>
 
@@ -43,9 +46,18 @@ export default function Index() {
         <BooleanInput field={fields.dryRun}>Dry run</BooleanInput>
 
         <BooleanInput field={fields.isReplace}>Replace</BooleanInput>
+
+        <div className="flex h-full flex-col gap-2">
+          <div className="text-lg font-bold">History</div>
+          <ScrollArea className="h-full border">
+            <HistoryLink path={importHistoryRoute(1)}>test</HistoryLink>
+            <HistoryLink path={importHistoryRoute(2)}>test</HistoryLink>
+          </ScrollArea>
+        </div>
       </fetcher.Form>
 
       <ContentErrorMessage error={contentError} />
+      <Outlet />
     </div>
   );
 }

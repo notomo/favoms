@@ -1,7 +1,7 @@
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scrollArea";
 import { BookAuthor, loader } from "./loader";
-import { BookItemLinks } from "./rowLink";
+import { BookAuthorsItemLinks } from "./rowLink";
 import { LazyLoad } from "~/component/lazyLoad";
 import { TwoColumn } from "~/component/layout/twoColumn";
 import { useForceTitle } from "~/lib/meta";
@@ -13,7 +13,10 @@ const BookAuthorBookList = ({ bookAuthor }: { bookAuthor: BookAuthor }) => {
 
   return (
     <ScrollArea className="border">
-      <BookItemLinks books={bookAuthor.books} bookAuthorId={bookAuthor.id} />
+      <BookAuthorsItemLinks
+        books={bookAuthor.books}
+        bookAuthorId={bookAuthor.id}
+      />
     </ScrollArea>
   );
 };
