@@ -74,7 +74,18 @@ export const SearchForm = ({
   const isLoading = navigation.state === "loading";
 
   return (
-    <Form method="GET" className="flex items-center gap-2">
+    <Form
+      method="GET"
+      className="flex items-center gap-2"
+      onSubmit={(e) => {
+        const formData = new FormData(e.currentTarget);
+        const formQuery = formData.get("query");
+        if (formQuery !== query) {
+          return;
+        }
+        e.preventDefault();
+      }}
+    >
       <ResetableInput query={query} placeholder={placeholder} />
       <Button type="submit" size="icon" variant="ghost" disabled={isLoading}>
         <LoadingOr isLoading={isLoading}>
