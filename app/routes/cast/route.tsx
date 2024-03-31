@@ -1,7 +1,7 @@
 import { Outlet, useLoaderData } from "@remix-run/react";
 import { Cast, loader } from "./loader";
 import { CastLinks } from "./rowLink";
-import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
+import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea";
 import { LazyLoad } from "~/component/lazyLoad";
 import { SearchForm } from "~/component/ui/searchForm";
 import { LeftNavigationTwoColumn } from "~/component/layout/leftNavigationTwoColumn";

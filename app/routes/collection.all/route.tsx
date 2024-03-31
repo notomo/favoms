@@ -2,7 +2,7 @@ import { Outlet, useLoaderData } from "@remix-run/react";
 import { ItemLinks } from "./rowLink";
 import { Button } from "~/component/ui/button";
 import { MoreHorizontal } from "lucide-react";
-import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea/infiniteScrollArea";
+import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea";
 import { Item, loader } from "./loader";
 import { LazyLoad } from "~/component/lazyLoad";
 import { SearchForm } from "~/component/ui/searchForm";
