@@ -78,3 +78,10 @@ model Cast {
 
   videos Video[]
 }
+
+model ImportHistory {
+  id   Int      @id @default(autoincrement())
+  name String   @unique
+  json Json
+  at   DateTime
+}

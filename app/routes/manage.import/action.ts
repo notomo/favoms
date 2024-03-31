@@ -3,10 +3,11 @@ import { parseWithValibot } from "conform-to-valibot";
 import { safeParse, flatten } from "valibot";
 import { json, redirect, useActionData } from "@remix-run/react";
 import { importRoute } from "~/routePath";
-import { prisma } from "~/lib/prisma";
+import { Prisma, prisma } from "~/lib/prisma";
 import { schema } from "./schema";
 import { ItemImport, itemImportSchema } from "~/lib/schema/item";
 import { listToRecord, uniqueListByKey } from "~/lib/collection";
+import { assertNotFound } from "~/lib/response";
 
 export async function runImportAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
@@ -18,8 +19,25 @@ export async function runImportAction({ request }: ActionFunctionArgs) {
     return json(submission.reply());
   }
 
-  const fileContent = await submission.value.targetFile.text();
-  const parsedJson = JSON.parse(fileContent);
+  let fileName = "";
+  let parsedJson = null;
+  if (submission.value.targetKind === "file") {
+    const fileContent = await submission.value.targetFile.text();
+    fileName = submission.value.targetFile.name;
+    parsedJson = JSON.parse(fileContent);
+  } else {
+    const history = await prisma.importHistory.findUnique({
+      where: { id: submission.value.targetHistoryId },
+    });
+    assertNotFound(history, "import history is not found");
+    fileName = history.name;
+    parsedJson = history.json;
+  }
+
+  if (!submission.value.dryRun) {
+    await saveHistory(fileName, parsedJson);
+  }
+
   const validated = safeParse(itemImportSchema, parsedJson);
   if (!validated.success) {
     const error = JSON.stringify(flatten(validated.issues), null, 2);
@@ -154,3 +172,24 @@ async function importItems(itemImport: ItemImport, isReplace = false) {
     }),
   ]);
 }
+
+const saveHistory = async (
+  fileName: string,
+  parsedJson: Prisma.InputJsonObject,
+) => {
+  await prisma.importHistory.upsert({
+    where: {
+      name: fileName,
+    },
+    create: {
+      name: fileName,
+      json: parsedJson,
+      at: new Date(),
+    },
+    update: {
+      name: fileName,
+      json: parsedJson,
+      at: new Date(),
+    },
+  });
+};

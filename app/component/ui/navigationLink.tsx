@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react";
 export const NavigationLink = ({
   children,
   path,
-}: React.PropsWithChildren<{ path: string }>) => {
+  end,
+}: React.PropsWithChildren<{ path: string; end?: boolean }>) => {
   const scrollTarget = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     scrollTarget.current?.scrollIntoView({ behavior: "instant" });
@@ -16,6 +17,7 @@ export const NavigationLink = ({
         isActive ? "bg-stone-500 text-stone-50" : ""
       }
       to={path}
+      end={end}
     >
       {({ isActive }) => {
         if (isActive) {

@@ -3,11 +3,17 @@ import { cn } from "~/lib/tailwind";
 
 export const HistoryLink = ({
   children,
+  className,
   path,
-}: React.PropsWithChildren<{ path: string }>) => {
+  end,
+}: React.PropsWithChildren<{
+  path: string;
+  className?: string;
+  end?: boolean;
+}>) => {
   return (
-    <NavigationLink path={path}>
-      <HistoryRow>{children}</HistoryRow>
+    <NavigationLink end={end} path={path}>
+      <HistoryRow className={className}>{children}</HistoryRow>
     </NavigationLink>
   );
 };

@@ -34,8 +34,12 @@ export const BooleanInput = ({
 
 export const FileInput = ({
   field,
+  disabled,
   children,
-}: React.PropsWithChildren<{ field: FieldMetadata<File> }>) => {
+}: React.PropsWithChildren<{
+  disabled: boolean;
+  field: FieldMetadata<File | undefined>;
+}>) => {
   return (
     <div className="flex flex-col gap-2">
       <Label className="text-lg" htmlFor={field.id}>
@@ -45,8 +49,9 @@ export const FileInput = ({
         {...getInputProps(field, { type: "file" })}
         accept=".json"
         className="bg-primary text-black"
+        disabled={disabled}
       />
-      <ErrorMessage errors={field.errors} />
+      {disabled ? null : <ErrorMessage errors={field.errors} />}
     </div>
   );
 };
