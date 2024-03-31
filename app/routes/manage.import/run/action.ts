@@ -21,6 +21,7 @@ export async function runImportAction({ request }: ActionFunctionArgs) {
 
   let fileName = "";
   let parsedJson = null;
+  let importHistoryId: number | undefined = undefined;
   if (submission.value.targetKind === "file") {
     const fileContent = await submission.value.targetFile.text();
     fileName = submission.value.targetFile.name;
@@ -32,10 +33,11 @@ export async function runImportAction({ request }: ActionFunctionArgs) {
     assertNotFound(history, "import history is not found");
     fileName = history.name;
     parsedJson = history.json;
+    importHistoryId = history.id;
   }
 
   if (!submission.value.dryRun) {
-    await saveHistory(fileName, parsedJson);
+    importHistoryId = (await saveHistory(fileName, parsedJson)).id;
   }
 
   const validated = safeParse(itemImportSchema, parsedJson);
@@ -53,7 +55,7 @@ export async function runImportAction({ request }: ActionFunctionArgs) {
     await importItems(validated.output, submission.value.isReplace);
   }
 
-  return redirect(importRoute());
+  return redirect(importRoute(importHistoryId));
 }
 
 export type ActionData = ReturnType<
@@ -177,7 +179,7 @@ const saveHistory = async (
   fileName: string,
   parsedJson: Prisma.InputJsonObject,
 ) => {
-  await prisma.importHistory.upsert({
+  return await prisma.importHistory.upsert({
     where: {
       name: fileName,
     },
@@ -190,6 +192,9 @@ const saveHistory = async (
       name: fileName,
       json: parsedJson,
       at: new Date(),
+    },
+    select: {
+      id: true,
     },
   });
 };

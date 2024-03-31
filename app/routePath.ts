@@ -134,12 +134,15 @@ export const itemRoute = (itemId: number) => {
   return `/${itemPath}/${itemId}` as const;
 };
 
-export const importRoute = () => {
+export const importRoute = (importHistoryId?: number) => {
+  if (importHistoryId) {
+    return `/${manageImportPath}/history/${importHistoryId}` as const;
+  }
   return `/${manageImportPath}` as const;
 };
 
 export const importHistoryRoute = (importHistoryId: number) => {
-  return `${importRoute()}/history/${importHistoryId}` as const;
+  return importRoute(importHistoryId);
 };
 
 export const bookAuthorListRoute = () => {
