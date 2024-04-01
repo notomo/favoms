@@ -8,13 +8,9 @@ import {
   DropdownMenuButton,
 } from "~/component/ui/dropdownMenu";
 import { DialogContent, Dialog } from "~/component/ui/dialog";
-import {
-  CollectionDialogType,
-  allItemsRoute,
-  allItemsWithDialog,
-  mylistsEditRoute,
-} from "~/routePath";
-import { Link, useNavigate } from "@remix-run/react";
+import { CollectionDialogType, mylistsEditRoute } from "~/routePath";
+import { Link, useNavigate, useSearchParams } from "@remix-run/react";
+import { collectionRoute } from "~/routePath/collectionRoute";
 
 export const CollectionsDropDownMenu = ({
   className,
@@ -24,8 +20,14 @@ export const CollectionsDropDownMenu = ({
   dialogType: CollectionDialogType;
 }) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const close = () => {
-    navigate(allItemsRoute());
+    navigate(
+      collectionRoute({
+        queryParams: { dialog: undefined },
+        searchParams,
+      }),
+    );
   };
 
   return (
@@ -45,7 +47,14 @@ export const CollectionsDropDownMenu = ({
 
         <DropdownMenuContent className="border" align="start">
           <DropdownMenuButton asChild>
-            <Link to={allItemsWithDialog()}>New</Link>
+            <Link
+              to={collectionRoute({
+                queryParams: { dialog: "new" },
+                searchParams,
+              })}
+            >
+              New
+            </Link>
           </DropdownMenuButton>
 
           <DropdownMenuButton asChild>

@@ -17,10 +17,6 @@ const collectionDialogKey = "dialog" as const;
 const newDialog = "new" as const;
 export type CollectionDialogType = typeof newDialog | undefined;
 
-export const collectionRoute = () => {
-  return `/${collectionPath}` as const;
-};
-
 const editKey = "edit" as const;
 const editItemsValue = "items" as const;
 const editMylistsValue = "mylists" as const;
@@ -43,11 +39,6 @@ export const allItemsRoute = () => {
 export const allItemsWithPageRoute = (page: number) => {
   const route = allItemsRoute();
   return build(route, { [pageKey]: page.toString() });
-};
-
-export const allItemsWithDialog = () => {
-  const route = allItemsRoute();
-  return build(route, { [collectionDialogKey]: newDialog });
 };
 
 export const getCollectionDialogType = (
