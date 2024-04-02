@@ -1,10 +1,17 @@
 import { buildRoute } from "~/routePath/builder";
 
+const dialogKey = "dialog" as const;
+const newDialog = "new" as const;
+export type CollectionDialogType = typeof newDialog | undefined;
+
+const editKey = "edit" as const;
+const editMylistsValue = "mylists" as const;
+
 type QueryParams = Readonly<{
   query?: string;
   page?: number;
-  dialog?: "new";
-  edit?: "mylist";
+  [dialogKey]?: typeof newDialog;
+  [editKey]?: typeof editMylistsValue;
 }>;
 
 type PathParams = Readonly<{
@@ -41,6 +48,25 @@ export const collectionRoute = ({
     return buildRoute(route, queryParams, searchParams);
   }
 
+  if (params?.itemId !== undefined) {
+    const route = `/collection/all/item/${params.itemId}` as const;
+    return buildRoute(route, queryParams, searchParams);
+  }
+
   const route = `/collection/all` as const;
   return buildRoute(route, queryParams, searchParams);
+};
+
+export const isMylistsEditRoute = (searchParams: URLSearchParams) => {
+  return searchParams.get(editKey) === editMylistsValue;
+};
+
+export const getCollectionDialogType = (
+  searchParams: URLSearchParams,
+): CollectionDialogType => {
+  const dialogType = searchParams.get(dialogKey);
+  if (dialogType === newDialog) {
+    return newDialog;
+  }
+  return undefined;
 };

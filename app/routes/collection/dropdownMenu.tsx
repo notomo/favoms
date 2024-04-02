@@ -8,9 +8,11 @@ import {
   DropdownMenuButton,
 } from "~/component/ui/dropdownMenu";
 import { DialogContent, Dialog } from "~/component/ui/dialog";
-import { CollectionDialogType, mylistsEditRoute } from "~/routePath";
 import { Link, useNavigate, useSearchParams } from "@remix-run/react";
-import { collectionRoute } from "~/routePath/collectionRoute";
+import {
+  CollectionDialogType,
+  collectionRoute,
+} from "~/routePath/collectionRoute";
 
 export const CollectionsDropDownMenu = ({
   className,
@@ -58,7 +60,14 @@ export const CollectionsDropDownMenu = ({
           </DropdownMenuButton>
 
           <DropdownMenuButton asChild>
-            <Link to={mylistsEditRoute()}>Edit mylists</Link>
+            <Link
+              to={collectionRoute({
+                queryParams: { edit: "mylists" },
+                searchParams,
+              })}
+            >
+              Edit mylists
+            </Link>
           </DropdownMenuButton>
         </DropdownMenuContent>
       </DropdownMenu>

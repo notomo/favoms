@@ -1,55 +1,16 @@
 const collectionPath = "collection" as const;
-const collectionAllPath = `${collectionPath}/all` as const;
 const itemPath = `item` as const;
 const collectionMylistPath = `${collectionPath}/mylist` as const;
-const collectionAllItemPath = `${collectionAllPath}/item` as const;
 const managePath = `manage` as const;
 const manageImportPath = `${managePath}/import` as const;
 const bookPath = `book` as const;
 const bookAuthorListPath = `${bookPath}/author` as const;
 const castListPath = `cast` as const;
 
-export const homeRoute = () => {
-  return "/" as const;
-};
-
-const collectionDialogKey = "dialog" as const;
-const newDialog = "new" as const;
-export type CollectionDialogType = typeof newDialog | undefined;
-
 const editKey = "edit" as const;
 const editItemsValue = "items" as const;
-const editMylistsValue = "mylists" as const;
-
-export const mylistsEditRoute = () => {
-  const route = allItemsRoute();
-  return build(route, { [editKey]: editMylistsValue });
-};
-
-export const isMylistsEditRoute = (searchParams: URLSearchParams) => {
-  return searchParams.get(editKey) === editMylistsValue;
-};
 
 const pageKey = "page" as const;
-
-export const allItemsRoute = () => {
-  return `/${collectionAllPath}` as const;
-};
-
-export const allItemsWithPageRoute = (page: number) => {
-  const route = allItemsRoute();
-  return build(route, { [pageKey]: page.toString() });
-};
-
-export const getCollectionDialogType = (
-  searchParams: URLSearchParams,
-): CollectionDialogType => {
-  const dialogType = searchParams.get(collectionDialogKey);
-  if (dialogType === newDialog) {
-    return newDialog;
-  }
-  return undefined;
-};
 
 export const getPage = (searchParams: URLSearchParams): number => {
   const page = searchParams.get(pageKey);
@@ -107,18 +68,6 @@ export const isMylistItemsEditRoute = (searchParams: URLSearchParams) => {
 
 export const mylistItemRoute = (mylistId: number, itemId: number) => {
   return `${mylistRoute(mylistId)}/${itemPath}/${itemId}` as const;
-};
-
-export const collectionItemRoute = (
-  itemId: number,
-  page: number,
-  query: string,
-) => {
-  const route = `/${collectionAllItemPath}/${itemId}` as const;
-  return build(route, {
-    [pageKey]: page.toString(),
-    [queryKey]: query,
-  });
 };
 
 export const itemRoute = (itemId: number) => {

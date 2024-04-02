@@ -1,7 +1,7 @@
 import { NavigationLink } from "~/component/ui/navigationLink";
 import { cn } from "~/lib/tailwind";
 import { Item } from "./loader";
-import { collectionItemRoute } from "~/routePath";
+import { collectionRoute } from "~/routePath/collectionRoute";
 
 export const ItemLinks = ({
   items,
@@ -13,7 +13,10 @@ export const ItemLinks = ({
   query: string;
 }) => {
   return items.map(({ id, name }) => {
-    const path = collectionItemRoute(id, page, query);
+    const path = collectionRoute({
+      pathParams: { itemId: id },
+      queryParams: { query, page },
+    });
     return (
       <ItemLink path={path} key={id}>
         {name}

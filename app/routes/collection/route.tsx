@@ -1,6 +1,5 @@
 import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scrollArea";
-import { getCollectionDialogType, isMylistsEditRoute } from "~/routePath";
 import { MylistLinks, AllItemsLink } from "./rowLink";
 import { type MetaFunction } from "@remix-run/node";
 import { CollectionsDropDownMenu } from "./dropdownMenu";
@@ -13,6 +12,10 @@ import { useState } from "react";
 import { createMylistAction } from "./createMylist/action";
 import { LazyLoad } from "~/component/lazyLoad";
 import { LeftNavigationTwoColumn } from "~/component/layout/leftNavigationTwoColumn";
+import {
+  getCollectionDialogType,
+  isMylistsEditRoute,
+} from "~/routePath/collectionRoute";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Collection | favoms" }];

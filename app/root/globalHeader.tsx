@@ -6,12 +6,7 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "~/component/ui/navigationMenu";
-import {
-  bookAuthorListRoute,
-  castListRoute,
-  homeRoute,
-  importRoute,
-} from "~/routePath";
+import { bookAuthorListRoute, castListRoute, importRoute } from "~/routePath";
 import { cn } from "~/lib/tailwind";
 import { collectionRoute } from "~/routePath/collectionRoute";
 
@@ -34,7 +29,7 @@ export const GlobalHeader = ({ className }: { className?: string }) => {
   return (
     <NavigationMenu className={cn("w-full", className)}>
       <NavigationMenuList>
-        <MenuLink to={homeRoute()}>Home</MenuLink>
+        <MenuLink to={"/"}>Home</MenuLink>
 
         <MenuLink to={collectionRoute({})}>Collection</MenuLink>
 

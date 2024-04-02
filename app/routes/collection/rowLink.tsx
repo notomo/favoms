@@ -1,10 +1,11 @@
 import { NavigationLink } from "~/component/ui/navigationLink";
 import { cn } from "~/lib/tailwind";
-import { allItemsRoute, mylistRoute } from "~/routePath";
+import { mylistRoute } from "~/routePath";
 import { Mylist } from "./loader";
+import { collectionRoute } from "~/routePath/collectionRoute";
 
 export const AllItemsLink = () => {
-  return <CollectionLink path={allItemsRoute()}>All</CollectionLink>;
+  return <CollectionLink path={collectionRoute({})}>All</CollectionLink>;
 };
 
 export const MylistLinks = ({ mylists }: { mylists: Mylist[] }) => {
