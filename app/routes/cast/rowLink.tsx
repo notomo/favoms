@@ -1,7 +1,7 @@
-import { castRoute } from "~/routePath";
 import { Cast } from "./loader";
 import { NavigationLink } from "~/component/ui/navigationLink";
 import { cn } from "~/lib/tailwind";
+import { castRoute } from "~/routePath/castRoute";
 
 export const CastLinks = ({
   casts,
@@ -13,7 +13,10 @@ export const CastLinks = ({
   query: string;
 }) => {
   return casts.map(({ id, name }) => {
-    const path = castRoute(id, page, query);
+    const path = castRoute({
+      queryParams: { page, query },
+      pathParams: { castId: id },
+    });
     return (
       <CastLink path={path} key={id}>
         {name}

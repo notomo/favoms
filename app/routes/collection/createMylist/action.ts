@@ -2,8 +2,8 @@ import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
 import { useActionData } from "@remix-run/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { prisma } from "~/lib/prisma";
-import { mylistRoute } from "~/routePath";
 import { createMylistSchema } from "./schema";
+import { mylistRoute } from "~/routePath/mylistRoute";
 
 export const createMylistAction = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
@@ -17,7 +17,7 @@ export const createMylistAction = async ({ request }: ActionFunctionArgs) => {
 
   const mylistName = submission.value.name;
   const mylist = await createMylist(mylistName);
-  return redirect(mylistRoute(mylist.id));
+  return redirect(mylistRoute({ pathParams: { mylistId: mylist.id } }));
 };
 
 export type ActionData = ReturnType<

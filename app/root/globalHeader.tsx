@@ -6,9 +6,11 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "~/component/ui/navigationMenu";
-import { bookAuthorListRoute, castListRoute, importRoute } from "~/routePath";
 import { cn } from "~/lib/tailwind";
 import { collectionRoute } from "~/routePath/collectionRoute";
+import { castRoute } from "~/routePath/castRoute";
+import { bookAuthorRoute } from "~/routePath/bookAuthorRoute";
+import { importRoute } from "~/routePath/importRoute";
 
 const MenuLink = ({
   to,
@@ -33,11 +35,11 @@ export const GlobalHeader = ({ className }: { className?: string }) => {
 
         <MenuLink to={collectionRoute({})}>Collection</MenuLink>
 
-        <MenuLink to={bookAuthorListRoute()}>Book Author</MenuLink>
+        <MenuLink to={bookAuthorRoute({})}>Book Author</MenuLink>
 
-        <MenuLink to={castListRoute()}>Cast</MenuLink>
+        <MenuLink to={castRoute({})}>Cast</MenuLink>
 
-        <MenuLink to={importRoute()}>Import</MenuLink>
+        <MenuLink to={importRoute({})}>Import</MenuLink>
       </NavigationMenuList>
     </NavigationMenu>
   );

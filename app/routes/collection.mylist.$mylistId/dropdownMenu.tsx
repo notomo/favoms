@@ -11,20 +11,14 @@ import { EditMylistInfoDialog } from "./editInfo/dialog";
 import { DeleteMylistDialog } from "./delete/dialog";
 import { Dialog, DialogContent } from "~/component/ui/dialog";
 import { Link, useNavigate } from "@remix-run/react";
-import {
-  DialogType,
-  mylistDeleteRoute,
-  mylistInfoEditRoute,
-  mylistItemsEditRoute,
-  mylistRoute,
-} from "~/routePath";
+import { MylistDialogType, mylistRoute } from "~/routePath/mylistRoute";
 
 const OneDialog = ({
   mylistName,
   dialogType,
 }: {
   mylistName: string;
-  dialogType: DialogType;
+  dialogType: MylistDialogType;
 }) => {
   switch (dialogType) {
     case "edit":
@@ -43,11 +37,16 @@ export const MylistDropDownMenu = ({
 }: {
   mylistId: number;
   mylistName: string;
-  dialogType: DialogType;
+  dialogType: MylistDialogType;
 }) => {
   const navigate = useNavigate();
   const close = () => {
-    navigate(mylistRoute(mylistId));
+    navigate(
+      mylistRoute({
+        pathParams: { mylistId },
+        queryParams: { dialog: undefined },
+      }),
+    );
   };
 
   return (
@@ -67,17 +66,38 @@ export const MylistDropDownMenu = ({
 
         <DropdownMenuContent className="border" align="start">
           <DropdownMenuButton asChild>
-            <Link to={mylistInfoEditRoute(mylistId)}>Edit info</Link>
+            <Link
+              to={mylistRoute({
+                pathParams: { mylistId },
+                queryParams: { dialog: "edit" },
+              })}
+            >
+              Edit info
+            </Link>
           </DropdownMenuButton>
 
           <DropdownMenuButton asChild>
-            <Link to={mylistItemsEditRoute(mylistId)}>Edit items</Link>
+            <Link
+              to={mylistRoute({
+                pathParams: { mylistId },
+                queryParams: { edit: "items" },
+              })}
+            >
+              Edit items
+            </Link>
           </DropdownMenuButton>
 
           <DropdownMenuSeparator />
 
           <DropdownMenuButton asChild>
-            <Link to={mylistDeleteRoute(mylistId)}>Delete</Link>
+            <Link
+              to={mylistRoute({
+                pathParams: { mylistId },
+                queryParams: { dialog: "delete" },
+              })}
+            >
+              Delete
+            </Link>
           </DropdownMenuButton>
         </DropdownMenuContent>
       </DropdownMenu>

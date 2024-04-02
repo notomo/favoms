@@ -1,7 +1,7 @@
-import { bookAuthorRoute } from "~/routePath";
 import { BookAuthor } from "./loader";
 import { NavigationLink } from "~/component/ui/navigationLink";
 import { cn } from "~/lib/tailwind";
+import { bookAuthorRoute } from "~/routePath/bookAuthorRoute";
 
 export const BookAuthorLinks = ({
   bookAuthors,
@@ -13,7 +13,10 @@ export const BookAuthorLinks = ({
   query: string;
 }) => {
   return bookAuthors.map(({ id, name }) => {
-    const path = bookAuthorRoute(id, page, query);
+    const path = bookAuthorRoute({
+      pathParams: { bookAuthorId: id },
+      queryParams: { page, query },
+    });
     return (
       <BookAuthorLink path={path} key={id}>
         {name}

@@ -1,7 +1,7 @@
 import { ScrollArea } from "~/component/ui/scrollArea";
-import { importHistoryRoute, importRoute } from "~/routePath";
 import { ImportHistory } from "./loader";
 import { HistoryLink } from "~/routes/manage.import/rowLink";
+import { importRoute } from "~/routePath/importRoute";
 
 export const ImportHistoryList = ({
   histories,
@@ -12,7 +12,7 @@ export const ImportHistoryList = ({
     <ScrollArea className="h-full border">
       <HistoryLink
         end={true}
-        path={importRoute()}
+        path={importRoute({})}
         className="text-lg font-bold"
       >
         No selected
@@ -22,7 +22,7 @@ export const ImportHistoryList = ({
         return (
           <HistoryLink
             key={history.id}
-            path={importHistoryRoute(history.id)}
+            path={importRoute({ pathParams: { importHistoryId: history.id } })}
             className="flex items-center justify-between"
           >
             <div>

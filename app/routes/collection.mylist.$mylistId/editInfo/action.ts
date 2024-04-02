@@ -3,8 +3,8 @@ import { useActionData } from "@remix-run/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { prisma } from "~/lib/prisma";
 import { validateId } from "~/lib/schema/validation/params";
-import { mylistRoute } from "~/routePath";
 import { editMylistInfoSchema } from "./schema";
+import { mylistRoute } from "~/routePath/mylistRoute";
 
 export const editMylistInfoAction = async ({
   params,
@@ -23,7 +23,7 @@ export const editMylistInfoAction = async ({
 
   const name = submission.value.name;
   const mylist = await updateMylistName(mylistId, name);
-  return redirect(mylistRoute(mylist.id));
+  return redirect(mylistRoute({ pathParams: { mylistId: mylist.id } }));
 };
 
 export type EditMylistInfoActionData = ReturnType<

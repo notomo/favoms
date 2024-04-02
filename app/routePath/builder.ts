@@ -27,3 +27,20 @@ export const buildRoute = <
   ) as Record<string, string>;
   return `${route}?${new URLSearchParams(params).toString()}` as const;
 };
+
+export const mergeParams = <
+  PathParams extends Record<string, string | number | undefined>,
+>({
+  pathParams,
+  rawPathParams,
+}: {
+  pathParams?: PathParams;
+  rawPathParams?: Record<string, string | undefined>;
+}) => {
+  return {
+    ...rawPathParams,
+    ...Object.fromEntries(
+      Object.entries(pathParams || {}).map(([k, v]) => [k, v?.toString()]),
+    ),
+  } as Record<keyof PathParams, string | undefined>;
+};

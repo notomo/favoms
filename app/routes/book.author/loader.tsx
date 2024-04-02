@@ -1,7 +1,7 @@
 import { LoaderFunctionArgs, defer } from "@remix-run/node";
 import { prisma } from "~/lib/prisma";
 
-import { getPage, getQuery } from "~/routePath";
+import { getPage, getQuery } from "~/routePath/listParam";
 
 const pageSize = 20;
 

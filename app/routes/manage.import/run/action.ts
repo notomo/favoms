@@ -2,12 +2,12 @@ import type { ActionFunctionArgs } from "@remix-run/node";
 import { parseWithValibot } from "conform-to-valibot";
 import { safeParse, flatten } from "valibot";
 import { json, redirect, useActionData } from "@remix-run/react";
-import { importRoute } from "~/routePath";
 import { Prisma, prisma } from "~/lib/prisma";
 import { schema } from "./schema";
 import { ItemImport, itemImportSchema } from "~/lib/schema/item";
 import { listToRecord, uniqueListByKey } from "~/lib/collection";
 import { assertNotFound } from "~/lib/response";
+import { importRoute } from "~/routePath/importRoute";
 
 export async function runImportAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
@@ -55,7 +55,7 @@ export async function runImportAction({ request }: ActionFunctionArgs) {
     await importItems(validated.output, submission.value.isReplace);
   }
 
-  return redirect(importRoute(importHistoryId));
+  return redirect(importRoute({ pathParams: { importHistoryId } }));
 }
 
 export type ActionData = ReturnType<

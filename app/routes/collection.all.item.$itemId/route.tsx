@@ -1,9 +1,11 @@
 import { type MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scrollArea";
-import { bookAuthorRoute, castRoute, itemRoute } from "~/routePath";
 import { loader, BookAuthor, Item } from "./loader";
 import { assertNever } from "~/lib/assert";
+import { bookAuthorRoute } from "~/routePath/bookAuthorRoute";
+import { castRoute } from "~/routePath/castRoute";
+import { itemRoute } from "~/routePath/itemRoute";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [{ title: `${data?.name} | favoms` }];
@@ -17,7 +19,12 @@ const BookAuthorList = ({ bookAuthors }: { bookAuthors: BookAuthor[] }) => {
       Authors:
       {bookAuthors.map((author) => {
         return (
-          <Link to={bookAuthorRoute(author.id, 1, "")} key={author.id}>
+          <Link
+            to={bookAuthorRoute({
+              pathParams: { bookAuthorId: author.id },
+            })}
+            key={author.id}
+          >
             {author.name}
           </Link>
         );
@@ -32,7 +39,12 @@ const VideoCastList = ({ videoCasts }: { videoCasts: BookAuthor[] }) => {
       Authors:
       {videoCasts.map((cast) => {
         return (
-          <Link to={castRoute(cast.id, 1, "")} key={cast.id}>
+          <Link
+            to={castRoute({
+              pathParams: { castId: cast.id },
+            })}
+            key={cast.id}
+          >
             {cast.name}
           </Link>
         );
@@ -57,7 +69,11 @@ export default function Page() {
   return (
     <ScrollArea className="h-full w-full border">
       <div className="flex flex-col">
-        <Link to={itemRoute(item.id)} target="_blank" rel="noreferrer">
+        <Link
+          to={itemRoute({ pathParams: { itemId: item.id } })}
+          target="_blank"
+          rel="noreferrer"
+        >
           {item.name}
         </Link>
         <KindSpecificContent item={item} />

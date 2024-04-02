@@ -2,8 +2,8 @@ import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
 import { parseWithValibot } from "conform-to-valibot";
 import { prisma } from "~/lib/prisma";
 import { validateId } from "~/lib/schema/validation/params";
-import { mylistRoute } from "~/routePath";
 import { editMylistItemsSchema } from "./schema";
+import { mylistRoute } from "~/routePath/mylistRoute";
 
 export const doneItemEditAction = async ({
   params,
@@ -21,7 +21,7 @@ export const doneItemEditAction = async ({
 
   const itemIds = submission.value.itemIds;
   await removeItemsFromMylist(mylistId, itemIds);
-  return redirect(mylistRoute(mylistId));
+  return redirect(mylistRoute({ pathParams: { mylistId } }));
 };
 
 async function removeItemsFromMylist(mylistId: number, itemIds: number[]) {

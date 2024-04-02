@@ -1,6 +1,6 @@
-import { mylistItemRoute } from "~/routePath";
 import { ItemLink } from "~/routes/collection.all/rowLink";
 import { MylistItem } from "./loader";
+import { mylistRoute } from "~/routePath/mylistRoute";
 
 export const ItemLinks = ({
   mylistId,
@@ -10,7 +10,7 @@ export const ItemLinks = ({
   items: MylistItem[];
 }) => {
   return items.map(({ id, name }) => {
-    const path = mylistItemRoute(mylistId, id);
+    const path = mylistRoute({ pathParams: { mylistId, itemId: id } });
     return (
       <ItemLink path={path} key={id}>
         {name}

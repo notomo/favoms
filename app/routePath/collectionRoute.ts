@@ -1,4 +1,4 @@
-import { buildRoute } from "~/routePath/builder";
+import { buildRoute, mergeParams } from "~/routePath/builder";
 
 const dialogKey = "dialog" as const;
 const newDialog = "new" as const;
@@ -10,7 +10,7 @@ const editMylistsValue = "mylists" as const;
 type QueryParams = Readonly<{
   query?: string;
   page?: number;
-  [dialogKey]?: typeof newDialog;
+  [dialogKey]?: CollectionDialogType;
   [editKey]?: typeof editMylistsValue;
 }>;
 
@@ -30,12 +30,7 @@ export const collectionRoute = ({
   rawPathParams?: Record<string, string | undefined>;
   searchParams?: URLSearchParams;
 }) => {
-  const params = {
-    ...rawPathParams,
-    ...Object.fromEntries(
-      Object.entries(pathParams || {}).map(([k, v]) => [k, v.toString()]),
-    ),
-  };
+  const params = mergeParams({ rawPathParams, pathParams });
 
   if (params?.mylistId !== undefined && params?.itemId !== undefined) {
     const route =

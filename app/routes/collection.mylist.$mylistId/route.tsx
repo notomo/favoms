@@ -1,7 +1,6 @@
 import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
 import { useState } from "react";
 import { ScrollArea } from "~/component/ui/scrollArea";
-import { getMylistDialogType, isMylistItemsEditRoute } from "~/routePath";
 import { MylistDropDownMenu } from "./dropdownMenu";
 import {
   DoneMylistItemsEditButton,
@@ -12,6 +11,10 @@ import { ItemLinks } from "./rowLink";
 import { LazyLoad } from "~/component/lazyLoad";
 import { TwoColumn } from "~/component/layout/twoColumn";
 import { useForceTitle } from "~/lib/meta";
+import {
+  getMylistDialogType,
+  isMylistItemsEditRoute,
+} from "~/routePath/mylistRoute";
 
 export { loader } from "./loader";
 

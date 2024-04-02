@@ -1,7 +1,7 @@
 import { defer, LoaderFunctionArgs } from "@remix-run/node";
 import { switchKind } from "~/lib/schema/validation/kind";
 import { prisma } from "~/lib/prisma";
-import { getPage, getQuery } from "~/routePath";
+import { getPage, getQuery } from "~/routePath/listParam";
 
 const pageSize = 20;
 
