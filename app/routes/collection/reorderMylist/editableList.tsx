@@ -1,4 +1,4 @@
-import { useFetcher } from "@remix-run/react";
+import { useFetcher, useParams, useSearchParams } from "@remix-run/react";
 import { Check, GripVertical } from "lucide-react";
 import { FormEvent } from "react";
 import { Button } from "~/component/ui/button";
@@ -24,10 +24,14 @@ export const DoneMylistsEditButton = ({
   className?: string;
 }) => {
   const fetcher = useFetcher();
+  const rawPathParams = useParams();
+  const searchParams = useSearchParams();
 
   const onSubmit = (e: FormEvent) => {
     const data = {
       mylistIds: mylistIds.join(","),
+      itemId: rawPathParams.itemId || "",
+      searchParams: searchParams.toString(),
     };
     fetcher.submit(data, { method: "POST", action: "reorderMylist" });
     e.preventDefault();

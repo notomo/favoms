@@ -1,4 +1,4 @@
-import { useFetcher } from "@remix-run/react";
+import { useFetcher, useParams, useSearchParams } from "@remix-run/react";
 import { Check, Trash, Undo } from "lucide-react";
 import { FormEvent } from "react";
 import { Button } from "~/component/ui/button";
@@ -12,6 +12,8 @@ export const DoneMylistItemsEditButton = ({
   willBeRemovedItemIds: Record<number, boolean>;
 }) => {
   const fetcher = useFetcher();
+  const searchParams = useSearchParams();
+  const rawPathParams = useParams();
 
   const onSubmit = (e: FormEvent) => {
     const data = {
@@ -19,6 +21,8 @@ export const DoneMylistItemsEditButton = ({
         .filter(([, willBeRemoved]) => willBeRemoved)
         .map(([id]) => id)
         .join(","),
+      itemId: rawPathParams.itemId || "",
+      searchParams: searchParams.toString(),
     };
     fetcher.submit(data, { method: "POST", action: "editItems" });
     e.preventDefault();

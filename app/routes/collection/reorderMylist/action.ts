@@ -17,7 +17,13 @@ export const doneMylistsEditAction = async ({
 
   const mylistIds = submission.value.mylistIds;
   await reorderMylists(mylistIds);
-  return redirect(collectionRoute({}));
+
+  return redirect(
+    collectionRoute({
+      pathParams: { itemId: submission.value.itemId },
+      searchParams: submission.value.searchParams,
+    }),
+  );
 };
 
 async function reorderMylists(mylistIds: number[]) {

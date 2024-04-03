@@ -23,7 +23,16 @@ export const editMylistInfoAction = async ({
 
   const name = submission.value.name;
   const mylist = await updateMylistName(mylistId, name);
-  return redirect(mylistRoute({ pathParams: { mylistId: mylist.id } }));
+
+  return redirect(
+    mylistRoute({
+      pathParams: {
+        mylistId: mylist.id,
+        itemId: submission.value.itemId,
+      },
+      searchParams: submission.value.searchParams,
+    }),
+  );
 };
 
 export type EditMylistInfoActionData = ReturnType<

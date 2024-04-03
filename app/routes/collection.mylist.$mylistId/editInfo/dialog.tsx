@@ -1,5 +1,5 @@
 import { Label } from "~/component/ui/label";
-import { useFetcher } from "@remix-run/react";
+import { useFetcher, useParams, useSearchParams } from "@remix-run/react";
 import { Button } from "~/component/ui/button";
 import { DialogFooter, DialogHeader, DialogTitle } from "~/component/ui/dialog";
 import { Input } from "~/component/ui/input";
@@ -16,6 +16,8 @@ export const EditMylistInfoDialog = ({
   mylistName: string;
 }) => {
   const fetcher = useFetcher<EditMylistInfoActionData>();
+  const searchParams = useSearchParams();
+  const rawPathParams = useParams();
 
   const [form, fields] = useForm({
     lastResult: fetcher.data,
@@ -47,6 +49,17 @@ export const EditMylistInfoDialog = ({
           <ErrorMessage errors={fields.name.errors} />
         </div>
       </DialogHeader>
+
+      <input
+        name={fields.searchParams.name}
+        value={searchParams.toString()}
+        hidden
+      />
+      <input
+        name={fields.itemId.name}
+        value={rawPathParams.itemId || ""}
+        hidden
+      />
 
       <DialogFooter>
         <Button type="submit" disabled={isSubmitting}>

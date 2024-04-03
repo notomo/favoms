@@ -65,3 +65,12 @@ export const getCollectionDialogType = (
   }
   return undefined;
 };
+
+export const removeCollectionParam = (
+  s: string,
+  key: typeof dialogKey | typeof editKey,
+) => {
+  const searchParams = new URLSearchParams(s);
+  searchParams.delete(key);
+  return searchParams;
+};

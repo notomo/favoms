@@ -1,6 +1,11 @@
-import { object } from "valibot";
-import { joinedIdsSchema } from "~/lib/schema/id";
+import { object, string, transform } from "valibot";
+import { joinedIdsSchema, optionalIdSchema } from "~/lib/schema/id";
+import { removeCollectionParam } from "~/routePath/collectionRoute";
 
 export const editMylistsSchema = object({
   mylistIds: joinedIdsSchema,
+  itemId: optionalIdSchema,
+  searchParams: transform(string(), (x) => {
+    return removeCollectionParam(x, "edit");
+  }),
 });

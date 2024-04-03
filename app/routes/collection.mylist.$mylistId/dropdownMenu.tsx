@@ -10,7 +10,7 @@ import {
 import { EditMylistInfoDialog } from "./editInfo/dialog";
 import { DeleteMylistDialog } from "./delete/dialog";
 import { Dialog, DialogContent } from "~/component/ui/dialog";
-import { Link, useNavigate } from "@remix-run/react";
+import { Link, useNavigate, useParams } from "@remix-run/react";
 import { MylistDialogType, mylistRoute } from "~/routePath/mylistRoute";
 
 const OneDialog = ({
@@ -40,11 +40,13 @@ export const MylistDropDownMenu = ({
   dialogType: MylistDialogType;
 }) => {
   const navigate = useNavigate();
+  const rawPathParams = useParams();
   const close = () => {
     navigate(
       mylistRoute({
         pathParams: { mylistId },
         queryParams: { dialog: undefined },
+        rawPathParams,
       }),
     );
   };
@@ -70,6 +72,7 @@ export const MylistDropDownMenu = ({
               to={mylistRoute({
                 pathParams: { mylistId },
                 queryParams: { dialog: "edit" },
+                rawPathParams,
               })}
             >
               Edit info
@@ -81,6 +84,7 @@ export const MylistDropDownMenu = ({
               to={mylistRoute({
                 pathParams: { mylistId },
                 queryParams: { edit: "items" },
+                rawPathParams,
               })}
             >
               Edit items
@@ -94,6 +98,7 @@ export const MylistDropDownMenu = ({
               to={mylistRoute({
                 pathParams: { mylistId },
                 queryParams: { dialog: "delete" },
+                rawPathParams,
               })}
             >
               Delete

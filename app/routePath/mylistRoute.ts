@@ -62,3 +62,12 @@ export const mylistRoute = ({
 export const isMylistItemsEditRoute = (searchParams: URLSearchParams) => {
   return searchParams.get(editKey) === editItemsValue;
 };
+
+export const removeMylistParam = (
+  s: string,
+  key: typeof dialogKey | typeof editKey,
+) => {
+  const searchParams = new URLSearchParams(s);
+  searchParams.delete(key);
+  return searchParams;
+};

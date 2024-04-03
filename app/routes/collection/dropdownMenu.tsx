@@ -8,7 +8,12 @@ import {
   DropdownMenuButton,
 } from "~/component/ui/dropdownMenu";
 import { DialogContent, Dialog } from "~/component/ui/dialog";
-import { Link, useNavigate, useSearchParams } from "@remix-run/react";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "@remix-run/react";
 import {
   CollectionDialogType,
   collectionRoute,
@@ -22,11 +27,13 @@ export const CollectionsDropDownMenu = ({
   dialogType: CollectionDialogType;
 }) => {
   const navigate = useNavigate();
+  const rawPathParams = useParams();
   const [searchParams] = useSearchParams();
   const close = () => {
     navigate(
       collectionRoute({
         queryParams: { dialog: undefined },
+        rawPathParams,
         searchParams,
       }),
     );
@@ -52,6 +59,7 @@ export const CollectionsDropDownMenu = ({
             <Link
               to={collectionRoute({
                 queryParams: { dialog: "new" },
+                rawPathParams,
                 searchParams,
               })}
             >
@@ -63,6 +71,7 @@ export const CollectionsDropDownMenu = ({
             <Link
               to={collectionRoute({
                 queryParams: { edit: "mylists" },
+                rawPathParams,
                 searchParams,
               })}
             >
