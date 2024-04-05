@@ -1,4 +1,4 @@
-import { object, string, transform } from "valibot";
+import { Input, object, string, transform } from "valibot";
 import { joinedIdsSchema, optionalIdSchema } from "~/lib/schema/id";
 import { removeMylistParam } from "~/routePath/mylistRoute";
 
@@ -9,3 +9,7 @@ export const editMylistItemsSchema = object({
     return removeMylistParam(x, "edit");
   }),
 });
+
+export type InputSchema = Required<
+  Record<keyof Input<typeof editMylistItemsSchema>, string>
+>;

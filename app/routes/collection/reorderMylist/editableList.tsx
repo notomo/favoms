@@ -15,6 +15,7 @@ import clsx from "clsx";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { LoadingOr } from "~/component/ui/loading";
+import { InputSchema } from "./schema";
 
 export const DoneMylistsEditButton = ({
   mylistIds,
@@ -28,7 +29,7 @@ export const DoneMylistsEditButton = ({
   const searchParams = useSearchParams();
 
   const onSubmit = (e: FormEvent) => {
-    const data = {
+    const data: InputSchema = {
       mylistIds: mylistIds.join(","),
       itemId: rawPathParams.itemId || "",
       searchParams: searchParams.toString(),

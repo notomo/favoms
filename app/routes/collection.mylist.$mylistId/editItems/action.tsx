@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
+import { ActionFunctionArgs, redirect } from "@remix-run/node";
 import { parseWithValibot } from "conform-to-valibot";
 import { prisma } from "~/lib/prisma";
 import { validateId } from "~/lib/schema/validation/params";
@@ -16,7 +16,7 @@ export const doneItemEditAction = async ({
     schema: editMylistItemsSchema,
   });
   if (submission.status !== "success") {
-    return json(submission.reply());
+    throw new Error(JSON.stringify(submission.reply().error));
   }
 
   const itemIds = submission.value.itemIds;

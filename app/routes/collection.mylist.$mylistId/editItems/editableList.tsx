@@ -4,6 +4,7 @@ import { FormEvent } from "react";
 import { Button } from "~/component/ui/button";
 import { LoadingOr } from "~/component/ui/loading";
 import { ItemRow } from "~/routes/collection.all/rowLink";
+import { InputSchema } from "./schema";
 import { MylistItem } from "~/routes/collection.mylist.$mylistId/loader";
 
 export const DoneMylistItemsEditButton = ({
@@ -16,7 +17,7 @@ export const DoneMylistItemsEditButton = ({
   const rawPathParams = useParams();
 
   const onSubmit = (e: FormEvent) => {
-    const data = {
+    const data: InputSchema = {
       itemIds: Object.entries(willBeRemovedItemIds)
         .filter(([, willBeRemoved]) => willBeRemoved)
         .map(([id]) => id)
