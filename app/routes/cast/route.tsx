@@ -20,7 +20,7 @@ const CastList = ({
   query: string;
 }) => {
   return (
-    <div className="grid h-full w-full grid-cols-[100%] grid-rows-[6%_94%] gap-y-1">
+    <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
       <SearchForm query={query} placeholder={"Search cast name"} />
 
       <InfiniteScrollArea

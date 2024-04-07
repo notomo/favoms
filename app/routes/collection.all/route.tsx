@@ -22,19 +22,14 @@ const ItemList = ({
   query: string;
 }) => {
   return (
-    <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_6%_86%]">
-      <div className="flex items-center justify-between">
-        <div className="px-4 text-xl">All</div>
-        <Button disabled variant="ghost" size="icon">
-          <MoreHorizontal className="h-4 w-4" />
-        </Button>
-      </div>
+    <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_6%_86%] items-center">
+      <div className="px-4 text-2xl">All</div>
 
       <SearchForm query={query} placeholder={"Search item name"} />
 
       <InfiniteScrollArea
         key={query}
-        className="border"
+        className="h-full w-full border"
         page={page}
         pageKey="page"
         addedItems={items}

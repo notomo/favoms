@@ -10,7 +10,10 @@ export const meta: MetaFunction = () => {
 export default function Page() {
   return (
     <TwoColumn>
-      <div className="h-full w-full border"></div>
+      <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
+        <div></div>
+        <div className="h-full w-full border"></div>
+      </div>
       <div className="h-full w-full border"></div>
     </TwoColumn>
   );

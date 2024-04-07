@@ -32,7 +32,7 @@ const MylistItemList = ({ mylist }: { mylist: Mylist }) => {
   return (
     <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">
       <div className="flex items-center justify-between">
-        <div className="truncate px-4 text-xl">{mylist.name}</div>
+        <div className="truncate px-4 text-2xl">{mylist.name}</div>
         {editable ? (
           <DoneMylistItemsEditButton
             willBeRemovedItemIds={willBeRemovedItemIds}

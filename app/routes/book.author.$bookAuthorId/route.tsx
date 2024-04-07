@@ -12,12 +12,18 @@ const BookAuthorBookList = ({ bookAuthor }: { bookAuthor: BookAuthor }) => {
   useForceTitle(`${bookAuthor.name} | Author | favoms`);
 
   return (
-    <ScrollArea className="border">
-      <BookAuthorsItemLinks
-        books={bookAuthor.books}
-        bookAuthorId={bookAuthor.id}
-      />
-    </ScrollArea>
+    <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] items-center">
+      <div className="px-4 text-2xl">{bookAuthor.name}</div>
+
+      <div className="h-full">
+        <ScrollArea className="h-full border">
+          <BookAuthorsItemLinks
+            books={bookAuthor.books}
+            bookAuthorId={bookAuthor.id}
+          />
+        </ScrollArea>
+      </div>
+    </div>
   );
 };
 

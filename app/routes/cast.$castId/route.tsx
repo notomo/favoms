@@ -12,9 +12,15 @@ const CastVideoList = ({ cast }: { cast: Cast }) => {
   useForceTitle(`${cast.name} | Cast | favoms`);
 
   return (
-    <ScrollArea className="border">
-      <CastsVideoLinks videos={cast.videos} castId={cast.id} />
-    </ScrollArea>
+    <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] items-center">
+      <div className="px-4 text-2xl">{cast.name}</div>
+
+      <div className="h-full">
+        <ScrollArea className="h-full border">
+          <CastsVideoLinks videos={cast.videos} castId={cast.id} />
+        </ScrollArea>
+      </div>
+    </div>
   );
 };
 
