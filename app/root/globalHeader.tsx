@@ -1,16 +1,18 @@
-import { Link } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  navigationMenuTriggerStyle,
 } from "~/component/ui/navigationMenu";
 import { cn } from "~/lib/tailwind";
 import { collectionRoute } from "~/routePath/collectionRoute";
 import { castRoute } from "~/routePath/castRoute";
 import { bookAuthorRoute } from "~/routePath/bookAuthorRoute";
 import { importRoute } from "~/routePath/importRoute";
+import { cva } from "class-variance-authority";
+
+const nav = cva("px-4 py-2 text-sm font-medium rounded-md");
 
 const MenuLink = ({
   to,
@@ -18,10 +20,15 @@ const MenuLink = ({
 }: React.PropsWithChildren<{ to: string }>) => {
   return (
     <NavigationMenuItem>
-      <NavigationMenuLink asChild>
-        <Link to={to} className={navigationMenuTriggerStyle()}>
+      <NavigationMenuLink>
+        <NavLink
+          to={to}
+          className={({ isActive }) =>
+            isActive ? cn(nav(), "bg-accent") : nav()
+          }
+        >
           {children}
-        </Link>
+        </NavLink>
       </NavigationMenuLink>
     </NavigationMenuItem>
   );
