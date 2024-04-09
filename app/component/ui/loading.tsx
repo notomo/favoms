@@ -10,10 +10,14 @@ export const Loading = () => {
 
 export const LoadingOr = ({
   isLoading,
+  size,
   children,
-}: React.PropsWithChildren<{ isLoading: boolean }>) => {
+}: React.PropsWithChildren<{
+  isLoading: boolean;
+  size?: number;
+}>) => {
   if (!isLoading) {
     return children;
   }
-  return <Loader2 className="animate-spin" />;
+  return <Loader2 size={size} className="animate-spin" />;
 };

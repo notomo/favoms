@@ -11,6 +11,7 @@ import { castRoute } from "~/routePath/castRoute";
 import { bookAuthorRoute } from "~/routePath/bookAuthorRoute";
 import { importRoute } from "~/routePath/importRoute";
 import { cva } from "class-variance-authority";
+import { exportRoute } from "~/routePath/exportRoute";
 
 const nav = cva("px-4 py-2 text-sm font-medium rounded-md");
 
@@ -47,6 +48,8 @@ export const GlobalHeader = ({ className }: { className?: string }) => {
         <MenuLink to={castRoute({})}>Cast</MenuLink>
 
         <MenuLink to={importRoute({})}>Import</MenuLink>
+
+        <MenuLink to={exportRoute({})}>Export</MenuLink>
       </NavigationMenuList>
     </NavigationMenu>
   );
