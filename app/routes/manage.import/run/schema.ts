@@ -1,4 +1,12 @@
-import { object, instance, mimeType, intersect, union, literal } from "valibot";
+import {
+  object,
+  instance,
+  mimeType,
+  intersect,
+  union,
+  literal,
+  Output,
+} from "valibot";
 import { idSchema } from "~/lib/schema/id";
 import { checkboxSchema } from "~/lib/schema/ui";
 
@@ -21,3 +29,5 @@ export const schema = intersect([
   sharedSchema,
   union([fileKindSchema, historyKindSchema]),
 ]);
+
+export type ImportSetting = Output<typeof schema>;
