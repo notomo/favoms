@@ -1,3 +1,3 @@
-import { maxLength, minLength, string } from "valibot";
+import { maxLength, minLength, string, pipe } from "valibot";
 
-export const mylistNameSchema = string([minLength(1), maxLength(100)]);
+export const mylistNameSchema = pipe(string(), minLength(1), maxLength(100));

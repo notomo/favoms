@@ -8,12 +8,13 @@ import {
   string,
   minLength,
   maxLength,
-  Output,
+  InferOutput,
   transform,
+  pipe,
 } from "valibot";
 
 const nameSchema = ({ min, max }: { min: number; max: number }) => {
-  return string([minLength(min), maxLength(max)]);
+  return pipe(string(), minLength(min), maxLength(max));
 };
 
 const bookAuthorSchema = object({
@@ -33,7 +34,10 @@ const bookSchema = object({
   authors: array(bookAuthorSchema),
   publishers: array(bookPublisherSchema),
   // TODO: validate date format
-  publishedAt: transform(nullable(string()), (x) => (x ? new Date(x) : null)),
+  publishedAt: pipe(
+    nullable(string()),
+    transform((x) => (x ? new Date(x) : null)),
+  ),
 });
 
 const castSchema = object({
@@ -47,7 +51,10 @@ const videoSchema = object({
   titleRuby: nullable(nameSchema({ min: 0, max: 1000 }), ""),
   casts: array(castSchema),
   // TODO: validate date format
-  publishedAt: transform(nullable(string()), (x) => (x ? new Date(x) : null)),
+  publishedAt: pipe(
+    nullable(string()),
+    transform((x) => (x ? new Date(x) : null)),
+  ),
 });
 
 export const itemImportSchema = object({
@@ -55,7 +62,7 @@ export const itemImportSchema = object({
   videos: array(videoSchema),
 });
 
-type ItemImport = Output<typeof itemImportSchema>;
+type ItemImport = InferOutput<typeof itemImportSchema>;
 
 export async function importItems(itemImport: ItemImport, isReplace = false) {
   const books = itemImport.books;
