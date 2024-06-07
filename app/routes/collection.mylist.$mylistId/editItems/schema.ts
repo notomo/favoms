@@ -1,15 +1,18 @@
-import { Input, object, string, transform } from "valibot";
+import { InferInput, object, pipe, string, transform } from "valibot";
 import { joinedIdsSchema, optionalIdSchema } from "~/lib/schema/id";
 import { removeMylistParam } from "~/routePath/mylistRoute";
 
 export const editMylistItemsSchema = object({
   itemIds: joinedIdsSchema,
   itemId: optionalIdSchema,
-  searchParams: transform(string(), (x) => {
-    return removeMylistParam(x, "edit");
-  }),
+  searchParams: pipe(
+    string(),
+    transform((x) => {
+      return removeMylistParam(x, "edit");
+    }),
+  ),
 });
 
 export type InputSchema = Required<
-  Record<keyof Input<typeof editMylistItemsSchema>, string>
+  Record<keyof InferInput<typeof editMylistItemsSchema>, string>
 >;

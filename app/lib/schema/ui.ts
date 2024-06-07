@@ -1,6 +1,6 @@
-import { optional, string, transform } from "valibot";
+import { optional, pipe, string, transform } from "valibot";
 
-export const checkboxSchema = transform(
+export const checkboxSchema = pipe(
   optional(string(), ""),
-  (x) => x === "on",
+  transform((x) => x === "on"),
 );

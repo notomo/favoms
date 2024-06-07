@@ -5,14 +5,15 @@ import {
   intersect,
   union,
   literal,
-  Output,
+  InferOutput,
+  pipe,
 } from "valibot";
 import { idSchema } from "~/lib/schema/id";
 import { checkboxSchema } from "~/lib/schema/ui";
 
 const fileKindSchema = object({
   targetKind: literal("file"),
-  targetFile: instance(File, [mimeType(["application/json"])]),
+  targetFile: pipe(instance(File), mimeType(["application/json"])),
 });
 
 const historyKindSchema = object({
@@ -30,4 +31,4 @@ export const schema = intersect([
   union([fileKindSchema, historyKindSchema]),
 ]);
 
-export type ImportSetting = Output<typeof schema>;
+export type ImportSetting = InferOutput<typeof schema>;

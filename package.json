@@ -28,7 +28,7 @@
     "@remix-run/serve": "^2.9.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "conform-to-valibot": "^1.7.0",
+    "conform-to-valibot": "^1.8.0",
     "lucide-react": "^0.390.0",
     "prisma": "^5.15.0",
     "react": "^18.3.1",
@@ -36,7 +36,7 @@
     "react-hotkeys-hook": "^4.5.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "valibot": "^0.30.0"
+    "valibot": "^0.31.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.9.2",
