@@ -5,7 +5,8 @@ import {
   intersect,
   union,
   literal,
-  InferOutput, pipe,
+  InferOutput,
+  pipe,
 } from "valibot";
 import { idSchema } from "~/lib/schema/id";
 import { checkboxSchema } from "~/lib/schema/ui";
