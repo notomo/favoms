@@ -16,7 +16,7 @@ type QueryParams = Readonly<{
 
 type PathParams = Readonly<{
   mylistId?: number;
-  itemId?: number;
+  itemId?: string;
 }>;
 
 export const collectionRoute = ({

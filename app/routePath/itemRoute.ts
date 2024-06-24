@@ -3,7 +3,7 @@ import { buildRoute, mergeParams } from "~/routePath/builder";
 type QueryParams = Readonly<Record<string, string>>;
 
 type PathParams = Readonly<{
-  itemId: number;
+  itemId: string;
 }>;
 
 export const itemRoute = ({

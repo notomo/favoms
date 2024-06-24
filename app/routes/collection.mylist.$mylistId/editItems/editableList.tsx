@@ -78,9 +78,9 @@ export const EditableItemList = ({
   setWillBeRemovedItemIds,
 }: {
   items: MylistItem[];
-  willBeRemovedItemIds: Record<number, boolean>;
+  willBeRemovedItemIds: Record<string, boolean>;
   setWillBeRemovedItemIds: React.Dispatch<
-    React.SetStateAction<Record<number, boolean>>
+    React.SetStateAction<Record<string, boolean>>
   >;
 }) => {
   return items.map(({ id, name }) => {

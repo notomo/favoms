@@ -21,7 +21,7 @@ export type BookAuthor = {
 };
 
 export type Book = {
-  itemId: number;
+  itemId: string;
   title: string;
 };
 

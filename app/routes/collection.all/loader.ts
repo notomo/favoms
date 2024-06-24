@@ -26,7 +26,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export type Item = {
-  id: number;
+  id: string;
   name: string;
 };
 

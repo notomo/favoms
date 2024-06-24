@@ -5,7 +5,7 @@ async function main() {
     Array.from({ length: 40 }, (_, i) => {
       const id = i + 1;
       return {
-        where: { id },
+        where: { id: id.toString() },
         data: {
           title: `title${id}`,
           titleRuby: `titleRuby${id}`,
@@ -64,8 +64,16 @@ export async function upsertMylist(
         name: true,
       },
     });
-    await tx.mylistOrder.create({
-      data: {
+    await tx.mylistOrder.upsert({
+      where: {
+        mylistId: mylist.id,
+      },
+      create: {
+        mylist: {
+          connect: mylist,
+        },
+      },
+      update: {
         mylist: {
           connect: mylist,
         },
@@ -77,7 +85,7 @@ export async function upsertMylist(
 
 export async function upsertBookItems(
   upserts: {
-    where: UpsertWhere<typeof prisma.item>;
+    where: UpsertWhere<typeof prisma.item> & { id: string };
     data: Omit<UpsertData<typeof prisma.book>, "item">;
   }[],
 ) {
@@ -86,6 +94,7 @@ export async function upsertBookItems(
       return prisma.item.upsert({
         where: upsert.where,
         create: {
+          id: upsert.where.id,
           book: {
             create: upsert.data,
           },

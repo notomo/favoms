@@ -12,6 +12,7 @@ import {
   transform,
   pipe,
 } from "valibot";
+import { itemIdSchema } from "~/lib/schema/id";
 
 const nameSchema = ({ min, max }: { min: number; max: number }) => {
   return pipe(string(), minLength(min), maxLength(max));
@@ -29,6 +30,7 @@ const bookPublisherSchema = object({
 
 const bookSchema = object({
   kind: literal("book"),
+  id: itemIdSchema,
   title: nameSchema({ min: 1, max: 1000 }),
   titleRuby: nullable(nameSchema({ min: 0, max: 1000 }), ""),
   authors: array(bookAuthorSchema),
@@ -47,6 +49,7 @@ const castSchema = object({
 
 const videoSchema = object({
   kind: literal("video"),
+  id: itemIdSchema,
   title: nameSchema({ min: 1, max: 1000 }),
   titleRuby: nullable(nameSchema({ min: 0, max: 1000 }), ""),
   casts: array(castSchema),
@@ -136,6 +139,7 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
     ...books.map((x) => {
       return prisma.item.create({
         data: {
+          id: x.id,
           book: {
             create: {
               title: x.title,
@@ -159,6 +163,7 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
     ...videos.map((x) => {
       return prisma.item.create({
         data: {
+          id: x.id,
           video: {
             create: {
               title: x.title,

@@ -30,7 +30,7 @@ export const doneItemEditAction = async ({
   );
 };
 
-async function removeItemsFromMylist(mylistId: number, itemIds: number[]) {
+async function removeItemsFromMylist(mylistId: number, itemIds: string[]) {
   return await prisma.mylist.update({
     where: {
       id: mylistId,

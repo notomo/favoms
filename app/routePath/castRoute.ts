@@ -7,7 +7,7 @@ type QueryParams = Readonly<{
 
 type PathParams = Readonly<{
   castId?: number;
-  itemId?: number;
+  itemId?: string;
 }>;
 
 export const castRoute = ({

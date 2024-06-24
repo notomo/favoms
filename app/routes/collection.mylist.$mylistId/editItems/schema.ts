@@ -1,10 +1,10 @@
 import { InferInput, object, pipe, string, transform } from "valibot";
-import { joinedIdsSchema, optionalIdSchema } from "~/lib/schema/id";
+import { joinedItemIdsSchema, optionalItemIdSchema } from "~/lib/schema/id";
 import { removeMylistParam } from "~/routePath/mylistRoute";
 
 export const editMylistItemsSchema = object({
-  itemIds: joinedIdsSchema,
-  itemId: optionalIdSchema,
+  itemIds: joinedItemIdsSchema,
+  itemId: optionalItemIdSchema,
   searchParams: pipe(
     string(),
     transform((x) => {

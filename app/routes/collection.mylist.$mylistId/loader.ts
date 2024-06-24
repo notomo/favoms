@@ -22,7 +22,7 @@ export type Mylist = {
 };
 
 export type MylistItem = {
-  id: number;
+  id: string;
   name: string;
 };
 

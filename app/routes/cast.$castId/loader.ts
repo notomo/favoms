@@ -21,7 +21,7 @@ export type Cast = {
 };
 
 export type Video = {
-  itemId: number;
+  itemId: string;
   title: string;
 };
 

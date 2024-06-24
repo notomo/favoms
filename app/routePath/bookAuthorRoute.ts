@@ -7,7 +7,7 @@ type QueryParams = Readonly<{
 
 type PathParams = Readonly<{
   bookAuthorId?: number;
-  itemId?: number;
+  itemId?: string;
 }>;
 
 export const bookAuthorRoute = ({
