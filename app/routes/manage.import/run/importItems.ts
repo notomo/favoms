@@ -130,54 +130,71 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
     },
   );
 
+  const items = isReplace
+    ? []
+    : await prisma.item.findMany({
+        select: { id: true },
+      });
+  const itemRecord = listToRecord(items, "id");
+
   const bookAuthorRecord = listToRecord(bookAuthors, "name");
   const bookPublisherRecord = listToRecord(bookPublishers, "name");
   const castRecord = listToRecord(casts, "name");
 
   await prisma.$transaction([
     ...(isReplace ? [prisma.item.deleteMany({ where: {} })] : []),
-    ...books.map((x) => {
-      return prisma.item.create({
-        data: {
-          id: x.id,
-          book: {
-            create: {
-              title: x.title,
-              titleRuby: x.titleRuby,
-              publishedAt: x.publishedAt,
-              authors: {
-                connect: x.authors.map((author) => ({
-                  id: bookAuthorRecord[author.name].id,
-                })),
-              },
-              publishers: {
-                connect: x.publishers.map((publisher) => ({
-                  id: bookPublisherRecord[publisher.name].id,
-                })),
-              },
-            },
-          },
-        },
-      });
-    }),
-    ...videos.map((x) => {
-      return prisma.item.create({
-        data: {
-          id: x.id,
-          video: {
-            create: {
-              title: x.title,
-              titleRuby: x.titleRuby,
-              publishedAt: x.publishedAt,
-              casts: {
-                connect: x.casts.map((cast) => ({
-                  id: castRecord[cast.name].id,
-                })),
+    ...books
+      .map((x) => {
+        if (itemRecord[x.id]) {
+          return null;
+        }
+        return prisma.item.create({
+          data: {
+            id: x.id,
+            book: {
+              create: {
+                title: x.title,
+                titleRuby: x.titleRuby,
+                publishedAt: x.publishedAt,
+                authors: {
+                  connect: x.authors.map((author) => ({
+                    id: bookAuthorRecord[author.name].id,
+                  })),
+                },
+                publishers: {
+                  connect: x.publishers.map((publisher) => ({
+                    id: bookPublisherRecord[publisher.name].id,
+                  })),
+                },
               },
             },
           },
-        },
-      });
-    }),
+        });
+      })
+      .filter((x) => x !== null),
+    ...videos
+      .map((x) => {
+        if (itemRecord[x.id]) {
+          return null;
+        }
+        return prisma.item.create({
+          data: {
+            id: x.id,
+            video: {
+              create: {
+                title: x.title,
+                titleRuby: x.titleRuby,
+                publishedAt: x.publishedAt,
+                casts: {
+                  connect: x.casts.map((cast) => ({
+                    id: castRecord[cast.name].id,
+                  })),
+                },
+              },
+            },
+          },
+        });
+      })
+      .filter((x) => x !== null),
   ]);
 }
