@@ -101,7 +101,7 @@ export const EditableItemList = ({
     return (
       <EditableItemRow
         key={id}
-        willBeRemoved={willBeRemovedItemIds[id]}
+        willBeRemoved={willBeRemovedItemIds[id] !== undefined}
         onClickToRemove={remove}
         onClickToUndo={undo}
       >

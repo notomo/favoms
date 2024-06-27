@@ -108,7 +108,9 @@ export const EditableMylistList = ({
   mylistIds: number[];
   setMylistIds: React.Dispatch<React.SetStateAction<number[]>>;
 }) => {
-  const mylists = mylistIds.map((id) => mylistRecords[id]);
+  const mylists = mylistIds
+    .map((id) => mylistRecords[id])
+    .filter((x) => x !== undefined);
 
   return (
     <DndContext

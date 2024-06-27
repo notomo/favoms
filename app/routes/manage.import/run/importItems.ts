@@ -158,12 +158,12 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
                 publishedAt: x.publishedAt,
                 authors: {
                   connect: x.authors.map((author) => ({
-                    id: bookAuthorRecord[author.name].id,
+                    id: bookAuthorRecord[author.name]?.id,
                   })),
                 },
                 publishers: {
                   connect: x.publishers.map((publisher) => ({
-                    id: bookPublisherRecord[publisher.name].id,
+                    id: bookPublisherRecord[publisher.name]?.id,
                   })),
                 },
               },
@@ -187,7 +187,7 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
                 publishedAt: x.publishedAt,
                 casts: {
                   connect: x.casts.map((cast) => ({
-                    id: castRecord[cast.name].id,
+                    id: castRecord[cast.name]?.id,
                   })),
                 },
               },

@@ -18,7 +18,8 @@ const LoadingItem = ({
     const current = loadingWrapper.current;
     const observer = new IntersectionObserver(
       (entries) => {
-        if (!entries[0].isIntersecting) {
+        const entry = entries[0];
+        if (!entry?.isIntersecting) {
           return;
         }
         if (!canLoad) {
