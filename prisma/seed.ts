@@ -48,7 +48,7 @@ async function main() {
   console.log({ emptyMylist });
 }
 
-main();
+await main();
 
 export async function upsertMylist(
   where: UpsertWhere<typeof prisma.mylist>,
