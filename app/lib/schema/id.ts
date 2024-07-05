@@ -14,7 +14,8 @@ export const idSchema = pipe(
   minValue(1),
 );
 
-export const itemIdSchema = pipe(string(), minLength(1));
+export const stringIdSchema = pipe(string(), minLength(1));
+export const itemIdSchema = stringIdSchema;
 
 export const optionalItemIdSchema = pipe(
   optional(itemIdSchema, ""),

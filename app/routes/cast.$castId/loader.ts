@@ -1,10 +1,10 @@
 import { LoaderFunctionArgs, defer } from "@remix-run/node";
 import { prisma } from "~/lib/prisma";
 import { assertNotFound } from "~/lib/response";
-import { validateId } from "~/lib/schema/validation/params";
+import { validateStringId } from "~/lib/schema/validation/params";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const castId = validateId(params.castId);
+  const castId = validateStringId(params.castId);
   const cast = getCast(castId).then((x) => {
     assertNotFound(x, "cast is not found");
     return x;
@@ -15,7 +15,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 };
 
 export type Cast = {
-  id: number;
+  id: string;
   name: string;
   videos: Video[];
 };
@@ -25,7 +25,7 @@ export type Video = {
   title: string;
 };
 
-async function getCast(castId: number): Promise<Cast | null> {
+async function getCast(castId: string): Promise<Cast | null> {
   return await prisma.cast.findUnique({
     where: { id: castId },
     select: {

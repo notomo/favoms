@@ -7,7 +7,7 @@ export const CastsVideoLinks = ({
   castId,
   videos,
 }: {
-  castId: number;
+  castId: string;
   videos: Video[];
 }) => {
   const [searchParams] = useSearchParams();

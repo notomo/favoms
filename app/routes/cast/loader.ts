@@ -25,7 +25,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export type Cast = Readonly<{
-  id: number;
+  id: string;
   name: string;
 }>;
 

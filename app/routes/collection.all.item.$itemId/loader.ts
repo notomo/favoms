@@ -1,11 +1,11 @@
 import { LoaderFunctionArgs, json } from "@remix-run/node";
 import { assertNotFound } from "~/lib/response";
-import { validateItemId } from "~/lib/schema/validation/params";
+import { validateStringId } from "~/lib/schema/validation/params";
 import { prisma } from "~/lib/prisma";
 import { switchKind } from "~/lib/schema/validation/kind";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const itemId = validateItemId(params.itemId);
+  const itemId = validateStringId(params.itemId);
   const item = await getItem(itemId);
   assertNotFound(item, "item is not found");
   return json(item);
@@ -26,7 +26,7 @@ export type Book = {
 };
 
 export type Cast = {
-  id: number;
+  id: string;
   name: string;
 };
 

@@ -1,7 +1,7 @@
 import { type MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scrollArea";
-import { loader, BookAuthor, Item } from "./loader";
+import { loader, BookAuthor, Cast, Item } from "./loader";
 import { assertNever } from "~/lib/assert";
 import { bookAuthorRoute } from "~/routePath/bookAuthorRoute";
 import { castRoute } from "~/routePath/castRoute";
@@ -33,7 +33,7 @@ const BookAuthorList = ({ bookAuthors }: { bookAuthors: BookAuthor[] }) => {
   );
 };
 
-const VideoCastList = ({ videoCasts }: { videoCasts: BookAuthor[] }) => {
+const VideoCastList = ({ videoCasts }: { videoCasts: Cast[] }) => {
   return (
     <div className="flex gap-2">
       Authors:

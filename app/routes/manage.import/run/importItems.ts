@@ -12,7 +12,7 @@ import {
   transform,
   pipe,
 } from "valibot";
-import { itemIdSchema } from "~/lib/schema/id";
+import { itemIdSchema, stringIdSchema } from "~/lib/schema/id";
 
 const nameSchema = ({ min, max }: { min: number; max: number }) => {
   return pipe(string(), minLength(min), maxLength(max));
@@ -43,6 +43,7 @@ const bookSchema = object({
 });
 
 const castSchema = object({
+  id: stringIdSchema,
   name: nameSchema({ min: 1, max: 1000 }),
   nameRuby: nullable(nameSchema({ min: 0, max: 1000 }), ""),
 });
@@ -79,12 +80,9 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
     books.map((x) => x.publishers).flat(),
     "name",
   );
-  const uniqueCasts = uniqueListByKey(
-    videos.map((x) => x.casts).flat(),
-    "name",
-  );
+  const uniqueCasts = uniqueListByKey(videos.map((x) => x.casts).flat(), "id");
 
-  const [bookAuthors, bookPublishers, casts] = await prisma.$transaction(
+  const [bookAuthors, bookPublishers] = await prisma.$transaction(
     async (tx) => {
       return await Promise.all([
         Promise.all([
@@ -116,12 +114,11 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
         Promise.all([
           ...uniqueCasts.map((x) => {
             return tx.cast.upsert({
-              where: { name: x.name },
+              where: { id: x.id },
               create: x,
               update: x,
               select: {
                 id: true,
-                name: true,
               },
             });
           }),
@@ -139,7 +136,6 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
 
   const bookAuthorRecord = listToRecord(bookAuthors, "name");
   const bookPublisherRecord = listToRecord(bookPublishers, "name");
-  const castRecord = listToRecord(casts, "name");
 
   await prisma.$transaction([
     ...(isReplace ? [prisma.item.deleteMany({ where: {} })] : []),
@@ -187,7 +183,7 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
                 publishedAt: x.publishedAt,
                 casts: {
                   connect: x.casts.map((cast) => ({
-                    id: castRecord[cast.name]?.id,
+                    id: cast.id,
                   })),
                 },
               },
