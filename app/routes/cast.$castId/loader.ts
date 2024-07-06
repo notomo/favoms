@@ -26,19 +26,32 @@ export type Video = {
 };
 
 async function getCast(castId: string): Promise<Cast | null> {
-  return await prisma.cast.findUnique({
+  const cast = await prisma.cast.findUnique({
     where: { id: castId },
     select: {
       id: true,
       name: true,
-      nameRuby: true,
-      videos: {
+      castings: {
         select: {
-          title: true,
-          titleRuby: true,
-          itemId: true,
+          video: {
+            select: {
+              title: true,
+              titleRuby: true,
+              itemId: true,
+            },
+          },
         },
       },
     },
   });
+
+  if (cast === null) {
+    return null;
+  }
+
+  return {
+    id: cast.id,
+    name: cast.name,
+    videos: cast.castings.map((x) => x.video),
+  };
 }

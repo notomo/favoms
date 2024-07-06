@@ -63,10 +63,14 @@ export async function getItem(id: string): Promise<Item | null> {
       video: {
         select: {
           title: true,
-          casts: {
+          castings: {
             select: {
-              id: true,
-              name: true,
+              cast: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
             },
           },
           publishedAt: true,
@@ -94,6 +98,6 @@ export async function getItem(id: string): Promise<Item | null> {
   return {
     ...shared,
     kind: "video",
-    casts: item.video?.casts || [],
+    casts: item.video?.castings.map((x) => x.cast) || [],
   } as const;
 }

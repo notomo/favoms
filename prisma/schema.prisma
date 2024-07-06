@@ -67,7 +67,7 @@ model BookPublisher {
   name     String @unique
   nameRuby String
 
-  publishing BookPublishing[]
+  publishings BookPublishing[]
 }
 
 model Video {
@@ -77,17 +77,28 @@ model Video {
   title     String
   titleRuby String
 
-  casts       Cast[]
+  castings VideoCasting[]
+
   publishedAt DateTime?
+}
+
+model VideoCasting {
+  itemId String
+  video  Video  @relation(fields: [itemId], references: [itemId], onDelete: Cascade)
+
+  castId String
+  cast   Cast   @relation(fields: [castId], references: [id], onDelete: Cascade)
+
+  @@id([itemId, castId])
 }
 
 model Cast {
   id String @id
 
-  name     String @unique
-  nameRuby String
+  name         String         @unique
+  nameRuby     String
 
-  videos Video[]
+  castings VideoCasting[]
 }
 
 model ImportHistory {

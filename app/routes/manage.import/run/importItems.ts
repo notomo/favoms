@@ -171,25 +171,35 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
         .filter((x) => x !== null)
         .flat(),
     }),
-    ...videos
-      .map((x) => {
-        if (itemRecord[x.id]) {
-          return null;
-        }
-        return prisma.video.create({
-          data: {
+    prisma.video.createMany({
+      data: videos
+        .map((x) => {
+          if (itemRecord[x.id]) {
+            return null;
+          }
+          return {
             itemId: x.id,
             title: x.title,
             titleRuby: x.titleRuby,
             publishedAt: x.publishedAt,
-            casts: {
-              connect: x.casts.map((cast) => ({
-                id: cast.id,
-              })),
-            },
-          },
-        });
-      })
-      .filter((x) => x !== null),
+          };
+        })
+        .filter((x) => x !== null)
+        .flat(),
+    }),
+    prisma.videoCasting.createMany({
+      data: videos
+        .map((x) => {
+          if (itemRecord[x.id]) {
+            return null;
+          }
+          return x.casts.map((cast) => ({
+            itemId: x.id,
+            castId: cast.id,
+          }));
+        })
+        .filter((x) => x !== null)
+        .flat(),
+    }),
   ]);
 }
