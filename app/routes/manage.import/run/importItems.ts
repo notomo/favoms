@@ -153,15 +153,24 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
                 id: author.id,
               })),
             },
-            publishers: {
-              connect: x.publishers.map((publisher) => ({
-                id: publisher.id,
-              })),
-            },
           },
         });
       })
       .filter((x) => x !== null),
+    prisma.bookPublishing.createMany({
+      data: books
+        .map((x) => {
+          if (itemRecord[x.id]) {
+            return null;
+          }
+          return x.publishers.map((publisher) => ({
+            itemId: x.id,
+            publisherId: publisher.id,
+          }));
+        })
+        .filter((x) => x !== null)
+        .flat(),
+    }),
     ...videos
       .map((x) => {
         if (itemRecord[x.id]) {

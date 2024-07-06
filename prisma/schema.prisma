@@ -36,9 +36,20 @@ model Book {
   title     String
   titleRuby String
 
-  authors     BookAuthor[]
-  publishers  BookPublisher[]
   publishedAt DateTime?
+  publishing  BookPublishing[]
+
+  authors BookAuthor[]
+}
+
+model BookPublishing {
+  itemId String
+  book   Book   @relation(fields: [itemId], references: [itemId], onDelete: Cascade)
+
+  publisherId String
+  publisher   BookPublisher @relation(fields: [publisherId], references: [id], onDelete: Cascade)
+
+  @@id([itemId, publisherId])
 }
 
 model BookAuthor {
@@ -56,7 +67,7 @@ model BookPublisher {
   name     String @unique
   nameRuby String
 
-  books Book[]
+  publishing BookPublishing[]
 }
 
 model Video {
