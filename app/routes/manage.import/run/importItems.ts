@@ -71,11 +71,8 @@ export const itemImportSchema = object({
 type ItemImport = InferOutput<typeof itemImportSchema>;
 
 export async function importItems(itemImport: ItemImport, isReplace = false) {
-  const books = itemImport.books;
-  const videos = itemImport.videos;
-
-  const [bookAuthors, bookPublishers, casts] = isReplace
-    ? [[], [], []]
+  const [bookAuthors, bookPublishers, casts, items] = isReplace
+    ? [[], [], [], []]
     : await Promise.all([
         prisma.bookAuthor.findMany({
           select: { id: true },
@@ -86,10 +83,21 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
         prisma.cast.findMany({
           select: { id: true },
         }),
+        prisma.item.findMany({
+          select: { id: true },
+        }),
       ]);
   const bookAuthorRecord = listToRecord(bookAuthors, "id");
   const bookPublisherRecord = listToRecord(bookPublishers, "id");
   const castRecord = listToRecord(casts, "id");
+
+  const itemRecord = listToRecord(items, "id");
+  const nonExistedBooks = itemImport.books.filter(
+    (x) => itemRecord[x.id] === undefined,
+  );
+  const nonExistedVideos = itemImport.videos.filter(
+    (x) => itemRecord[x.id] === undefined,
+  );
 
   await prisma.$transaction([
     ...(isReplace
@@ -97,119 +105,72 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
           prisma.bookAuthor.deleteMany({ where: {} }),
           prisma.bookPublisher.deleteMany({ where: {} }),
           prisma.cast.deleteMany({ where: {} }),
+          prisma.item.deleteMany({ where: {} }),
         ]
       : []),
     prisma.bookAuthor.createMany({
-      data: uniqueByKey(books.map((x) => x.authors).flat(), "id").filter(
-        (x) => bookAuthorRecord[x.id] == undefined,
-      ),
+      data: uniqueByKey(
+        nonExistedBooks.flatMap((x) => x.authors),
+        "id",
+      ).filter((x) => bookAuthorRecord[x.id] == undefined),
     }),
     prisma.bookPublisher.createMany({
-      data: uniqueByKey(books.map((x) => x.publishers).flat(), "id").filter(
-        (x) => bookPublisherRecord[x.id] == undefined,
-      ),
+      data: uniqueByKey(
+        nonExistedBooks.flatMap((x) => x.publishers),
+        "id",
+      ).filter((x) => bookPublisherRecord[x.id] == undefined),
     }),
     prisma.cast.createMany({
-      data: uniqueByKey(videos.map((x) => x.casts).flat(), "id").filter(
-        (x) => castRecord[x.id] == undefined,
-      ),
+      data: uniqueByKey(
+        nonExistedVideos.flatMap((x) => x.casts),
+        "id",
+      ).filter((x) => castRecord[x.id] == undefined),
     }),
-  ]);
-
-  const items = isReplace
-    ? []
-    : await prisma.item.findMany({
-        select: { id: true },
-      });
-  const itemRecord = listToRecord(items, "id");
-
-  const itemIds = [
-    ...books
-      .map((x) => ({ id: x.id }))
-      .filter((x) => itemRecord[x.id] === undefined),
-    ...videos
-      .map((x) => ({ id: x.id }))
-      .filter((x) => itemRecord[x.id] === undefined),
-  ];
-
-  await prisma.$transaction([
-    ...(isReplace ? [prisma.item.deleteMany({ where: {} })] : []),
     prisma.item.createMany({
-      data: itemIds,
+      data: [
+        ...nonExistedBooks.map((x) => ({ id: x.id })),
+        ...nonExistedVideos.map((x) => ({ id: x.id })),
+      ],
     }),
     prisma.book.createMany({
-      data: books
-        .map((x) => {
-          if (itemRecord[x.id]) {
-            return null;
-          }
-          return {
-            itemId: x.id,
-            title: x.title,
-            titleRuby: x.titleRuby,
-            publishedAt: x.publishedAt,
-          };
-        })
-        .filter((x) => x !== null)
-        .flat(),
+      data: nonExistedBooks.map((x) => ({
+        itemId: x.id,
+        title: x.title,
+        titleRuby: x.titleRuby,
+        publishedAt: x.publishedAt,
+      })),
     }),
     prisma.bookAuthoring.createMany({
-      data: books
-        .map((x) => {
-          if (itemRecord[x.id]) {
-            return null;
-          }
-          return x.authors.map((author) => ({
-            itemId: x.id,
-            authorId: author.id,
-          }));
-        })
-        .filter((x) => x !== null)
-        .flat(),
+      data: nonExistedBooks.flatMap((x) =>
+        x.authors.map((author) => ({
+          itemId: x.id,
+          authorId: author.id,
+        })),
+      ),
     }),
     prisma.bookPublishing.createMany({
-      data: books
-        .map((x) => {
-          if (itemRecord[x.id]) {
-            return null;
-          }
-          return x.publishers.map((publisher) => ({
-            itemId: x.id,
-            publisherId: publisher.id,
-          }));
-        })
-        .filter((x) => x !== null)
-        .flat(),
+      data: nonExistedBooks.flatMap((x) =>
+        x.publishers.map((publisher) => ({
+          itemId: x.id,
+          publisherId: publisher.id,
+        })),
+      ),
     }),
     prisma.video.createMany({
-      data: videos
-        .map((x) => {
-          if (itemRecord[x.id]) {
-            return null;
-          }
-          return {
-            itemId: x.id,
-            title: x.title,
-            titleRuby: x.titleRuby,
-            publishedAt: x.publishedAt,
-          };
-        })
-        .filter((x) => x !== null)
-        .flat(),
+      data: nonExistedVideos.map((x) => ({
+        itemId: x.id,
+        title: x.title,
+        titleRuby: x.titleRuby,
+        publishedAt: x.publishedAt,
+      })),
     }),
     prisma.videoCasting.createMany({
-      data: videos
-        .map((x) => {
-          if (itemRecord[x.id]) {
-            return null;
-          }
-          return x.casts.map((cast) => ({
-            itemId: x.id,
-            castId: cast.id,
-          }));
-        })
-        .filter((x) => x !== null)
-        .flat(),
+      data: nonExistedVideos.flatMap((x) =>
+        x.casts.map((cast) => ({
+          itemId: x.id,
+          castId: cast.id,
+        })),
+      ),
     }),
   ]);
 }
