@@ -51,10 +51,14 @@ export async function getItem(id: string): Promise<Item | null> {
       book: {
         select: {
           title: true,
-          authors: {
+          authorings: {
             select: {
-              id: true,
-              name: true,
+              author: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
             },
           },
           publishedAt: true,
@@ -92,7 +96,7 @@ export async function getItem(id: string): Promise<Item | null> {
     return {
       ...shared,
       kind: "book",
-      authors: content.inner.authors || [],
+      authors: content.inner.authorings.map((x) => x.author) || [],
     } as const;
   }
   return {

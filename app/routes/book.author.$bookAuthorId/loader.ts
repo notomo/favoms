@@ -28,19 +28,32 @@ export type Book = {
 export async function getBookAuthor(
   bookAuthorId: string,
 ): Promise<BookAuthor | null> {
-  return await prisma.bookAuthor.findUnique({
+  const bookAuthor = await prisma.bookAuthor.findUnique({
     where: { id: bookAuthorId },
     select: {
       id: true,
       name: true,
-      nameRuby: true,
-      books: {
+      authorings: {
         select: {
-          title: true,
-          titleRuby: true,
-          itemId: true,
+          book: {
+            select: {
+              title: true,
+              titleRuby: true,
+              itemId: true,
+            },
+          },
         },
       },
     },
   });
+
+  if (bookAuthor === null) {
+    return null;
+  }
+
+  return {
+    id: bookAuthor.id,
+    name: bookAuthor.name,
+    books: bookAuthor.authorings.map((x) => x.book),
+  };
 }

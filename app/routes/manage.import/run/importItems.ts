@@ -137,26 +137,36 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
     prisma.item.createMany({
       data: itemIds,
     }),
-    ...books
-      .map((x) => {
-        if (itemRecord[x.id]) {
-          return null;
-        }
-        return prisma.book.create({
-          data: {
+    prisma.book.createMany({
+      data: books
+        .map((x) => {
+          if (itemRecord[x.id]) {
+            return null;
+          }
+          return {
             itemId: x.id,
             title: x.title,
             titleRuby: x.titleRuby,
             publishedAt: x.publishedAt,
-            authors: {
-              connect: x.authors.map((author) => ({
-                id: author.id,
-              })),
-            },
-          },
-        });
-      })
-      .filter((x) => x !== null),
+          };
+        })
+        .filter((x) => x !== null)
+        .flat(),
+    }),
+    prisma.bookAuthoring.createMany({
+      data: books
+        .map((x) => {
+          if (itemRecord[x.id]) {
+            return null;
+          }
+          return x.authors.map((author) => ({
+            itemId: x.id,
+            authorId: author.id,
+          }));
+        })
+        .filter((x) => x !== null)
+        .flat(),
+    }),
     prisma.bookPublishing.createMany({
       data: books
         .map((x) => {
