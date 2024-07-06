@@ -25,6 +25,7 @@ const bookAuthorSchema = object({
 });
 
 const bookPublisherSchema = object({
+  id: stringIdSchema,
   name: nameSchema({ min: 1, max: 1000 }),
   nameRuby: nullable(nameSchema({ min: 0, max: 1000 }), ""),
 });
@@ -79,11 +80,11 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
   );
   const uniqueBookPublishers = uniqueListByKey(
     books.map((x) => x.publishers).flat(),
-    "name",
+    "id",
   );
   const uniqueCasts = uniqueListByKey(videos.map((x) => x.casts).flat(), "id");
 
-  const [, bookPublishers] = await prisma.$transaction(async (tx) => {
+  await prisma.$transaction(async (tx) => {
     return await Promise.all([
       Promise.all([
         ...uniqueBookAuthors.map((x) => {
@@ -100,12 +101,11 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
       Promise.all([
         ...uniqueBookPublishers.map((x) => {
           return tx.bookPublisher.upsert({
-            where: { name: x.name },
+            where: { id: x.id },
             create: x,
             update: x,
             select: {
               id: true,
-              name: true,
             },
           });
         }),
@@ -132,8 +132,6 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
       });
   const itemRecord = listToRecord(items, "id");
 
-  const bookPublisherRecord = listToRecord(bookPublishers, "name");
-
   await prisma.$transaction([
     ...(isReplace ? [prisma.item.deleteMany({ where: {} })] : []),
     ...books
@@ -156,7 +154,7 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
                 },
                 publishers: {
                   connect: x.publishers.map((publisher) => ({
-                    id: bookPublisherRecord[publisher.name]?.id,
+                    id: publisher.id,
                   })),
                 },
               },

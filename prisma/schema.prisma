@@ -51,7 +51,7 @@ model BookAuthor {
 }
 
 model BookPublisher {
-  id Int @id @default(autoincrement())
+  id String @id
 
   name     String @unique
   nameRuby String
