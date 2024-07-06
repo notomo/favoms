@@ -1,5 +1,5 @@
 import { prisma } from "~/lib/prisma";
-import { listToRecord, uniqueListByKey } from "~/lib/collection";
+import { listToRecord, uniqueListByKey as uniqueByKey } from "~/lib/collection";
 import {
   object,
   array,
@@ -74,56 +74,47 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
   const books = itemImport.books;
   const videos = itemImport.videos;
 
-  const uniqueBookAuthors = uniqueListByKey(
-    books.map((x) => x.authors).flat(),
-    "id",
-  );
-  const uniqueBookPublishers = uniqueListByKey(
-    books.map((x) => x.publishers).flat(),
-    "id",
-  );
-  const uniqueCasts = uniqueListByKey(videos.map((x) => x.casts).flat(), "id");
+  const [bookAuthors, bookPublishers, casts] = isReplace
+    ? [[], [], []]
+    : await Promise.all([
+        prisma.bookAuthor.findMany({
+          select: { id: true },
+        }),
+        prisma.bookPublisher.findMany({
+          select: { id: true },
+        }),
+        prisma.cast.findMany({
+          select: { id: true },
+        }),
+      ]);
+  const bookAuthorRecord = listToRecord(bookAuthors, "id");
+  const bookPublisherRecord = listToRecord(bookPublishers, "id");
+  const castRecord = listToRecord(casts, "id");
 
-  await prisma.$transaction(async (tx) => {
-    return await Promise.all([
-      Promise.all([
-        ...uniqueBookAuthors.map((x) => {
-          return tx.bookAuthor.upsert({
-            where: { id: x.id },
-            create: x,
-            update: x,
-            select: {
-              id: true,
-            },
-          });
-        }),
-      ]),
-      Promise.all([
-        ...uniqueBookPublishers.map((x) => {
-          return tx.bookPublisher.upsert({
-            where: { id: x.id },
-            create: x,
-            update: x,
-            select: {
-              id: true,
-            },
-          });
-        }),
-      ]),
-      Promise.all([
-        ...uniqueCasts.map((x) => {
-          return tx.cast.upsert({
-            where: { id: x.id },
-            create: x,
-            update: x,
-            select: {
-              id: true,
-            },
-          });
-        }),
-      ]),
-    ]);
-  });
+  await prisma.$transaction([
+    ...(isReplace
+      ? [
+          prisma.bookAuthor.deleteMany({ where: {} }),
+          prisma.bookPublisher.deleteMany({ where: {} }),
+          prisma.cast.deleteMany({ where: {} }),
+        ]
+      : []),
+    prisma.bookAuthor.createMany({
+      data: uniqueByKey(books.map((x) => x.authors).flat(), "id").filter(
+        (x) => bookAuthorRecord[x.id] == undefined,
+      ),
+    }),
+    prisma.bookPublisher.createMany({
+      data: uniqueByKey(books.map((x) => x.publishers).flat(), "id").filter(
+        (x) => bookPublisherRecord[x.id] == undefined,
+      ),
+    }),
+    prisma.cast.createMany({
+      data: uniqueByKey(videos.map((x) => x.casts).flat(), "id").filter(
+        (x) => castRecord[x.id] == undefined,
+      ),
+    }),
+  ]);
 
   const items = isReplace
     ? []
@@ -132,32 +123,40 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
       });
   const itemRecord = listToRecord(items, "id");
 
+  const itemIds = [
+    ...books
+      .map((x) => ({ id: x.id }))
+      .filter((x) => itemRecord[x.id] === undefined),
+    ...videos
+      .map((x) => ({ id: x.id }))
+      .filter((x) => itemRecord[x.id] === undefined),
+  ];
+
   await prisma.$transaction([
     ...(isReplace ? [prisma.item.deleteMany({ where: {} })] : []),
+    prisma.item.createMany({
+      data: itemIds,
+    }),
     ...books
       .map((x) => {
         if (itemRecord[x.id]) {
           return null;
         }
-        return prisma.item.create({
+        return prisma.book.create({
           data: {
-            id: x.id,
-            book: {
-              create: {
-                title: x.title,
-                titleRuby: x.titleRuby,
-                publishedAt: x.publishedAt,
-                authors: {
-                  connect: x.authors.map((author) => ({
-                    id: author.id,
-                  })),
-                },
-                publishers: {
-                  connect: x.publishers.map((publisher) => ({
-                    id: publisher.id,
-                  })),
-                },
-              },
+            itemId: x.id,
+            title: x.title,
+            titleRuby: x.titleRuby,
+            publishedAt: x.publishedAt,
+            authors: {
+              connect: x.authors.map((author) => ({
+                id: author.id,
+              })),
+            },
+            publishers: {
+              connect: x.publishers.map((publisher) => ({
+                id: publisher.id,
+              })),
             },
           },
         });
@@ -168,20 +167,16 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
         if (itemRecord[x.id]) {
           return null;
         }
-        return prisma.item.create({
+        return prisma.video.create({
           data: {
-            id: x.id,
-            video: {
-              create: {
-                title: x.title,
-                titleRuby: x.titleRuby,
-                publishedAt: x.publishedAt,
-                casts: {
-                  connect: x.casts.map((cast) => ({
-                    id: cast.id,
-                  })),
-                },
-              },
+            itemId: x.id,
+            title: x.title,
+            titleRuby: x.titleRuby,
+            publishedAt: x.publishedAt,
+            casts: {
+              connect: x.casts.map((cast) => ({
+                id: cast.id,
+              })),
             },
           },
         });
