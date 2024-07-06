@@ -6,7 +6,7 @@ type QueryParams = Readonly<{
 }>;
 
 type PathParams = Readonly<{
-  bookAuthorId?: number;
+  bookAuthorId?: string;
   itemId?: string;
 }>;
 

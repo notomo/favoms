@@ -7,7 +7,7 @@ export const BookAuthorsItemLinks = ({
   bookAuthorId,
   books,
 }: {
-  bookAuthorId: number;
+  bookAuthorId: string;
   books: Book[];
 }) => {
   const [searchParams] = useSearchParams();

@@ -12,7 +12,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 };
 
 export type BookAuthor = {
-  id: number;
+  id: string;
   name: string;
 };
 

@@ -19,6 +19,7 @@ const nameSchema = ({ min, max }: { min: number; max: number }) => {
 };
 
 const bookAuthorSchema = object({
+  id: stringIdSchema,
   name: nameSchema({ min: 1, max: 1000 }),
   nameRuby: nullable(nameSchema({ min: 0, max: 1000 }), ""),
 });
@@ -74,7 +75,7 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
 
   const uniqueBookAuthors = uniqueListByKey(
     books.map((x) => x.authors).flat(),
-    "name",
+    "id",
   );
   const uniqueBookPublishers = uniqueListByKey(
     books.map((x) => x.publishers).flat(),
@@ -82,50 +83,47 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
   );
   const uniqueCasts = uniqueListByKey(videos.map((x) => x.casts).flat(), "id");
 
-  const [bookAuthors, bookPublishers] = await prisma.$transaction(
-    async (tx) => {
-      return await Promise.all([
-        Promise.all([
-          ...uniqueBookAuthors.map((x) => {
-            return tx.bookAuthor.upsert({
-              where: { name: x.name },
-              create: x,
-              update: x,
-              select: {
-                id: true,
-                name: true,
-              },
-            });
-          }),
-        ]),
-        Promise.all([
-          ...uniqueBookPublishers.map((x) => {
-            return tx.bookPublisher.upsert({
-              where: { name: x.name },
-              create: x,
-              update: x,
-              select: {
-                id: true,
-                name: true,
-              },
-            });
-          }),
-        ]),
-        Promise.all([
-          ...uniqueCasts.map((x) => {
-            return tx.cast.upsert({
-              where: { id: x.id },
-              create: x,
-              update: x,
-              select: {
-                id: true,
-              },
-            });
-          }),
-        ]),
-      ]);
-    },
-  );
+  const [, bookPublishers] = await prisma.$transaction(async (tx) => {
+    return await Promise.all([
+      Promise.all([
+        ...uniqueBookAuthors.map((x) => {
+          return tx.bookAuthor.upsert({
+            where: { id: x.id },
+            create: x,
+            update: x,
+            select: {
+              id: true,
+            },
+          });
+        }),
+      ]),
+      Promise.all([
+        ...uniqueBookPublishers.map((x) => {
+          return tx.bookPublisher.upsert({
+            where: { name: x.name },
+            create: x,
+            update: x,
+            select: {
+              id: true,
+              name: true,
+            },
+          });
+        }),
+      ]),
+      Promise.all([
+        ...uniqueCasts.map((x) => {
+          return tx.cast.upsert({
+            where: { id: x.id },
+            create: x,
+            update: x,
+            select: {
+              id: true,
+            },
+          });
+        }),
+      ]),
+    ]);
+  });
 
   const items = isReplace
     ? []
@@ -134,7 +132,6 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
       });
   const itemRecord = listToRecord(items, "id");
 
-  const bookAuthorRecord = listToRecord(bookAuthors, "name");
   const bookPublisherRecord = listToRecord(bookPublishers, "name");
 
   await prisma.$transaction([
@@ -154,7 +151,7 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
                 publishedAt: x.publishedAt,
                 authors: {
                   connect: x.authors.map((author) => ({
-                    id: bookAuthorRecord[author.name]?.id,
+                    id: author.id,
                   })),
                 },
                 publishers: {

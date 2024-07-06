@@ -1,10 +1,10 @@
 import { LoaderFunctionArgs, defer } from "@remix-run/node";
 import { assertNotFound } from "~/lib/response";
 import { prisma } from "~/lib/prisma";
-import { validateId } from "~/lib/schema/validation/params";
+import { validateStringId } from "~/lib/schema/validation/params";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const bookAuthorId = validateId(params.bookAuthorId);
+  const bookAuthorId = validateStringId(params.bookAuthorId);
   const bookAuthor = getBookAuthor(bookAuthorId).then((x) => {
     assertNotFound(x, "book author is not found");
     return x;
@@ -15,7 +15,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 };
 
 export type BookAuthor = {
-  id: number;
+  id: string;
   name: string;
   books: Book[];
 };
@@ -26,7 +26,7 @@ export type Book = {
 };
 
 export async function getBookAuthor(
-  bookAuthorId: number,
+  bookAuthorId: string,
 ): Promise<BookAuthor | null> {
   return await prisma.bookAuthor.findUnique({
     where: { id: bookAuthorId },

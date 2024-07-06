@@ -26,7 +26,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 export type BookAuthor = Readonly<{
-  id: number;
+  id: string;
   name: string;
 }>;
 
