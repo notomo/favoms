@@ -112,19 +112,19 @@ export async function importItems(itemImport: ItemImport, isReplace = false) {
       data: uniqueByKey(
         nonExistedBooks.flatMap((x) => x.authors),
         "id",
-      ).filter((x) => bookAuthorRecord[x.id] == undefined),
+      ).filter((x) => bookAuthorRecord[x.id] === undefined),
     }),
     prisma.bookPublisher.createMany({
       data: uniqueByKey(
         nonExistedBooks.flatMap((x) => x.publishers),
         "id",
-      ).filter((x) => bookPublisherRecord[x.id] == undefined),
+      ).filter((x) => bookPublisherRecord[x.id] === undefined),
     }),
     prisma.cast.createMany({
       data: uniqueByKey(
         nonExistedVideos.flatMap((x) => x.casts),
         "id",
-      ).filter((x) => castRecord[x.id] == undefined),
+      ).filter((x) => castRecord[x.id] === undefined),
     }),
     prisma.item.createMany({
       data: [

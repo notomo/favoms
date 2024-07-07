@@ -34,7 +34,18 @@ const prismaClientSingleton = () => {
   });
   if (process.env.NODE_ENV !== "production") {
     client.$on("query", (e) => {
-      console.log(JSON.stringify(e, null, 2));
+      const { query, params, ...rest } = e;
+      console.log(
+        JSON.stringify(
+          {
+            query: query.slice(0, 100),
+            params: params.slice(0, 100),
+            ...rest,
+          },
+          null,
+          2,
+        ),
+      );
     });
   }
   client.$on("error", (e) => {
