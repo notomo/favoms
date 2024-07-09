@@ -5,7 +5,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   const histories = listImportHistories();
   return defer({
     histories,
-    importHistoryId: params.importHistoryId,
+    importHistoryId: params["importHistoryId"],
   });
 };
 

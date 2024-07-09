@@ -31,7 +31,7 @@ export const DoneMylistsEditButton = ({
   const onSubmit = (e: FormEvent) => {
     const data: InputSchema = {
       mylistIds: mylistIds.join(","),
-      itemId: rawPathParams.itemId || "",
+      itemId: rawPathParams["itemId"] || "",
       searchParams: searchParams.toString(),
     };
     fetcher.submit(data, { method: "POST", action: "reorderMylist" });

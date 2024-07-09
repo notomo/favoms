@@ -57,7 +57,7 @@ export const EditMylistInfoDialog = ({
       />
       <input
         name={fields.itemId.name}
-        value={rawPathParams.itemId || ""}
+        value={rawPathParams["itemId"] || ""}
         hidden
       />
 

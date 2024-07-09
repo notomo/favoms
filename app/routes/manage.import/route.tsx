@@ -35,7 +35,7 @@ export default function Page() {
   const loaderData = useLoaderData<typeof loader>();
 
   const params = useParams();
-  const targetHistoryId = params.importHistoryId;
+  const targetHistoryId = params["importHistoryId"];
   const enabledHistory = targetHistoryId !== undefined;
   const targetKind = enabledHistory ? "history" : "file";
 

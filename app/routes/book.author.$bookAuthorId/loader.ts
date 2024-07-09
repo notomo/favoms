@@ -4,7 +4,7 @@ import { prisma } from "~/lib/prisma";
 import { validateStringId } from "~/lib/schema/validation/params";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const bookAuthorId = validateStringId(params.bookAuthorId);
+  const bookAuthorId = validateStringId(params["bookAuthorId"]);
   const bookAuthor = getBookAuthor(bookAuthorId).then((x) => {
     assertNotFound(x, "book author is not found");
     return x;

@@ -4,7 +4,7 @@ import { prisma } from "~/lib/prisma";
 import { collectionRoute } from "~/routePath/collectionRoute";
 
 export const deleteMylistAction = async ({ params }: ActionFunctionArgs) => {
-  const mylistId = validateId(params.mylistId);
+  const mylistId = validateId(params["mylistId"]);
   await deleteMylist(mylistId);
   return redirect(collectionRoute({}));
 };

@@ -22,7 +22,7 @@ export const DoneMylistItemsEditButton = ({
         .filter(([, willBeRemoved]) => willBeRemoved)
         .map(([id]) => id)
         .join(","),
-      itemId: rawPathParams.itemId || "",
+      itemId: rawPathParams["itemId"] || "",
       searchParams: searchParams.toString(),
     };
     fetcher.submit(data, { method: "POST", action: "editItems" });

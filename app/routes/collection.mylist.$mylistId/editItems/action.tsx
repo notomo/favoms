@@ -9,7 +9,7 @@ export const doneItemEditAction = async ({
   params,
   request,
 }: ActionFunctionArgs) => {
-  const mylistId = validateId(params.mylistId);
+  const mylistId = validateId(params["mylistId"]);
 
   const formData = await request.formData();
   const submission = parseWithValibot(formData, {

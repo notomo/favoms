@@ -5,7 +5,7 @@ import { prisma } from "~/lib/prisma";
 import { switchKind } from "~/lib/schema/validation/kind";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const itemId = validateStringId(params.itemId);
+  const itemId = validateStringId(params["itemId"]);
   const item = await getItem(itemId);
   assertNotFound(item, "item is not found");
   return json(item);

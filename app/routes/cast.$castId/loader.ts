@@ -4,7 +4,7 @@ import { assertNotFound } from "~/lib/response";
 import { validateStringId } from "~/lib/schema/validation/params";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  const castId = validateStringId(params.castId);
+  const castId = validateStringId(params["castId"]);
   const cast = getCast(castId).then((x) => {
     assertNotFound(x, "cast is not found");
     return x;

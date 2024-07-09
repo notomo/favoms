@@ -4,7 +4,7 @@ import { prisma } from "~/lib/prisma";
 import { importRoute } from "~/routePath/importRoute";
 
 export async function deleteImportHistory({ params }: ActionFunctionArgs) {
-  const importHistoryId = validateId(params.importHistoryId);
+  const importHistoryId = validateId(params["importHistoryId"]);
 
   await prisma.importHistory.delete({
     where: { id: importHistoryId },
