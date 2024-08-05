@@ -6,7 +6,7 @@ import { ActionData, runImportAction } from "./run/action";
 import { schema } from "./run/schema";
 import { BooleanInput, FileInput, SubmitButton } from "./input";
 import { ContentErrorMessage } from "~/routes/manage.import/contentErrorMessage";
-import { loader } from "./loader";
+import { type loader } from "./loader";
 import { LazyLoad } from "~/component/lazyLoad";
 import { ImportHistoryList } from "~/routes/manage.import/historyList";
 
