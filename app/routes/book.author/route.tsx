@@ -1,5 +1,5 @@
 import { Outlet, useLoaderData } from "@remix-run/react";
-import { BookAuthor, loader } from "./loader";
+import { BookAuthor, type loader } from "./loader";
 import { BookAuthorLinks } from "./rowLink";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea";
 import { LazyLoad } from "~/component/lazyLoad";

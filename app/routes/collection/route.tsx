@@ -7,7 +7,7 @@ import {
   DoneMylistsEditButton,
   EditableMylistList,
 } from "./reorderMylist/editableList";
-import { Mylist, loader } from "./loader";
+import { Mylist, type loader } from "./loader";
 import { useState } from "react";
 import { createMylistAction } from "./createMylist/action";
 import { LazyLoad } from "~/component/lazyLoad";
