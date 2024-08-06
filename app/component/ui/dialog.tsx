@@ -56,7 +56,6 @@ const DialogContent = React.forwardRef<
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 const DialogHeader = ({
-  // eslint-disable-next-line react/prop-types
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
@@ -71,7 +70,6 @@ const DialogHeader = ({
 DialogHeader.displayName = "DialogHeader";
 
 const DialogFooter = ({
-  // eslint-disable-next-line react/prop-types
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (

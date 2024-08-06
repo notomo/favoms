@@ -22,7 +22,7 @@ update_remix:
 
 check: typecheck lint build
 lint:
-	npx eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .
+	npx eslint --cache --cache-location ./node_modules/.cache/eslint .
 typecheck:
 	npx tsc
 format:
