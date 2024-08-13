@@ -28,3 +28,18 @@ updates:
         patterns:
           - prisma
           - "@prisma/client"
+
+  - package-ecosystem: "terraform"
+    directory: "/infra/admin"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "12:00"
+      timezone: "Asia/Tokyo"
+    assignees:
+      - "notomo"
+    groups:
+      hashicorp-google-providers:
+        patterns:
+          - "hashicorp/google"
+          - "hashicorp/google-beta"
