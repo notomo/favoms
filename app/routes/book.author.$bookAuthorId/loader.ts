@@ -1,6 +1,6 @@
 import { type LoaderFunctionArgs, defer } from "@remix-run/node";
-import { assertNotFound } from "~/lib/response";
 import { prisma } from "~/lib/prisma";
+import { assertNotFound } from "~/lib/response";
 import { validateStringId } from "~/lib/schema/validation/params";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {

@@ -1,17 +1,17 @@
-import { Button } from "~/component/ui/button";
+import { Link, useNavigate, useParams } from "@remix-run/react";
 import { MoreHorizontal } from "lucide-react";
+import { Button } from "~/component/ui/button";
+import { Dialog, DialogContent } from "~/component/ui/dialog";
 import {
   DropdownMenu,
+  DropdownMenuButton,
   DropdownMenuContent,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  DropdownMenuButton,
 } from "~/component/ui/dropdownMenu";
-import { EditMylistInfoDialog } from "./editInfo/dialog";
-import { DeleteMylistDialog } from "./delete/dialog";
-import { Dialog, DialogContent } from "~/component/ui/dialog";
-import { Link, useNavigate, useParams } from "@remix-run/react";
 import { type MylistDialogType, mylistRoute } from "~/routePath/mylistRoute";
+import { DeleteMylistDialog } from "./delete/dialog";
+import { EditMylistInfoDialog } from "./editInfo/dialog";
 
 const OneDialog = ({
   mylistName,

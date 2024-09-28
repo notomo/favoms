@@ -1,14 +1,14 @@
-import type { MetaFunction } from "@remix-run/node";
 import { useForm } from "@conform-to/react";
-import { parseWithValibot } from "conform-to-valibot";
+import type { MetaFunction } from "@remix-run/node";
 import { Outlet, useFetcher, useLoaderData, useParams } from "@remix-run/react";
+import { parseWithValibot } from "conform-to-valibot";
+import { LazyLoad } from "~/component/lazyLoad";
+import { ContentErrorMessage } from "~/routes/manage.import/contentErrorMessage";
+import { ImportHistoryList } from "~/routes/manage.import/historyList";
+import { BooleanInput, FileInput, SubmitButton } from "./input";
+import type { loader } from "./loader";
 import { type ActionData, runImportAction } from "./run/action";
 import { schema } from "./run/schema";
-import { BooleanInput, FileInput, SubmitButton } from "./input";
-import { ContentErrorMessage } from "~/routes/manage.import/contentErrorMessage";
-import type { loader } from "./loader";
-import { LazyLoad } from "~/component/lazyLoad";
-import { ImportHistoryList } from "~/routes/manage.import/historyList";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Import | favoms" }];
@@ -73,7 +73,7 @@ export default function Page() {
 
         <div className="grid h-full grid-cols-[100%] grid-rows-[10%_90%]">
           <div className="flex items-center justify-between">
-            <p className="text-lg font-bold">History</p>
+            <p className="font-bold text-lg">History</p>
             <Outlet />
           </div>
 

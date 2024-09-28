@@ -1,9 +1,5 @@
-import { useFetcher, useParams, useSearchParams } from "@remix-run/react";
-import { Check, GripVertical } from "lucide-react";
-import type { FormEvent } from "react";
-import { Button } from "~/component/ui/button";
-import type { Mylist } from "../loader";
-import { CollectionRow } from "~/routes/collection/rowLink";
+import { DndContext, closestCenter } from "@dnd-kit/core";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import {
   SortableContext,
   arrayMove,
@@ -11,10 +7,14 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { useFetcher, useParams, useSearchParams } from "@remix-run/react";
 import { clsx } from "clsx";
-import { DndContext, closestCenter } from "@dnd-kit/core";
-import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+import { Check, GripVertical } from "lucide-react";
+import type { FormEvent } from "react";
+import { Button } from "~/component/ui/button";
 import { LoadingOr } from "~/component/ui/loading";
+import { CollectionRow } from "~/routes/collection/rowLink";
+import type { Mylist } from "../loader";
 import type { InputSchema } from "./schema";
 
 export const DoneMylistsEditButton = ({

@@ -1,10 +1,10 @@
 import { Outlet, useLoaderData } from "@remix-run/react";
+import { TwoColumn } from "~/component/layout/twoColumn";
+import { LazyLoad } from "~/component/lazyLoad";
 import { ScrollArea } from "~/component/ui/scrollArea";
+import { useForceTitle } from "~/lib/meta";
 import type { BookAuthor, loader } from "./loader";
 import { BookAuthorsItemLinks } from "./rowLink";
-import { LazyLoad } from "~/component/lazyLoad";
-import { TwoColumn } from "~/component/layout/twoColumn";
-import { useForceTitle } from "~/lib/meta";
 
 export { loader } from "./loader";
 

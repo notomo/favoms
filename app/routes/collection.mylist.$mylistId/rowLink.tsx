@@ -1,6 +1,6 @@
+import { mylistRoute } from "~/routePath/mylistRoute";
 import { ItemLink } from "~/routes/collection.all/rowLink";
 import type { MylistItem } from "./loader";
-import { mylistRoute } from "~/routePath/mylistRoute";
 
 export const ItemLinks = ({
   mylistId,

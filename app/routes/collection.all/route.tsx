@@ -1,10 +1,10 @@
 import { Outlet, useLoaderData } from "@remix-run/react";
-import { ItemLinks } from "./rowLink";
-import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea";
-import type { Item, loader } from "./loader";
-import { LazyLoad } from "~/component/lazyLoad";
-import { SearchForm } from "~/component/ui/searchForm";
 import { TwoColumn } from "~/component/layout/twoColumn";
+import { LazyLoad } from "~/component/lazyLoad";
+import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea";
+import { SearchForm } from "~/component/ui/searchForm";
+import type { Item, loader } from "./loader";
+import { ItemLinks } from "./rowLink";
 
 export { loader } from "./loader";
 

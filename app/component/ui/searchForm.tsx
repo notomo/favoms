@@ -1,10 +1,10 @@
 import { Form, useNavigation } from "@remix-run/react";
 import { Search, X } from "lucide-react";
 import { useRef } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 import { Button } from "~/component/ui/button";
 import { Input } from "~/component/ui/input";
 import { LoadingOr } from "~/component/ui/loading";
-import { useHotkeys } from "react-hotkeys-hook";
 
 const ResetableInput = ({
   query,

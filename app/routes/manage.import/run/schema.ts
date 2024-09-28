@@ -1,12 +1,12 @@
 import {
-  object,
-  instance,
-  mimeType,
-  intersect,
-  union,
-  literal,
   type InferOutput,
+  instance,
+  intersect,
+  literal,
+  mimeType,
+  object,
   pipe,
+  union,
 } from "valibot";
 import { idSchema } from "~/lib/schema/id";
 import { checkboxSchema } from "~/lib/schema/ui";

@@ -1,7 +1,7 @@
 import { ScrollArea } from "~/component/ui/scrollArea";
-import type { ImportHistory } from "./loader";
-import { HistoryLink } from "~/routes/manage.import/rowLink";
 import { importRoute } from "~/routePath/importRoute";
+import { HistoryLink } from "~/routes/manage.import/rowLink";
+import type { ImportHistory } from "./loader";
 
 export const ImportHistoryList = ({
   histories,
@@ -13,7 +13,7 @@ export const ImportHistoryList = ({
       <HistoryLink
         end={true}
         path={importRoute({})}
-        className="text-lg font-bold"
+        className="font-bold text-lg"
       >
         No selected
       </HistoryLink>

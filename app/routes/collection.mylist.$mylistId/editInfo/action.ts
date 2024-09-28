@@ -3,8 +3,8 @@ import type { useActionData } from "@remix-run/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { prisma } from "~/lib/prisma";
 import { validateId } from "~/lib/schema/validation/params";
-import { editMylistInfoSchema } from "./schema";
 import { mylistRoute } from "~/routePath/mylistRoute";
+import { editMylistInfoSchema } from "./schema";
 
 export const editMylistInfoAction = async ({
   params,

@@ -8,7 +8,7 @@ export const meta: MetaFunction = () => {
 
 export default function Page() {
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center text-3xl font-bold">
+    <div className="flex h-full w-full flex-col items-center justify-center font-bold text-3xl">
       <Link to={collectionRoute({})}>favoms</Link>
     </div>
   );

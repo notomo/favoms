@@ -1,8 +1,8 @@
 import { type ActionFunctionArgs, redirect } from "@remix-run/node";
 import { parseWithValibot } from "conform-to-valibot";
 import { prisma } from "~/lib/prisma";
-import { editMylistsSchema } from "./schema";
 import { collectionRoute } from "~/routePath/collectionRoute";
+import { editMylistsSchema } from "./schema";
 
 export const doneMylistsEditAction = async ({
   request,

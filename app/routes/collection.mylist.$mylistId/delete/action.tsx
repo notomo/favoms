@@ -1,6 +1,6 @@
 import { type ActionFunctionArgs, redirect } from "@remix-run/node";
-import { validateId } from "~/lib/schema/validation/params";
 import { prisma } from "~/lib/prisma";
+import { validateId } from "~/lib/schema/validation/params";
 import { collectionRoute } from "~/routePath/collectionRoute";
 
 export const deleteMylistAction = async ({ params }: ActionFunctionArgs) => {

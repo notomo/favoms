@@ -1,7 +1,7 @@
-import { ItemLink } from "~/routes/collection.all/rowLink";
-import type { Video } from "./loader";
 import { useSearchParams } from "@remix-run/react";
 import { castRoute } from "~/routePath/castRoute";
+import { ItemLink } from "~/routes/collection.all/rowLink";
+import type { Video } from "./loader";
 
 export const CastsVideoLinks = ({
   castId,

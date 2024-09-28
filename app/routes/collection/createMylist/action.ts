@@ -2,8 +2,8 @@ import { type ActionFunctionArgs, json, redirect } from "@remix-run/node";
 import type { useActionData } from "@remix-run/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { prisma } from "~/lib/prisma";
-import { createMylistSchema } from "./schema";
 import { mylistRoute } from "~/routePath/mylistRoute";
+import { createMylistSchema } from "./schema";
 
 export const createMylistAction = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();

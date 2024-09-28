@@ -1,17 +1,17 @@
-import { prisma } from "~/lib/prisma";
-import { listToRecord, uniqueListByKey as uniqueByKey } from "~/lib/collection";
 import {
-  object,
+  type InferOutput,
   array,
   literal,
-  nullable,
-  string,
-  minLength,
   maxLength,
-  type InferOutput,
-  transform,
+  minLength,
+  nullable,
+  object,
   pipe,
+  string,
+  transform,
 } from "valibot";
+import { listToRecord, uniqueListByKey as uniqueByKey } from "~/lib/collection";
+import { prisma } from "~/lib/prisma";
 import { itemIdSchema, stringIdSchema } from "~/lib/schema/id";
 
 const nameSchema = ({ min, max }: { min: number; max: number }) => {

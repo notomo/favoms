@@ -1,7 +1,7 @@
-import type { BookAuthor } from "./loader";
 import { NavigationLink } from "~/component/ui/navigationLink";
 import { cn } from "~/lib/tailwind";
 import { bookAuthorRoute } from "~/routePath/bookAuthorRoute";
+import type { BookAuthor } from "./loader";
 
 export const BookAuthorLinks = ({
   bookAuthors,

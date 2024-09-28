@@ -1,7 +1,7 @@
-import { ItemLink } from "~/routes/collection.all/rowLink";
-import type { Book } from "./loader";
 import { useSearchParams } from "@remix-run/react";
 import { bookAuthorRoute } from "~/routePath/bookAuthorRoute";
+import { ItemLink } from "~/routes/collection.all/rowLink";
+import type { Book } from "./loader";
 
 export const BookAuthorsItemLinks = ({
   bookAuthorId,

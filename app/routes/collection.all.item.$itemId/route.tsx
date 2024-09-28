@@ -1,11 +1,11 @@
 import type { MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scrollArea";
-import type { loader, BookAuthor, Cast, Item } from "./loader";
 import { assertNever } from "~/lib/assert";
 import { bookAuthorRoute } from "~/routePath/bookAuthorRoute";
 import { castRoute } from "~/routePath/castRoute";
 import { itemRoute } from "~/routePath/itemRoute";
+import type { BookAuthor, Cast, Item, loader } from "./loader";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [{ title: `${data?.name} | favoms` }];

@@ -4,8 +4,8 @@ import type { FormEvent } from "react";
 import { Button } from "~/component/ui/button";
 import { LoadingOr } from "~/component/ui/loading";
 import { ItemRow } from "~/routes/collection.all/rowLink";
-import type { InputSchema } from "./schema";
 import type { MylistItem } from "~/routes/collection.mylist.$mylistId/loader";
+import type { InputSchema } from "./schema";
 
 export const DoneMylistItemsEditButton = ({
   willBeRemovedItemIds,

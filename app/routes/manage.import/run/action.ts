@@ -1,12 +1,12 @@
 import type { ActionFunctionArgs } from "@remix-run/node";
-import { parseWithValibot } from "conform-to-valibot";
-import { safeParse, flatten } from "valibot";
 import { json, redirect, type useActionData } from "@remix-run/react";
+import { parseWithValibot } from "conform-to-valibot";
+import { flatten, safeParse } from "valibot";
 import { type Prisma, prisma } from "~/lib/prisma";
-import { type ImportSetting, schema } from "./schema";
 import { assertNotFound } from "~/lib/response";
 import { importRoute } from "~/routePath/importRoute";
 import { importItems, itemImportSchema } from "./importItems";
+import { type ImportSetting, schema } from "./schema";
 
 export async function runImportAction({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
@@ -30,7 +30,7 @@ export async function runImportAction({ request }: ActionFunctionArgs) {
     return json({
       ...submission.reply(),
       error: {
-        "fileContent": [error],
+        fileContent: [error],
       },
     });
   }

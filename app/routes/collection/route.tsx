@@ -1,21 +1,21 @@
-import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
-import { ScrollArea } from "~/component/ui/scrollArea";
-import { MylistLinks, AllItemsLink } from "./rowLink";
 import type { MetaFunction } from "@remix-run/node";
-import { CollectionsDropDownMenu } from "./dropdownMenu";
-import {
-  DoneMylistsEditButton,
-  EditableMylistList,
-} from "./reorderMylist/editableList";
-import type { Mylist, loader } from "./loader";
+import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
 import { useState } from "react";
-import { createMylistAction } from "./createMylist/action";
-import { LazyLoad } from "~/component/lazyLoad";
 import { LeftNavigationTwoColumn } from "~/component/layout/leftNavigationTwoColumn";
+import { LazyLoad } from "~/component/lazyLoad";
+import { ScrollArea } from "~/component/ui/scrollArea";
 import {
   getCollectionDialogType,
   isMylistsEditRoute,
 } from "~/routePath/collectionRoute";
+import { createMylistAction } from "./createMylist/action";
+import { CollectionsDropDownMenu } from "./dropdownMenu";
+import type { Mylist, loader } from "./loader";
+import {
+  DoneMylistsEditButton,
+  EditableMylistList,
+} from "./reorderMylist/editableList";
+import { AllItemsLink, MylistLinks } from "./rowLink";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Collection | favoms" }];

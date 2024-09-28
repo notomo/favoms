@@ -1,8 +1,8 @@
 import { type LoaderFunctionArgs, json } from "@remix-run/node";
-import { assertNotFound } from "~/lib/response";
-import { validateStringId } from "~/lib/schema/validation/params";
 import { prisma } from "~/lib/prisma";
+import { assertNotFound } from "~/lib/response";
 import { switchKind } from "~/lib/schema/validation/kind";
+import { validateStringId } from "~/lib/schema/validation/params";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const itemId = validateStringId(params["itemId"]);

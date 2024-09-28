@@ -1,10 +1,10 @@
 import { Outlet, useLoaderData } from "@remix-run/react";
+import { LeftNavigationTwoColumn } from "~/component/layout/leftNavigationTwoColumn";
+import { LazyLoad } from "~/component/lazyLoad";
+import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea";
+import { SearchForm } from "~/component/ui/searchForm";
 import type { BookAuthor, loader } from "./loader";
 import { BookAuthorLinks } from "./rowLink";
-import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea";
-import { LazyLoad } from "~/component/lazyLoad";
-import { SearchForm } from "~/component/ui/searchForm";
-import { LeftNavigationTwoColumn } from "~/component/layout/leftNavigationTwoColumn";
 
 export { loader } from "./loader";
 

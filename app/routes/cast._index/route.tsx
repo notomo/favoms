@@ -1,5 +1,5 @@
-import { TwoColumn } from "~/component/layout/twoColumn";
 import type { MetaFunction } from "@remix-run/node";
+import { TwoColumn } from "~/component/layout/twoColumn";
 
 export { loader } from "~/routes/cast/loader";
 

@@ -22,11 +22,13 @@ update_remix:
 
 check: typecheck lint build
 lint:
-	npx @biomejs/biome lint
+	npx @biomejs/biome check
+fix:
+	npx @biomejs/biome check --fix --unsafe
 typecheck:
 	npx tsc
 format:
-	npx prettier . --write 
+	npx biome format --write
 test_watch:
 	npx vitest
 test:

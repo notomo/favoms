@@ -1,7 +1,7 @@
-import type { Cast } from "./loader";
 import { NavigationLink } from "~/component/ui/navigationLink";
 import { cn } from "~/lib/tailwind";
 import { castRoute } from "~/routePath/castRoute";
+import type { Cast } from "./loader";
 
 export const CastLinks = ({
   casts,
