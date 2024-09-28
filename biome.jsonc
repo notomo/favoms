@@ -21,7 +21,7 @@
     "rules": {
       "recommended": true,
       "complexity": {
-        "useLiteralKeys": "off"
+        "useLiteralKeys": "off" // for noPropertyAccessFromIndexSignature
       },
       "nursery": {
         "useSortedClasses": "warn"
