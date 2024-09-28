@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, json } from "@remix-run/node";
+import { type LoaderFunctionArgs, json } from "@remix-run/node";
 import { prisma } from "~/lib/prisma";
 import { assertNotFound } from "~/lib/response";
 import { validateId } from "~/lib/schema/validation/params";

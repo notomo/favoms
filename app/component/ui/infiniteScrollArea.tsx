@@ -47,7 +47,7 @@ const LoadingItem = ({
       }
       observer.unobserve(current);
     };
-  }, [loadingWrapper, load, canLoad]);
+  }, [load, canLoad]);
 
   return (
     <div className={className} ref={loadingWrapper}>
@@ -79,9 +79,9 @@ export const InfiniteScrollArea = <T,>({
     ...eachPageItems,
     [page]: addedItems,
   };
-  const currentItems = Object.entries(currentEachPageItems)
-    .map(([, x]) => x)
-    .flat();
+  const currentItems = Object.entries(currentEachPageItems).flatMap(
+    ([, x]) => x,
+  );
 
   const maxPage = Math.max(
     ...Object.entries(currentEachPageItems)

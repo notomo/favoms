@@ -48,7 +48,7 @@ export const collectionRoute = ({
     return buildRoute(route, queryParams, searchParams);
   }
 
-  const route = `/collection/all` as const;
+  const route = "/collection/all" as const;
   return buildRoute(route, queryParams, searchParams);
 };
 

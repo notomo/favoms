@@ -1,5 +1,5 @@
 import { ScrollArea } from "~/component/ui/scrollArea";
-import { ImportHistory } from "./loader";
+import type { ImportHistory } from "./loader";
 import { HistoryLink } from "~/routes/manage.import/rowLink";
 import { importRoute } from "~/routePath/importRoute";
 

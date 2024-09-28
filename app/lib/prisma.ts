@@ -61,10 +61,10 @@ const prismaClientSingleton = () => {
 };
 
 declare global {
-  // eslint-disable-next-line no-var
   var prisma: undefined | ReturnType<typeof prismaClientSingleton>;
 }
 
+// biome-ignore lint/suspicious/noRedeclare: <explanation>
 export const prisma = globalThis.prisma ?? prismaClientSingleton();
 
 if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma;

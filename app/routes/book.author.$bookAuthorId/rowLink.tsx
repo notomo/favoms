@@ -1,5 +1,5 @@
 import { ItemLink } from "~/routes/collection.all/rowLink";
-import { Book } from "./loader";
+import type { Book } from "./loader";
 import { useSearchParams } from "@remix-run/react";
 import { bookAuthorRoute } from "~/routePath/bookAuthorRoute";
 

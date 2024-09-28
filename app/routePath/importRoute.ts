@@ -24,6 +24,6 @@ export const importRoute = ({
     return buildRoute(route, queryParams, searchParams);
   }
 
-  const route = `/manage/import` as const;
+  const route = "/manage/import" as const;
   return buildRoute(route, queryParams, searchParams);
 };

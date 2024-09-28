@@ -6,7 +6,7 @@ import { Input } from "~/component/ui/input";
 import { getInputProps, useForm } from "@conform-to/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { editMylistInfoSchema } from "./schema";
-import { EditMylistInfoActionData } from "./action";
+import type { EditMylistInfoActionData } from "./action";
 import { ErrorMessage } from "~/component/ui/form";
 import { LoadingOr } from "~/component/ui/loading";
 

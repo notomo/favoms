@@ -1,11 +1,11 @@
 import { useFetcher, useParams, useSearchParams } from "@remix-run/react";
 import { Check, Trash, Undo } from "lucide-react";
-import { FormEvent } from "react";
+import type { FormEvent } from "react";
 import { Button } from "~/component/ui/button";
 import { LoadingOr } from "~/component/ui/loading";
 import { ItemRow } from "~/routes/collection.all/rowLink";
-import { InputSchema } from "./schema";
-import { MylistItem } from "~/routes/collection.mylist.$mylistId/loader";
+import type { InputSchema } from "./schema";
+import type { MylistItem } from "~/routes/collection.mylist.$mylistId/loader";
 
 export const DoneMylistItemsEditButton = ({
   willBeRemovedItemIds,

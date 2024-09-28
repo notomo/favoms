@@ -14,5 +14,5 @@ export const switchKind = <Book, Video>(
       inner: video,
     };
   }
-  throw new Error(`book or video must be not null`);
+  throw new Error("book or video must be not null");
 };

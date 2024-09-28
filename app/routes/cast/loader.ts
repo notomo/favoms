@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, defer } from "@remix-run/node";
+import { type LoaderFunctionArgs, defer } from "@remix-run/node";
 import { prisma } from "~/lib/prisma";
 import { getPage, getQuery } from "~/routePath/listParam";
 
@@ -13,7 +13,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const take = pageSize + 1;
   const fetched = listCasts({ query, skip, take }).then((items) => {
     return {
-      existsNextPage: items.length == take,
+      existsNextPage: items.length === take,
       casts: items.slice(0, pageSize),
     };
   });

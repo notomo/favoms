@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, defer } from "@remix-run/node";
+import { type LoaderFunctionArgs, defer } from "@remix-run/node";
 import { prisma } from "~/lib/prisma";
 import { switchKind } from "~/lib/schema/validation/kind";
 import { assertNotFound } from "~/lib/response";

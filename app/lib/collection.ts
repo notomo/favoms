@@ -20,7 +20,10 @@ export const listToRecord = <
   key: K,
 ): Record<T[K], T> => {
   return list.reduce(
-    (acc, x) => ((acc[x[key]] = x), acc),
+    (acc, x) => {
+      acc[x[key]] = x;
+      return acc;
+    },
     {} as Record<T[K], T>,
   );
 };

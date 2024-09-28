@@ -1,5 +1,5 @@
 import { Outlet, useLoaderData } from "@remix-run/react";
-import { Cast, type loader } from "./loader";
+import type { Cast, loader } from "./loader";
 import { CastLinks } from "./rowLink";
 import { InfiniteScrollArea } from "~/component/ui/infiniteScrollArea";
 import { LazyLoad } from "~/component/lazyLoad";

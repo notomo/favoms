@@ -6,7 +6,7 @@ import {
   DoneMylistItemsEditButton,
   EditableItemList,
 } from "./editItems/editableList";
-import { Mylist, type loader } from "./loader";
+import type { Mylist, loader } from "./loader";
 import { ItemLinks } from "./rowLink";
 import { LazyLoad } from "~/component/lazyLoad";
 import { TwoColumn } from "~/component/layout/twoColumn";

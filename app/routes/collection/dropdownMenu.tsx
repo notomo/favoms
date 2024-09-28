@@ -15,7 +15,7 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 import {
-  CollectionDialogType,
+  type CollectionDialogType,
   collectionRoute,
 } from "~/routePath/collectionRoute";
 

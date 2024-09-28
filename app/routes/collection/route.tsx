@@ -1,13 +1,13 @@
 import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
 import { ScrollArea } from "~/component/ui/scrollArea";
 import { MylistLinks, AllItemsLink } from "./rowLink";
-import { type MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "@remix-run/node";
 import { CollectionsDropDownMenu } from "./dropdownMenu";
 import {
   DoneMylistsEditButton,
   EditableMylistList,
 } from "./reorderMylist/editableList";
-import { Mylist, type loader } from "./loader";
+import type { Mylist, loader } from "./loader";
 import { useState } from "react";
 import { createMylistAction } from "./createMylist/action";
 import { LazyLoad } from "~/component/lazyLoad";
@@ -50,9 +50,9 @@ const EditableCollectionList = ({ mylists }: { mylists: Mylist[] }) => {
   const [mylistIds, setMylistIds] = useState(mylists.map((x) => x.id));
 
   const mylistRecords: Record<number, Mylist> = {};
-  mylists.forEach((mylist) => {
+  for (const mylist of mylists) {
     mylistRecords[mylist.id] = mylist;
-  });
+  }
 
   return (
     <div className="grid h-full w-full grid-cols-[100%] grid-rows-[8%_92%] gap-y-1">

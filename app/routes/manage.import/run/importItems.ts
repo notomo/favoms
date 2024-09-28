@@ -8,7 +8,7 @@ import {
   string,
   minLength,
   maxLength,
-  InferOutput,
+  type InferOutput,
   transform,
   pipe,
 } from "valibot";

@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, defer } from "@remix-run/node";
+import { type LoaderFunctionArgs, defer } from "@remix-run/node";
 import { prisma } from "~/lib/prisma";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {

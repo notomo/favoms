@@ -14,7 +14,6 @@ const Label = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> &
     VariantProps<typeof labelVariants>
-  // eslint-disable-next-line react/prop-types
 >(({ className, ...props }, ref) => (
   <LabelPrimitive.Root
     ref={ref}

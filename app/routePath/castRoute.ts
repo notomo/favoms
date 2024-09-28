@@ -33,6 +33,6 @@ export const castRoute = ({
     return buildRoute(route, queryParams, searchParams);
   }
 
-  const route = `/cast` as const;
+  const route = "/cast" as const;
   return buildRoute(route, queryParams, searchParams);
 };

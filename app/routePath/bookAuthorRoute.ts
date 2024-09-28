@@ -34,6 +34,6 @@ export const bookAuthorRoute = ({
     return buildRoute(route, queryParams, searchParams);
   }
 
-  const route = `/book/author` as const;
+  const route = "/book/author" as const;
   return buildRoute(route, queryParams, searchParams);
 };

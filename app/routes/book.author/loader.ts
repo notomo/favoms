@@ -1,4 +1,4 @@
-import { LoaderFunctionArgs, defer } from "@remix-run/node";
+import { type LoaderFunctionArgs, defer } from "@remix-run/node";
 import { prisma } from "~/lib/prisma";
 
 import { getPage, getQuery } from "~/routePath/listParam";
@@ -14,7 +14,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const take = pageSize + 1;
   const fetched = listBookAuthors({ query, skip, take }).then((items) => {
     return {
-      existsNextPage: items.length == take,
+      existsNextPage: items.length === take,
       bookAuthors: items.slice(0, pageSize),
     };
   });

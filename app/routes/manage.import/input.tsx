@@ -1,6 +1,6 @@
 import { Checkbox } from "~/component/ui/checkbox";
 import { Label } from "~/component/ui/label";
-import { FieldMetadata, getInputProps } from "@conform-to/react";
+import { type FieldMetadata, getInputProps } from "@conform-to/react";
 import { Input } from "~/component/ui/input";
 import { Button } from "~/component/ui/button";
 import { ErrorMessage } from "~/component/ui/form";

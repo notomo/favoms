@@ -1,6 +1,6 @@
 import { NavigationLink } from "~/component/ui/navigationLink";
 import { cn } from "~/lib/tailwind";
-import { Item } from "./loader";
+import type { Item } from "./loader";
 import { collectionRoute } from "~/routePath/collectionRoute";
 
 export const ItemLinks = ({

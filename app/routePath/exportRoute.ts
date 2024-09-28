@@ -9,7 +9,7 @@ export const exportRoute = ({
   queryParams?: QueryParams;
   searchParams?: URLSearchParams;
 }) => {
-  const route = `/manage/export` as const;
+  const route = "/manage/export" as const;
   return buildRoute(route, queryParams, searchParams);
 };
 
@@ -20,6 +20,6 @@ export const exportFileRoute = ({
   queryParams?: QueryParams;
   searchParams?: URLSearchParams;
 }) => {
-  const route = `/manage/export/file` as const;
+  const route = "/manage/export/file" as const;
   return buildRoute(route, queryParams, searchParams);
 };

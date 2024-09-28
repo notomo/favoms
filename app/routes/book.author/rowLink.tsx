@@ -1,4 +1,4 @@
-import { BookAuthor } from "./loader";
+import type { BookAuthor } from "./loader";
 import { NavigationLink } from "~/component/ui/navigationLink";
 import { cn } from "~/lib/tailwind";
 import { bookAuthorRoute } from "~/routePath/bookAuthorRoute";

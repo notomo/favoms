@@ -1,6 +1,6 @@
 import { NavigationLink } from "~/component/ui/navigationLink";
 import { cn } from "~/lib/tailwind";
-import { Mylist } from "./loader";
+import type { Mylist } from "./loader";
 import { collectionRoute } from "~/routePath/collectionRoute";
 import { mylistRoute } from "~/routePath/mylistRoute";
 

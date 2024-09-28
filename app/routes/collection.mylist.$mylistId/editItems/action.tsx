@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, redirect } from "@remix-run/node";
+import { type ActionFunctionArgs, redirect } from "@remix-run/node";
 import { parseWithValibot } from "conform-to-valibot";
 import { prisma } from "~/lib/prisma";
 import { validateId } from "~/lib/schema/validation/params";

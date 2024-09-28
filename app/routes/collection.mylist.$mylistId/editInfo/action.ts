@@ -1,5 +1,5 @@
-import { ActionFunctionArgs, json, redirect } from "@remix-run/node";
-import { type useActionData } from "@remix-run/react";
+import { type ActionFunctionArgs, json, redirect } from "@remix-run/node";
+import type { useActionData } from "@remix-run/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { prisma } from "~/lib/prisma";
 import { validateId } from "~/lib/schema/validation/params";

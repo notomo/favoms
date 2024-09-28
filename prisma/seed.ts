@@ -1,4 +1,4 @@
-import { prisma, UpsertData, UpsertWhere } from "~/lib/prisma";
+import { prisma, type UpsertData, type UpsertWhere } from "~/lib/prisma";
 
 async function main() {
   const bookItems = await upsertBookItems(

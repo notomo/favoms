@@ -23,7 +23,7 @@ export const NavigationLink = ({
         if (isActive) {
           return (
             <>
-              <div ref={scrollTarget}></div>
+              <div ref={scrollTarget} />
               {children}
             </>
           );

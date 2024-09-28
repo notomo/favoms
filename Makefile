@@ -22,7 +22,7 @@ update_remix:
 
 check: typecheck lint build
 lint:
-	npx eslint --cache --cache-location ./node_modules/.cache/eslint .
+	npx @biomejs/biome lint
 typecheck:
 	npx tsc
 format:

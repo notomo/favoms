@@ -1,4 +1,4 @@
-import { InferInput, object, pipe, string, transform } from "valibot";
+import { type InferInput, object, pipe, string, transform } from "valibot";
 import { joinedItemIdsSchema, optionalItemIdSchema } from "~/lib/schema/id";
 import { removeMylistParam } from "~/routePath/mylistRoute";
 

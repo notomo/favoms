@@ -2,11 +2,11 @@ import type { MetaFunction } from "@remix-run/node";
 import { useForm } from "@conform-to/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { Outlet, useFetcher, useLoaderData, useParams } from "@remix-run/react";
-import { ActionData, runImportAction } from "./run/action";
+import { type ActionData, runImportAction } from "./run/action";
 import { schema } from "./run/schema";
 import { BooleanInput, FileInput, SubmitButton } from "./input";
 import { ContentErrorMessage } from "~/routes/manage.import/contentErrorMessage";
-import { type loader } from "./loader";
+import type { loader } from "./loader";
 import { LazyLoad } from "~/component/lazyLoad";
 import { ImportHistoryList } from "~/routes/manage.import/historyList";
 

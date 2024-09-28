@@ -11,7 +11,7 @@ import { EditMylistInfoDialog } from "./editInfo/dialog";
 import { DeleteMylistDialog } from "./delete/dialog";
 import { Dialog, DialogContent } from "~/component/ui/dialog";
 import { Link, useNavigate, useParams } from "@remix-run/react";
-import { MylistDialogType, mylistRoute } from "~/routePath/mylistRoute";
+import { type MylistDialogType, mylistRoute } from "~/routePath/mylistRoute";
 
 const OneDialog = ({
   mylistName,

@@ -1,8 +1,8 @@
 import { useFetcher, useParams, useSearchParams } from "@remix-run/react";
 import { Check, GripVertical } from "lucide-react";
-import { FormEvent } from "react";
+import type { FormEvent } from "react";
 import { Button } from "~/component/ui/button";
-import { type Mylist } from "../loader";
+import type { Mylist } from "../loader";
 import { CollectionRow } from "~/routes/collection/rowLink";
 import {
   SortableContext,
@@ -15,7 +15,7 @@ import { clsx } from "clsx";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { LoadingOr } from "~/component/ui/loading";
-import { InputSchema } from "./schema";
+import type { InputSchema } from "./schema";
 
 export const DoneMylistsEditButton = ({
   mylistIds,
@@ -74,7 +74,7 @@ const EditableMylistRow = ({
     <div
       ref={setNodeRef}
       className={clsx("", {
-        ["z-10"]: isDragging,
+        "z-10": isDragging,
       })}
       style={{
         transform: CSS.Transform.toString(transform),
