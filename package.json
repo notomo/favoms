@@ -39,7 +39,7 @@
     "valibot": "^0.42.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.2",
+    "@biomejs/biome": "1.9.3",
     "@remix-run/dev": "^2.12.1",
     "@types/morgan": "^1.9.9",
     "@types/react": "^18.3.10",
