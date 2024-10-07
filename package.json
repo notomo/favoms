@@ -28,7 +28,7 @@
     "@remix-run/serve": "^2.12.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
-    "conform-to-valibot": "^1.10.0",
+    "conform-to-valibot": "^1.11.0",
     "lucide-react": "^0.447.0",
     "prisma": "^5.20.0",
     "react": "^18.3.1",
