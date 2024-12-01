@@ -1,4 +1,4 @@
-import { useSearchParams } from "@remix-run/react";
+import { useSearchParams } from "react-router";
 import { bookAuthorRoute } from "~/routePath/bookAuthorRoute";
 import { ItemLink } from "~/routes/collection.all/rowLink";
 import type { Book } from "./loader";

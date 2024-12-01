@@ -4,7 +4,7 @@ export { ErrorBoundary } from "./root/errorBoundary";
 
 export { Layout } from "./root/layout";
 
-import { Outlet } from "@remix-run/react";
+import { Outlet } from "react-router";
 export default function Root() {
   return <Outlet />;
 }

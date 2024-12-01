@@ -1,4 +1,4 @@
-import { NavLink } from "@remix-run/react";
+import { NavLink } from "react-router";
 import { cva } from "class-variance-authority";
 import {
   NavigationMenu,

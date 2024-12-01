@@ -1,5 +1,5 @@
-import { vitePlugin as remix } from "@remix-run/dev";
-import { installGlobals } from "@remix-run/node";
+import { reactRouter } from "@react-router/dev/vite";
+import { installGlobals } from "react-router";
 import morgan from "morgan";
 import { type ViteDevServer, defineConfig, loadEnv } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => {
     define: {
       "process.env": env,
     },
-    plugins: [morganPlugin(), remix(), tsconfigPaths()],
+    plugins: [morganPlugin(), reactRouter(), tsconfigPaths()],
   };
 });
 

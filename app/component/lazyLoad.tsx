@@ -1,4 +1,4 @@
-import { Await, type AwaitProps } from "@remix-run/react";
+import { Await, type AwaitProps } from "react-router";
 import { Suspense } from "react";
 import { Loading } from "~/component/ui/loading";
 

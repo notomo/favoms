@@ -1,4 +1,4 @@
-import { Links, Meta, Scripts, ScrollRestoration } from "@remix-run/react";
+import { Links, Meta, Scripts, ScrollRestoration } from "react-router";
 import { GlobalHeader } from "./globalHeader";
 
 export function Layout({ children }: { children: React.ReactNode }) {

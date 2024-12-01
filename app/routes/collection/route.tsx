@@ -1,5 +1,5 @@
-import type { MetaFunction } from "@remix-run/node";
-import { Outlet, useLoaderData, useSearchParams } from "@remix-run/react";
+import type { MetaFunction } from "react-router";
+import { Outlet, useLoaderData, useSearchParams } from "react-router";
 import { useState } from "react";
 import { LeftNavigationTwoColumn } from "~/component/layout/leftNavigationTwoColumn";
 import { LazyLoad } from "~/component/lazyLoad";

@@ -1,4 +1,4 @@
-import { NavLink } from "@remix-run/react";
+import { NavLink } from "react-router";
 import { useEffect, useRef } from "react";
 
 export const NavigationLink = ({

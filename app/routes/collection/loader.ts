@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, defer, redirect } from "@remix-run/node";
+import { type LoaderFunctionArgs, defer, redirect } from "react-router";
 import { prisma } from "~/lib/prisma";
 import { collectionRoute } from "~/routePath/collectionRoute";
 

@@ -1,4 +1,4 @@
-import { Outlet, useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData } from "react-router";
 import { TwoColumn } from "~/component/layout/twoColumn";
 import { LazyLoad } from "~/component/lazyLoad";
 import { ScrollArea } from "~/component/ui/scrollArea";

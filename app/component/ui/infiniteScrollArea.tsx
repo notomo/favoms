@@ -1,4 +1,4 @@
-import { useNavigation, useSearchParams } from "@remix-run/react";
+import { useNavigation, useSearchParams } from "react-router";
 import { useEffect, useRef, useState } from "react";
 import { Loading } from "~/component/ui/loading";
 import { ScrollArea } from "~/component/ui/scrollArea";

@@ -1,4 +1,4 @@
-import { useSearchParams } from "@remix-run/react";
+import { useSearchParams } from "react-router";
 import { castRoute } from "~/routePath/castRoute";
 import { ItemLink } from "~/routes/collection.all/rowLink";
 import type { Video } from "./loader";

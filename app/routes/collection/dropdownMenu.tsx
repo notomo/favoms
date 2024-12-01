@@ -1,9 +1,4 @@
-import {
-  Link,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from "@remix-run/react";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "~/component/ui/button";
 import { Dialog, DialogContent } from "~/component/ui/dialog";

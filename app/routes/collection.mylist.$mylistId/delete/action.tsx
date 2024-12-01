@@ -1,4 +1,4 @@
-import { type ActionFunctionArgs, redirect } from "@remix-run/node";
+import { type ActionFunctionArgs, redirect } from "react-router";
 import { prisma } from "~/lib/prisma";
 import { validateId } from "~/lib/schema/validation/params";
 import { collectionRoute } from "~/routePath/collectionRoute";
