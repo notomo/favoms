@@ -1,7 +1,7 @@
-import { Form, useNavigation } from "react-router";
 import { Search, X } from "lucide-react";
 import { useRef } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
+import { Form, useNavigation } from "react-router";
 import { Button } from "~/component/ui/button";
 import { Input } from "~/component/ui/input";
 import { LoadingOr } from "~/component/ui/loading";

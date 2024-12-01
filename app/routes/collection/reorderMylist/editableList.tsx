@@ -7,10 +7,10 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useFetcher, useParams, useSearchParams } from "react-router";
 import { clsx } from "clsx";
 import { Check, GripVertical } from "lucide-react";
 import type { FormEvent } from "react";
+import { useFetcher, useParams, useSearchParams } from "react-router";
 import { Button } from "~/component/ui/button";
 import { LoadingOr } from "~/component/ui/loading";
 import { CollectionRow } from "~/routes/collection/rowLink";

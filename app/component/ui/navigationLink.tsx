@@ -1,5 +1,5 @@
-import { NavLink } from "react-router";
 import { useEffect, useRef } from "react";
+import { NavLink } from "react-router";
 
 export const NavigationLink = ({
   children,

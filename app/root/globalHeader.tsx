@@ -1,5 +1,5 @@
-import { NavLink } from "react-router";
 import { cva } from "class-variance-authority";
+import { NavLink } from "react-router";
 import {
   NavigationMenu,
   NavigationMenuItem,
