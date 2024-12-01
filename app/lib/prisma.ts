@@ -32,7 +32,7 @@ const prismaClientSingleton = () => {
       },
     ],
   });
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env["NODE_ENV"] !== "production") {
     client.$on("query", (e) => {
       const { query, params, ...rest } = e;
       console.log(
@@ -67,4 +67,4 @@ declare global {
 // biome-ignore lint/suspicious/noRedeclare: <explanation>
 export const prisma = globalThis.prisma ?? prismaClientSingleton();
 
-if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma;
+if (process.env["NODE_ENV"] !== "production") globalThis.prisma = prisma;
