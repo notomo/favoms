@@ -1,10 +1,7 @@
 import { reactRouter } from "@react-router/dev/vite";
-import { installGlobals } from "react-router";
 import morgan from "morgan";
 import { type ViteDevServer, defineConfig, loadEnv } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
-
-installGlobals();
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
