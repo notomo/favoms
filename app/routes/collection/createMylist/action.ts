@@ -17,7 +17,7 @@ export const createMylistAction = async ({ request }: ActionFunctionArgs) => {
 
   const mylistName = submission.value.name;
   const mylist = await createMylist(mylistName);
-  return redirect(mylistRoute({ pathParams: { mylistId: mylist.id } }));
+  throw redirect(mylistRoute({ pathParams: { mylistId: mylist.id } }));
 };
 
 export type ActionData = ReturnType<

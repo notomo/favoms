@@ -24,7 +24,7 @@ export const editMylistInfoAction = async ({
   const name = submission.value.name;
   const mylist = await updateMylistName(mylistId, name);
 
-  return redirect(
+  throw redirect(
     mylistRoute({
       pathParams: {
         mylistId: mylist.id,

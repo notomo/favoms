@@ -15,7 +15,12 @@ export async function runImportAction({ request }: ActionFunctionArgs) {
   });
 
   if (submission.status !== "success") {
-    return submission.reply();
+    return {
+      ...submission.reply(),
+      error: {
+        fileContent: [],
+      },
+    };
   }
 
   const importSetting = submission.value;
@@ -39,7 +44,7 @@ export async function runImportAction({ request }: ActionFunctionArgs) {
     await importItems(validated.output, importSetting.isReplace);
   }
 
-  return redirect(importRoute({ pathParams: { importHistoryId } }));
+  throw redirect(importRoute({ pathParams: { importHistoryId } }));
 }
 
 export type ActionData = ReturnType<

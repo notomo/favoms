@@ -7,4 +7,4 @@ node_modules
 
 /deploy
 /app-secret.yaml
-.react-router/
+/.react-router

@@ -10,5 +10,5 @@ export async function deleteImportHistory({ params }: ActionFunctionArgs) {
     where: { id: importHistoryId },
   });
 
-  return redirect(importRoute({}));
+  throw redirect(importRoute({}));
 }

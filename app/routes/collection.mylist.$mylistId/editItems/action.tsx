@@ -22,7 +22,7 @@ export const doneItemEditAction = async ({
   const itemIds = submission.value.itemIds;
   await removeItemsFromMylist(mylistId, itemIds);
 
-  return redirect(
+  throw redirect(
     mylistRoute({
       pathParams: { mylistId, itemId: submission.value.itemId },
       searchParams: submission.value.searchParams,
