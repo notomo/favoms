@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, json } from "react-router";
+import type { LoaderFunctionArgs } from "react-router";
 import { prisma } from "~/lib/prisma";
 import { assertNotFound } from "~/lib/response";
 import { switchKind } from "~/lib/schema/validation/kind";
@@ -8,7 +8,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   const itemId = validateStringId(params["itemId"]);
   const item = await getItem(itemId);
   assertNotFound(item, "item is not found");
-  return json(item);
+  return item;
 };
 
 export type BookAuthor = {

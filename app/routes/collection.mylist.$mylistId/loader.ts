@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, defer } from "react-router";
+import type { LoaderFunctionArgs } from "react-router";
 import { prisma } from "~/lib/prisma";
 import { assertNotFound } from "~/lib/response";
 import { switchKind } from "~/lib/schema/validation/kind";
@@ -10,9 +10,9 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     assertNotFound(x, "mylist is not found");
     return x;
   });
-  return defer({
+  return {
     mylist,
-  });
+  };
 };
 
 export type Mylist = {

@@ -1,6 +1,6 @@
-import { type ActionFunctionArgs, json, redirect } from "react-router";
-import type { useActionData } from "react-router";
 import { parseWithValibot } from "conform-to-valibot";
+import { type ActionFunctionArgs, redirect } from "react-router";
+import type { useActionData } from "react-router";
 import { prisma } from "~/lib/prisma";
 import { validateId } from "~/lib/schema/validation/params";
 import { mylistRoute } from "~/routePath/mylistRoute";
@@ -18,7 +18,7 @@ export const editMylistInfoAction = async ({
   });
 
   if (submission.status !== "success") {
-    return json(submission.reply());
+    return submission.reply();
   }
 
   const name = submission.value.name;

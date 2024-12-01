@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, defer } from "react-router";
+import type { LoaderFunctionArgs } from "react-router";
 import { prisma } from "~/lib/prisma";
 import { switchKind } from "~/lib/schema/validation/kind";
 import { getPage, getQuery } from "~/routePath/listParam";
@@ -18,11 +18,11 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       items: items.slice(0, pageSize),
     };
   });
-  return defer({
+  return {
     page,
     query,
     fetched,
-  });
+  };
 };
 
 export type Item = {

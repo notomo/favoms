@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, json } from "react-router";
+import type { LoaderFunctionArgs } from "react-router";
 import { prisma } from "~/lib/prisma";
 import { assertNotFound } from "~/lib/response";
 import { validateId } from "~/lib/schema/validation/params";
@@ -9,7 +9,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     assertNotFound(x, "import history is not found");
     return x;
   });
-  return json(importHistory);
+  return importHistory;
 };
 
 export type ImportHistory = {

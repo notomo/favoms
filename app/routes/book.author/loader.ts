@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, defer } from "react-router";
+import type { LoaderFunctionArgs } from "react-router";
 import { prisma } from "~/lib/prisma";
 
 import { getPage, getQuery } from "~/routePath/listParam";
@@ -18,11 +18,11 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       bookAuthors: items.slice(0, pageSize),
     };
   });
-  return defer({
+  return {
     fetched,
     page,
     query,
-  });
+  };
 };
 
 export type BookAuthor = Readonly<{

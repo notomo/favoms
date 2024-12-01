@@ -1,6 +1,6 @@
-import type { ActionFunctionArgs } from "react-router";
-import { json, redirect, type useActionData } from "react-router";
 import { parseWithValibot } from "conform-to-valibot";
+import type { ActionFunctionArgs } from "react-router";
+import { redirect, type useActionData } from "react-router";
 import { flatten, safeParse } from "valibot";
 import { type Prisma, prisma } from "~/lib/prisma";
 import { assertNotFound } from "~/lib/response";
@@ -15,7 +15,7 @@ export async function runImportAction({ request }: ActionFunctionArgs) {
   });
 
   if (submission.status !== "success") {
-    return json(submission.reply());
+    return submission.reply();
   }
 
   const importSetting = submission.value;
@@ -27,12 +27,12 @@ export async function runImportAction({ request }: ActionFunctionArgs) {
   const validated = safeParse(itemImportSchema, content.parsedJson);
   if (!validated.success) {
     const error = JSON.stringify(flatten(validated.issues), null, 2);
-    return json({
+    return {
       ...submission.reply(),
       error: {
         fileContent: [error],
       },
-    });
+    };
   }
 
   if (!importSetting.dryRun) {

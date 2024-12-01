@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs, defer, redirect } from "react-router";
+import { type LoaderFunctionArgs, redirect } from "react-router";
 import { prisma } from "~/lib/prisma";
 import { collectionRoute } from "~/routePath/collectionRoute";
 
@@ -10,9 +10,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   const mylists = listMylists();
 
-  return defer({
+  return {
     mylists,
-  });
+  };
 };
 
 export type Mylist = {

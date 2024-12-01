@@ -1,12 +1,12 @@
-import { type LoaderFunctionArgs, defer } from "react-router";
+import type { LoaderFunctionArgs } from "react-router";
 import { prisma } from "~/lib/prisma";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const histories = listImportHistories();
-  return defer({
+  return {
     histories,
     importHistoryId: params["importHistoryId"],
-  });
+  };
 };
 
 export type ImportHistory = {
