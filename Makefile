@@ -1,24 +1,24 @@
 start:
 	docker compose up -d --wait
-	pkill -KILL -f "npm exec remix vite:de[v]" || true
-	npx remix vite:dev
+	pkill -KILL -f "npm exec react-router de[v]" || true
+	npx react-router dev
 
 open:
 	explorer.exe http://localhost:3000/collection || true
 
 routes:
-	npx remix routes --json | jq
+	npx react-router routes --json | jq
 
 build: FORCE
-	npx remix vite:build
+	npx react-router build
 start_built:
-	npx remix-serve ./build/server/index.js
+	npx react-router-serve ./build/server/index.js
 
 update_remix:
 	rm -f ./app/entry.client.tsx
-	npx remix reveal entry.client
+	npx react-router reveal entry.client
 	rm -f ./app/entry.server.tsx
-	npx remix reveal entry.server
+	npx react-router reveal entry.server
 
 check: typecheck lint build
 lint:
