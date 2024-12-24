@@ -21,9 +21,10 @@ updates:
       - "notomo"
     open-pull-requests-limit: 10
     groups:
-      "@remix-run":
+      react-router:
         patterns:
-          - "@remix-run/*"
+          - react-router
+          - "@react-router/*"
       prisma:
         patterns:
           - prisma
