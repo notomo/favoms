@@ -28,7 +28,7 @@
     "@react-router/serve": "^7.1.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "conform-to-valibot": "^1.12.3",
+    "conform-to-valibot": "^1.13.0",
     "lucide-react": "^0.469.0",
     "prisma": "^6.1.0",
     "react": "^18.3.1",
