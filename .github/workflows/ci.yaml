@@ -5,9 +5,6 @@ on:
       - '*'
   pull_request:
 
-env:
-  NODE_VERSION: '20'
-
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -16,7 +13,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: '22'
       - run: npm ci --force
 
       - run: make typecheck
@@ -47,7 +44,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: '22'
       - run: npm ci --force
 
       - run: make setup_local
