@@ -29,6 +29,12 @@ updates:
         patterns:
           - prisma
           - "@prisma/client"
+      react:
+        patterns:
+          - react
+          - react-dom
+          - "@types/react"
+          - "@types/react-dom"
 
   - package-ecosystem: "terraform"
     directory: "/infra/admin"
