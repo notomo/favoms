@@ -35,6 +35,10 @@ updates:
           - react-dom
           - "@types/react"
           - "@types/react-dom"
+      tailwindcss:
+        patterns:
+          - tailwindcss
+          - "@tailwindcss/*"
 
   - package-ecosystem: "terraform"
     directory: "/infra/admin"
