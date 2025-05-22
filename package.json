@@ -44,7 +44,7 @@
     "@react-router/dev": "^7.1.1",
     "@tailwindcss/postcss": "^4.1.7",
     "@types/morgan": "^1.9.9",
-    "@types/react": "^19.1.4",
+    "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
     "globals": "^16.1.0",
     "morgan": "^1.10.0",
