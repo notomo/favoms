@@ -43,7 +43,7 @@
     "@biomejs/biome": "1.9.4",
     "@react-router/dev": "^7.1.1",
     "@tailwindcss/postcss": "^4.1.8",
-    "@types/morgan": "^1.9.9",
+    "@types/morgan": "^1.9.10",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.6",
     "globals": "^16.2.0",
