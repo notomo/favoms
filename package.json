@@ -42,7 +42,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@react-router/dev": "^7.1.1",
-    "@tailwindcss/postcss": "^4.1.8",
+    "@tailwindcss/postcss": "^4.1.10",
     "@types/morgan": "^1.9.10",
     "@types/react": "^19.1.7",
     "@types/react-dom": "^19.1.6",
